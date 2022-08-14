@@ -1,10 +1,10 @@
 # blog
 SpringBoot Blog System
 
-## TechStack
+## Techstack
 * SpringBoot
 * Redis
 * MySQL
 
-## FrontEnd
+## Frontend
 * React.js
