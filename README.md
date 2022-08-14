@@ -6,5 +6,5 @@ SpringBoot Blog System
 * Redis
 * MySQL
 
-## Frontend
+## FrontEnd
 * React.js
