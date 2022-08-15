@@ -22,7 +22,7 @@ public class TagServiceImpl implements TagService {
     private TagMapper tagMapper;
 
     @Override
-    public Result listHots(LimitParam limitParam) {
+    public Result listHotTags(LimitParam limitParam) {
         List<Long> tagIdList = tagMapper.findHotTagIds(limitParam.getLimit());
 
         if (CollectionUtils.isEmpty(tagIdList)) {

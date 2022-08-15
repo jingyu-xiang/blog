@@ -15,7 +15,7 @@ public interface TagService {
      * @param limitParam object of page and pageSize
      * @return list of
      */
-    Result listHots(LimitParam limitParam);
+    Result listHotTags(LimitParam limitParam);
 
     /**
      * list tags, given the articleId of the article that they are tagged with

@@ -15,7 +15,7 @@ public class TagController {
 
     @PostMapping("hots")
     public Result retrieveMostPopularTags(@RequestBody LimitParam limitParam) {
-        return tagService.listHots(limitParam);
+        return tagService.listHotTags(limitParam);
     }
 
 }
