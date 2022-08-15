@@ -53,7 +53,7 @@ public class ArticleServiceImpl implements ArticleService {
     public Result listHotArticles(LimitParam limitParam) {
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
 
-        queryWrapper // select id, title from ms_article order by view_counts desc limit {limit}
+        queryWrapper // select id, title, view_counts from ms_article order by view_counts desc limit {limit}
             .orderByDesc(Article::getViewCounts)
             .select(Article::getId, Article::getTitle, Article::getViewCounts)
             .last("LIMIT " + limitParam.getLimit());
@@ -71,7 +71,7 @@ public class ArticleServiceImpl implements ArticleService {
     public Result listNewArticles(LimitParam limitParam) {
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
 
-        queryWrapper // select id, title from ms_article order by create_date desc limit {limit}
+        queryWrapper // select id, title, createDate from ms_article order by create_date desc limit {limit}
             .orderByDesc(Article::getCreateDate)
             .select(Article::getId, Article::getTitle, Article::getCreateDate)
             .last("LIMIT " + limitParam.getLimit());
