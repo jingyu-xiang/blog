@@ -10,7 +10,7 @@ public interface SysUserService {
      * retrieve a user by a given id
      *
      * @param id
-     * @return
+     * @return SysUser
      */
     SysUser findUserById(Long id);
 

@@ -29,7 +29,7 @@ public class TagServiceImpl implements TagService {
             return Result.success(Collections.emptyList());
         }
 
-        List<Tag> tagList = tagMapper.selectBatchIds(tagIdList);
+        final List<Tag> tagList = tagMapper.selectBatchIds(tagIdList);
 
         return Result.success(tagList);
     }

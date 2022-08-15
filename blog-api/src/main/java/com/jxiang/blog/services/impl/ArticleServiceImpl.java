@@ -9,6 +9,7 @@ import com.jxiang.blog.services.SysUserService;
 import com.jxiang.blog.services.TagService;
 import com.jxiang.blog.vo.ArticleVo;
 import com.jxiang.blog.vo.Result;
+import com.jxiang.blog.vo.params.LimitParam;
 import com.jxiang.blog.vo.params.PageParams;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
@@ -41,21 +42,54 @@ public class ArticleServiceImpl implements ArticleService {
 
         final Page<Article> articlePage = articleMapper.selectPage(page, queryWrapper);
 
-        final List<ArticleVo> articleVoList = copyList(articlePage.getRecords());
+        final List<ArticleVo> articleVoList = copyList(articlePage.getRecords(), true, true);
 
         return articleVoList.size() != 0
             ? Result.success(articleVoList)
             : Result.success("No article yet");
     }
 
-    private List<ArticleVo> copyList(List<Article> records) {
-        boolean tagsRequired = true;
-        boolean authorRequired = true;
+    @Override
+    public Result listHotArticles(LimitParam limitParam) {
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
 
+        queryWrapper // select id, title from ms_article order by view_counts desc limit {limit}
+            .orderByDesc(Article::getViewCounts)
+            .select(Article::getId, Article::getTitle, Article::getViewCounts)
+            .last("LIMIT " + limitParam.getLimit());
+
+        final List<Article> articles = articleMapper.selectList(queryWrapper);
+
+        final List<ArticleVo> articleVoList = copyList(articles, false, false);
+
+        return articleVoList.size() != 0
+            ? Result.success(articleVoList)
+            : Result.success("No article Yet");
+    }
+
+    @Override
+    public Result listNewArticles(LimitParam limitParam) {
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+
+        queryWrapper // select id, title from ms_article order by create_date desc limit {limit}
+            .orderByDesc(Article::getCreateDate)
+            .select(Article::getId, Article::getTitle, Article::getCreateDate)
+            .last("LIMIT " + limitParam.getLimit());
+
+        final List<Article> articles = articleMapper.selectList(queryWrapper);
+
+        final List<ArticleVo> articleVoList = copyList(articles, false, false);
+
+        return articleVoList.size() != 0
+            ? Result.success(articleVoList)
+            : Result.success("No article Yet");
+    }
+
+    private List<ArticleVo> copyList(List<Article> records, boolean isTagsRequired, boolean isAuthorRequired) {
         List<ArticleVo> articleVoList = new ArrayList<>();
         for (Article record : records) {
             // author and tags are required
-            articleVoList.add(copy(record, tagsRequired, authorRequired));
+            articleVoList.add(copy(record, isTagsRequired, isAuthorRequired));
         }
         return articleVoList;
     }

@@ -2,6 +2,7 @@ package com.jxiang.blog.controllers;
 
 import com.jxiang.blog.services.ArticleService;
 import com.jxiang.blog.vo.Result;
+import com.jxiang.blog.vo.params.LimitParam;
 import com.jxiang.blog.vo.params.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +20,16 @@ public class ArticleController {
     @PostMapping
     public Result listArticles(@RequestBody PageParams pageParams) {
         return articleService.listArticles(pageParams);
+    }
+
+    @PostMapping("hots")
+    public Result retrieveMostPopularArticles(@RequestBody LimitParam limitParam) {
+        return articleService.listHotArticles(limitParam);
+    }
+
+    @PostMapping("news")
+    public Result retrieveMostRecentArticles(@RequestBody LimitParam limitParam) {
+        return articleService.listNewArticles(limitParam);
     }
 
 }

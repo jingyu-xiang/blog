@@ -14,7 +14,7 @@ public interface TagService {
      * return the first {limit} records, and order by the number of article_ids
      *
      * @param limitParam
-     * @return
+     * @return Result
      */
     Result listHots(LimitParam limitParam);
 
@@ -22,7 +22,7 @@ public interface TagService {
      * list tags, given the articleId of the article that they are tagged with
      *
      * @param articleId
-     * @return
+     * @return Result
      */
     List<TagVo> findTagsByArticleId(Long articleId);
 
