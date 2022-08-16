@@ -1,7 +1,7 @@
 package com.jxiang.blog.controllers;
 
 import com.jxiang.blog.services.ArticleService;
-import com.jxiang.blog.vo.Result;
+import com.jxiang.blog.vo.results.Result;
 import com.jxiang.blog.vo.params.LimitParam;
 import com.jxiang.blog.vo.params.PageParams;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +30,11 @@ public class ArticleController {
     @PostMapping("news")
     public Result retrieveMostRecentArticles(@RequestBody LimitParam limitParam) {
         return articleService.listNewArticles(limitParam);
+    }
+
+    @PostMapping("archives")
+    public Result listArchives() {
+        return articleService.listArchives();
     }
 
 }

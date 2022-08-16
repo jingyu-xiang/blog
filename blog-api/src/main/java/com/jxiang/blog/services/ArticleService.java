@@ -1,6 +1,6 @@
 package com.jxiang.blog.services;
 
-import com.jxiang.blog.vo.Result;
+import com.jxiang.blog.vo.results.Result;
 import com.jxiang.blog.vo.params.LimitParam;
 import com.jxiang.blog.vo.params.PageParams;
 
@@ -30,5 +30,13 @@ public interface ArticleService {
      * @return list of articles
      */
     Result listNewArticles(LimitParam limitParam);
+
+    /**
+     * article archives
+     * list monthly archive of articles and show the count during each month
+     *
+     * @return list of articles
+     */
+    Result listArchives();
 
 }

@@ -7,8 +7,9 @@ import com.jxiang.blog.pojo.Article;
 import com.jxiang.blog.services.ArticleService;
 import com.jxiang.blog.services.SysUserService;
 import com.jxiang.blog.services.TagService;
+import com.jxiang.blog.vo.ArchiveVo;
 import com.jxiang.blog.vo.ArticleVo;
-import com.jxiang.blog.vo.Result;
+import com.jxiang.blog.vo.results.Result;
 import com.jxiang.blog.vo.params.LimitParam;
 import com.jxiang.blog.vo.params.PageParams;
 import org.joda.time.DateTime;
@@ -83,6 +84,11 @@ public class ArticleServiceImpl implements ArticleService {
         return articleVoList.size() != 0
             ? Result.success(articleVoList)
             : Result.success("No article Yet");
+    }
+
+    @Override
+    public Result listArchives() {
+        return Result.success(articleMapper.listArchives());
     }
 
     private List<ArticleVo> copyList(List<Article> records, boolean isTagsRequired, boolean isAuthorRequired) {

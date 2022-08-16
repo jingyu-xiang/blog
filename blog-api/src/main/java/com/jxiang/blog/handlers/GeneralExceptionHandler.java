@@ -1,6 +1,6 @@
 package com.jxiang.blog.handlers;
 
-import com.jxiang.blog.vo.Result;
+import com.jxiang.blog.vo.results.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

@@ -1,4 +1,4 @@
-package com.jxiang.blog.vo;
+package com.jxiang.blog.vo.results;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

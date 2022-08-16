@@ -3,7 +3,7 @@ package com.jxiang.blog.services.impl;
 import com.jxiang.blog.dao.TagMapper;
 import com.jxiang.blog.pojo.Tag;
 import com.jxiang.blog.services.TagService;
-import com.jxiang.blog.vo.Result;
+import com.jxiang.blog.vo.results.Result;
 import com.jxiang.blog.vo.TagVo;
 import com.jxiang.blog.vo.params.LimitParam;
 import org.springframework.beans.BeanUtils;
