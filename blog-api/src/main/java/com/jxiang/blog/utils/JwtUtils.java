@@ -27,7 +27,7 @@ public class JwtUtils {
             .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
             .setClaims(claims)
             .setIssuedAt(new Date())
-            .setExpiration(new Date(System.currentTimeMillis() + 24 * 60 * 60 * 60 * 1000)); // valid for 2 months
+            .setExpiration(new Date(System.currentTimeMillis() + 24L * 60 * 60 * 30 * 1000)); // valid for 1 months
 
         return jwtBuilder.compact();
     }

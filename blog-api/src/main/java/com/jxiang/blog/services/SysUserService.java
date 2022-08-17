@@ -14,4 +14,13 @@ public interface SysUserService {
      */
     SysUser findUserById(Long id);
 
+    /**
+     * retrieve a user based on its username and password
+     *
+     * @param account  user account
+     * @param password user password
+     * @return
+     */
+    SysUser findAuthUser(String account, String password);
+
 }
