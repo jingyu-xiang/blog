@@ -1,6 +1,7 @@
 package com.jxiang.blog.services;
 
 import com.jxiang.blog.pojo.SysUser;
+import com.jxiang.blog.vo.results.Result;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,5 +23,13 @@ public interface SysUserService {
      * @return
      */
     SysUser findAuthUser(String account, String password);
+
+    /**
+     * retrieve user's authUserVo according to token
+     *
+     * @param token jwt token
+     * @return Result
+     */
+    Result findUserByToken(String token);
 
 }

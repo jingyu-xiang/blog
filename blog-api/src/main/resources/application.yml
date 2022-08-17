@@ -3,10 +3,6 @@ spring:
     active: ${profile.active}
   main:
     banner-mode: off
-  redis:
-    host: localhost
-    port: 6379
-
 mybatis-plus:
   global-config:
     banner: false
@@ -19,6 +15,9 @@ spring:
   config:
     activate:
       on-profile: dev
+  redis:
+    host: localhost
+    port: 6379
   datasource:
     url: jdbc:mysql://localhost:3306/blog
     username: root
@@ -33,6 +32,9 @@ spring:
   config:
     activate:
       on-profile: test
+  redis:
+    host: localhost
+    port: 6379
   datasource:
     url: jdbc:mysql://localhost:3306/blog
     username: root

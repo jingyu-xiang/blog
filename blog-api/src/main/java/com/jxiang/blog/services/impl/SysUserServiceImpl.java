@@ -3,7 +3,12 @@ package com.jxiang.blog.services.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.dao.SysUserMapper;
 import com.jxiang.blog.pojo.SysUser;
+import com.jxiang.blog.services.AuthService;
 import com.jxiang.blog.services.SysUserService;
+import com.jxiang.blog.vo.AuthUserVo;
+import com.jxiang.blog.vo.results.ErrorCode;
+import com.jxiang.blog.vo.results.Result;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +17,9 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     SysUserMapper sysUserMapper;
+
+    @Autowired
+    AuthService authService;
 
     @Override
     public SysUser findUserById(Long id) {
@@ -27,9 +35,29 @@ public class SysUserServiceImpl implements SysUserService {
     public SysUser findAuthUser(String account, String password) {
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
 
-        queryWrapper.eq(SysUser::getAccount, account).eq(SysUser::getPassword, password);
+        queryWrapper
+            .eq(SysUser::getAccount, account)
+            .eq(SysUser::getPassword, password)
+            .select(SysUser::getId, SysUser::getAccount, SysUser::getAvatar, SysUser::getNickname)
+            .last("LIMIT 1");
 
         return sysUserMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public Result findUserByToken(String token) {
+
+
+        SysUser sysUser = authService.checkToken(token);
+
+        if (sysUser == null) {
+            return Result.failure(ErrorCode.TOKEN_INVALID.getCode(), ErrorCode.TOKEN_INVALID.getMsg());
+        }
+
+        AuthUserVo authUserVo = new AuthUserVo();
+        BeanUtils.copyProperties(sysUser, authUserVo);
+
+        return Result.success(authUserVo);
     }
 
 }

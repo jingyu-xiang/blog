@@ -6,8 +6,8 @@ public enum ErrorCode {
     ACCOUNT_PWD_NOT_EXIST(404, "username or password does not exist"),
     NO_PERMISSION(404, "no permission"),
     SESSION_TIME_OUT(90001, "session time out"),
-    NO_LOGIN(401, "unauthorized"),
-    ;
+    NO_LOGIN(401, "require log in"),
+    TOKEN_INVALID(401, "invalid jwt token ");
 
     private int code;
 

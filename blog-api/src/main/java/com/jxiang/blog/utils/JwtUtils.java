@@ -27,7 +27,7 @@ public class JwtUtils {
             .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
             .setClaims(claims)
             .setIssuedAt(new Date())
-            .setExpiration(new Date(System.currentTimeMillis() + 24L * 60 * 60 * 30 * 1000)); // valid for 1 months
+            .setExpiration(new Date(System.currentTimeMillis() + 24L * 60 * 60 * 1 * 1000)); // valid for 1 day
 
         return jwtBuilder.compact();
     }
@@ -47,6 +47,16 @@ public class JwtUtils {
         }
 
         return null;
+    }
+
+    /**
+     * Remove "Bearer " from client-side token
+     *
+     * @param token jwt token
+     * @return jwt token with "Bearer " removed
+     */
+    public static String removeHeader(String token) {
+        return token.substring(7);
     }
 
 }
