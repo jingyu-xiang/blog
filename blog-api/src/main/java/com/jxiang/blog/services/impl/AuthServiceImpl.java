@@ -8,7 +8,7 @@ import com.jxiang.blog.utils.JwtUtils;
 import com.jxiang.blog.vo.params.LoginParams;
 import com.jxiang.blog.vo.results.ErrorCode;
 import com.jxiang.blog.vo.results.Result;
-import org.apache.commons.codec.digest.DigestUtils; // encode & decode password
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -21,14 +21,14 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class AuthServiceImpl implements AuthService {
 
+    private static final String SALT = "89j3@129%";
+
     @Lazy
     @Autowired
     private SysUserService sysUserService;
 
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
-
-    private static final String SALT = "89j3@129%";
 
     @Override
     public Result login(LoginParams loginParams) {

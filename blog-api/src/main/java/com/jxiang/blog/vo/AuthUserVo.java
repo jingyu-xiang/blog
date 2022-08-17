@@ -1,6 +1,5 @@
 package com.jxiang.blog.vo;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data

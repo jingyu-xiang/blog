@@ -1,8 +1,8 @@
 package com.jxiang.blog.services;
 
-import com.jxiang.blog.vo.results.Result;
 import com.jxiang.blog.vo.params.LimitParam;
 import com.jxiang.blog.vo.params.PageParams;
+import com.jxiang.blog.vo.results.Result;
 
 public interface ArticleService {
 
