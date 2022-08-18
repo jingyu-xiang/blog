@@ -12,11 +12,9 @@ import com.jxiang.blog.vo.results.Result;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -54,7 +52,9 @@ public class AuthServiceImpl implements AuthService {
         String token = JwtUtils.createToken(sysUser.getId());
 
         // store token in redis {TOKEN_ey21e123f24=SysUser}
-        redisTemplate.opsForValue().set("TOKEN_" + token, JSON.toJSONString(sysUser), 1, TimeUnit.DAYS);
+        redisTemplate
+            .opsForValue()
+            .set("TOKEN_" + token, JSON.toJSONString(sysUser), 1, TimeUnit.DAYS);
 
         return Result.success(token);
     }
@@ -131,7 +131,9 @@ public class AuthServiceImpl implements AuthService {
         String token = JwtUtils.createToken(sysUser.getId());
 
         // store token in redis {TOKEN_ey21e123f24=SysUser}
-        redisTemplate.opsForValue().set("TOKEN_" + token, JSON.toJSONString(sysUser), 1, TimeUnit.DAYS);
+        redisTemplate
+            .opsForValue()
+            .set("TOKEN_" + token, JSON.toJSONString(sysUser), 1, TimeUnit.DAYS);
 
         return Result.success(token);
     }

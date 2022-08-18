@@ -8,12 +8,9 @@ import com.jxiang.blog.services.SysUserService;
 import com.jxiang.blog.vo.AuthUserVo;
 import com.jxiang.blog.vo.results.ErrorCode;
 import com.jxiang.blog.vo.results.Result;
-import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
 
 @Service
 public class SysUserServiceImpl implements SysUserService {
