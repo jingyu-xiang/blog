@@ -24,4 +24,12 @@ public interface AuthService {
      */
     SysUser checkToken(String token);
 
+    /**
+     * SysUser logout, remove {TOKEN_token: sysUser} from redis store
+     *
+     * @param token jwt token
+     * @return Result
+     */
+    Result logout(String token);
+
 }

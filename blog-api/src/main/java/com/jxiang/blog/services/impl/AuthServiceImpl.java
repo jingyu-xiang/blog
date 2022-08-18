@@ -11,6 +11,7 @@ import com.jxiang.blog.vo.results.Result;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,6 @@ public class AuthServiceImpl implements AuthService {
 
         String token = JwtUtils.createToken(sysUser.getId());
 
-        // TODO change timeout when production
         // store token in redis {TOKEN_ey21e123f24=SysUser}
         redisTemplate.opsForValue().set("TOKEN_" + token, JSON.toJSONString(sysUser), 1, TimeUnit.DAYS);
 
@@ -79,6 +79,19 @@ public class AuthServiceImpl implements AuthService {
 
         // token is ok, retrieve sysUser obj from redis
         return JSON.parseObject(userJson, SysUser.class);
+    }
+
+    @Override
+    public Result logout(String token) {
+        String userJson = redisTemplate.opsForValue().get("TOKEN_" + token);
+
+        redisTemplate.delete("TOKEN_" + token);
+
+        if (!StringUtils.isBlank(userJson)) {
+            return Result.success(JSON.parseObject(userJson, SysUser.class).getId());
+        }
+
+        return Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
     }
 
 }
