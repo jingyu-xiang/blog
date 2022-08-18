@@ -2,7 +2,9 @@ package com.jxiang.blog.services;
 
 import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.vo.params.LoginParams;
+import com.jxiang.blog.vo.params.RegisterParams;
 import com.jxiang.blog.vo.results.Result;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface AuthService {
 
@@ -31,5 +33,14 @@ public interface AuthService {
      * @return Result
      */
     Result logout(String token);
+
+    /**
+     * Create a sysUser with account, password, nickname
+     *
+     * @param registerParams object of account, password and nickname
+     * @return Result
+     */
+    @Transactional
+    Result register(RegisterParams registerParams);
 
 }

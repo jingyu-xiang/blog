@@ -16,13 +16,13 @@ public interface SysUserService {
     SysUser findUserById(Long id);
 
     /**
-     * retrieve a user based on its username and password
+     * retrieve a user based on its username and password, and reset last login time to current
      *
      * @param account  user account
      * @param password user password
-     * @return
+     * @return Result
      */
-    SysUser findAuthUser(String account, String password);
+    SysUser findAuthUserForLogin(String account, String password);
 
     /**
      * retrieve user's authUserVo according to token
@@ -31,5 +31,20 @@ public interface SysUserService {
      * @return Result
      */
     Result findUserByToken(String token);
+
+    /**
+     * find sysUser according to account (unique)
+     *
+     * @param account user account
+     * @return Result
+     */
+    SysUser findUserByAccount(String account);
+
+    /**
+     * save sysUser to db
+     *
+     * @param sysUser new created sysUser object
+     */
+    void save(SysUser sysUser);
 
 }

@@ -6,6 +6,7 @@ import com.jxiang.blog.services.AuthService;
 import com.jxiang.blog.services.SysUserService;
 import com.jxiang.blog.utils.JwtUtils;
 import com.jxiang.blog.vo.params.LoginParams;
+import com.jxiang.blog.vo.params.RegisterParams;
 import com.jxiang.blog.vo.results.ErrorCode;
 import com.jxiang.blog.vo.results.Result;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -36,8 +38,6 @@ public class AuthServiceImpl implements AuthService {
         String account = loginParams.getAccount();
         String password = loginParams.getPassword();
 
-        System.out.println(account + password);
-
         if (StringUtils.isBlank(account) || StringUtils.isBlank(password)) {
             return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
         }
@@ -45,7 +45,7 @@ public class AuthServiceImpl implements AuthService {
         // encode (password + salt)
         password = DigestUtils.md5Hex(password + SALT);
 
-        SysUser sysUser = sysUserService.findAuthUser(account, password);
+        SysUser sysUser = sysUserService.findAuthUserForLogin(account, password);
 
         if (sysUser == null) {
             return Result.failure(ErrorCode.ACCOUNT_PWD_NOT_EXIST.getCode(), ErrorCode.ACCOUNT_PWD_NOT_EXIST.getMsg());
@@ -92,6 +92,48 @@ public class AuthServiceImpl implements AuthService {
         }
 
         return Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
+    }
+
+    @Override
+    public Result register(RegisterParams registerParams) {
+        String account = registerParams.getAccount();
+        String password = registerParams.getPassword();
+        String nickname = registerParams.getNickname();
+        String email = registerParams.getEmail();
+
+        if (StringUtils.isBlank(account)
+            || StringUtils.isBlank(password)
+            || StringUtils.isBlank(nickname)
+            || StringUtils.isBlank(email)
+        ) {
+            return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
+        }
+
+        // check if sysUser already exists
+        SysUser sysUser = sysUserService.findUserByAccount(account);
+        if (sysUser != null) {
+            return Result.failure(ErrorCode.ACCOUNT_EXISTS.getCode(), ErrorCode.ACCOUNT_PWD_NOT_EXIST.getMsg());
+        }
+
+        sysUser = new SysUser();
+        sysUser.setNickname(nickname);
+        sysUser.setAccount(account);
+        sysUser.setPassword(DigestUtils.md5Hex(password + SALT));
+        sysUser.setEmail(email);
+        sysUser.setCreateDate(System.currentTimeMillis());
+        sysUser.setLastLogin(System.currentTimeMillis());
+        sysUser.setAvatar("/static/img/logo.b3a48c0.png");
+        sysUser.setAdmin(0); // not admin
+        sysUser.setDeleted(0); // not deleted
+        sysUser.setStatus("");
+        sysUserService.save(sysUser);
+
+        String token = JwtUtils.createToken(sysUser.getId());
+
+        // store token in redis {TOKEN_ey21e123f24=SysUser}
+        redisTemplate.opsForValue().set("TOKEN_" + token, JSON.toJSONString(sysUser), 1, TimeUnit.DAYS);
+
+        return Result.success(token);
     }
 
 }

@@ -2,6 +2,7 @@ package com.jxiang.blog.vo.results;
 
 public enum ErrorCode {
 
+    ACCOUNT_EXISTS(400, "this account has already registered"),
     PARAMS_ERROR(400, "invalid parameters"),
     ACCOUNT_PWD_NOT_EXIST(404, "username or password does not exist"),
     NO_PERMISSION(404, "no permission"),

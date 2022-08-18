@@ -8,9 +8,12 @@ import com.jxiang.blog.services.SysUserService;
 import com.jxiang.blog.vo.AuthUserVo;
 import com.jxiang.blog.vo.results.ErrorCode;
 import com.jxiang.blog.vo.results.Result;
+import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class SysUserServiceImpl implements SysUserService {
@@ -32,7 +35,7 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public SysUser findAuthUser(String account, String password) {
+    public SysUser findAuthUserForLogin(String account, String password) {
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
 
         queryWrapper
@@ -41,7 +44,15 @@ public class SysUserServiceImpl implements SysUserService {
             .select(SysUser::getId, SysUser::getAccount, SysUser::getAvatar, SysUser::getNickname)
             .last("LIMIT 1");
 
-        return sysUserMapper.selectOne(queryWrapper);
+        SysUser sysUser = sysUserMapper.selectOne(queryWrapper);
+
+        if (sysUser != null) {
+            sysUser.setLastLogin(System.currentTimeMillis());
+            sysUserMapper.updateById(sysUser);
+            return sysUser;
+        }
+
+        return null;
     }
 
     @Override
@@ -58,6 +69,21 @@ public class SysUserServiceImpl implements SysUserService {
         BeanUtils.copyProperties(sysUser, authUserVo);
 
         return Result.success(authUserVo);
+    }
+
+    @Override
+    public SysUser findUserByAccount(String account) {
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+
+        queryWrapper.eq(SysUser::getAccount, account).last("LIMIT 1");
+
+        return sysUserMapper.selectOne(queryWrapper);
+    }
+
+    @Override
+    public void save(SysUser sysUser) {
+        // id is auto-generated with 雪花算法
+        sysUserMapper.insert(sysUser);
     }
 
 }
