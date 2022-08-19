@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 @Slf4j
-public class LoginInterceptor implements HandlerInterceptor {
+public class AuthInterceptor implements HandlerInterceptor {
 
     @Autowired
     private AuthService authService;
@@ -33,7 +33,6 @@ public class LoginInterceptor implements HandlerInterceptor {
         }
 
         String token = jwtUtils.removeHeader(request.getHeader("Authorization"));
-        System.out.println(token);
 
         log.info("============request start============");
         log.info("request URI: {}", request.getRequestURI());

@@ -1,15 +1,17 @@
 package com.jxiang.blog.configs;
 
-import com.jxiang.blog.handlers.LoginInterceptor;
+import com.jxiang.blog.handlers.AuthInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
-    LoginInterceptor loginInterceptor;
+    AuthInterceptor authInterceptor;
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -20,7 +22,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         WebMvcConfigurer.super.addInterceptors(registry);
         registry // Todo
-            .addInterceptor(loginInterceptor)
+            .addInterceptor(authInterceptor)
             .addPathPatterns("/api/users/me");
     }
 
