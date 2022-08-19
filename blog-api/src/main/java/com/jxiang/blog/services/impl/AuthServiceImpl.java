@@ -12,7 +12,9 @@ import com.jxiang.blog.vo.results.Result;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -20,9 +22,14 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
+@EnableConfigurationProperties
 public class AuthServiceImpl implements AuthService {
 
-    private static final String SALT = "89j3@129%";
+    @Autowired
+    private Environment environment;
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Lazy
     @Autowired
@@ -40,8 +47,11 @@ public class AuthServiceImpl implements AuthService {
             return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
         }
 
+        System.out.println("salt: " + environment.getProperty("credentials.salt"));
+        System.out.println("key: " + environment.getProperty("credentials.secret-key"));
+
         // encode (password + salt)
-        password = DigestUtils.md5Hex(password + SALT);
+        password = DigestUtils.md5Hex(password + environment.getProperty("credentials.salt"));
 
         SysUser sysUser = sysUserService.findAuthUserForLogin(account, password);
 
@@ -49,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
             return Result.failure(ErrorCode.ACCOUNT_PWD_NOT_EXIST.getCode(), ErrorCode.ACCOUNT_PWD_NOT_EXIST.getMsg());
         }
 
-        String token = JwtUtils.createToken(sysUser.getId());
+        String token = jwtUtils.createToken(sysUser.getId());
 
         // store token in redis {TOKEN_ey21e123f24=SysUser}
         redisTemplate
@@ -65,7 +75,7 @@ public class AuthServiceImpl implements AuthService {
             return null;
         }
 
-        Map<String, Object> stringObjectMap = JwtUtils.checkToken(token);
+        Map<String, Object> stringObjectMap = jwtUtils.checkToken(token);
         if (stringObjectMap == null) {
             // jwt check failed
             return null;
@@ -118,7 +128,7 @@ public class AuthServiceImpl implements AuthService {
         sysUser = new SysUser();
         sysUser.setNickname(nickname);
         sysUser.setAccount(account);
-        sysUser.setPassword(DigestUtils.md5Hex(password + SALT));
+        sysUser.setPassword(DigestUtils.md5Hex(password + environment.getProperty("credentials.salt")));
         sysUser.setEmail(email);
         sysUser.setCreateDate(System.currentTimeMillis());
         sysUser.setLastLogin(System.currentTimeMillis());
@@ -128,7 +138,7 @@ public class AuthServiceImpl implements AuthService {
         sysUser.setStatus("");
         sysUserService.save(sysUser);
 
-        String token = JwtUtils.createToken(sysUser.getId());
+        String token = jwtUtils.createToken(sysUser.getId());
 
         // store token in redis {TOKEN_ey21e123f24=SysUser}
         redisTemplate

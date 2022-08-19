@@ -15,6 +15,9 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private JwtUtils jwtUtils;
+
     @PostMapping("login")
     public Result login(@RequestBody LoginParams loginParams) {
         return authService.login(loginParams);
@@ -22,7 +25,7 @@ public class AuthController {
 
     @PostMapping("logout")
     public Result logout(@RequestHeader("Authorization") String token) {
-        return authService.logout(JwtUtils.removeHeader(token));
+        return authService.logout(jwtUtils.removeHeader(token));
     }
 
     @PostMapping("register")

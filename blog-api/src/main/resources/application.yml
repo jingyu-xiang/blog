@@ -25,6 +25,9 @@ spring:
     port: 6379
 server:
   port: 8000
+credentials:
+  secret-key: "u8dh39hd9312"
+  salt: "89j3@129%"
 
 ---
 
@@ -42,5 +45,8 @@ spring:
     port: 6379
 server:
   port: 8080
+credentials:
+  secret-key: "u8dh39hd9312"
+  salt: "89j3@129%"
 
 ---

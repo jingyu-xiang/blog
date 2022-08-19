@@ -17,9 +17,12 @@ public class UserController {
     @Autowired
     private SysUserService sysUserService;
 
+    @Autowired
+    private JwtUtils jwtUtils;
+
     @GetMapping("me")
     public Result currentUser(@RequestHeader("Authorization") String token) {
-        return sysUserService.findUserByToken(JwtUtils.removeHeader(token));
+        return sysUserService.findUserByToken(jwtUtils.removeHeader(token));
     }
 
 }
