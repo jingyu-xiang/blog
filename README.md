@@ -20,6 +20,8 @@ SpringBoot Blog System
     
 <img src="https://user-images.githubusercontent.com/46456200/185763633-2979512e-7fb3-4aaf-8ff6-94514a7afb33.png" alt="MarineGEO circle logo" style="height: 250px; width:550px;"/>
 
+<br/>
+
 2. used thread pool to update view counts for articles:
    * update view counts would be time-consuming, and may trigger exceptions. But it should not affect user viewing the article
    * apply optimistic when upating viewcount to achieve thread safty
