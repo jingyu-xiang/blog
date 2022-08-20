@@ -6,6 +6,12 @@ import java.util.List;
 
 public interface CategoryService {
 
+    /**
+     * retrieve category object given categoryId
+     *
+     * @param categoryId category id
+     * @return Result
+     */
     CategoryVo findCategoryById(Long categoryId);
 
 }
