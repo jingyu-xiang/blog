@@ -24,5 +24,5 @@ SpringBoot Blog System
    * update view counts would be time-consuming, and may trigger exceptions. But it should not affect user viewing the article
    * apply optimistic when upating viewcount to achieve thread safty
    ```
-   update article set view_count=100 where view_count={viewCount} and id={article.getId()}
+   update ms_article set view_count=100 where view_count={viewCount} and id={article.getId()}
    ```
