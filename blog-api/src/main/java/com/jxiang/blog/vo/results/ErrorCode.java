@@ -8,7 +8,8 @@ public enum ErrorCode {
     NO_PERMISSION(404, "no permission"),
     SESSION_TIME_OUT(90001, "session time out"),
     NO_LOGIN(401, "require log in"),
-    TOKEN_INVALID(401, "invalid jwt token ");
+    TOKEN_INVALID(401, "invalid jwt token "),
+    SYSTEM_ERROR(500, "System error");
 
     private int code;
 

@@ -16,6 +16,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
         "FROM ms_article " +
         "GROUP BY year, month;"
     )
-    List<ArchiveVo> listArchives();
+    List<ArchiveVo> listArchiveSummary();
 
 }

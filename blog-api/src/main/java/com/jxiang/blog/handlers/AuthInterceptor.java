@@ -1,8 +1,10 @@
 package com.jxiang.blog.handlers;
 
 import com.alibaba.fastjson.JSON;
+import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.services.AuthService;
 import com.jxiang.blog.utils.JwtUtils;
+import com.jxiang.blog.utils.UserThreadLocal;
 import com.jxiang.blog.vo.results.ErrorCode;
 import com.jxiang.blog.vo.results.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -40,14 +42,24 @@ public class AuthInterceptor implements HandlerInterceptor {
         log.info("token: {}", token);
         log.info("============request end============");
 
-        if (StringUtils.isBlank(token) || authService.checkToken(token) == null) {
+        SysUser sysUser = authService.checkToken(token);
+
+        if (StringUtils.isBlank(token) || sysUser == null) {
             Result result = Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
             response.setContentType("application/json;charset=utf-8");
             response.getWriter().print(JSON.toJSONString(result));
             return false;
         }
 
+        UserThreadLocal.put(sysUser); // persist user info in thread local in the whole controller's execution scope
+
         return true;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        // avoid memory leak after completing controller
+        UserThreadLocal.remove();
     }
 
 }

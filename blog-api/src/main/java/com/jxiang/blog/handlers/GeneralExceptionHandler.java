@@ -1,5 +1,6 @@
 package com.jxiang.blog.handlers;
 
+import com.jxiang.blog.vo.results.ErrorCode;
 import com.jxiang.blog.vo.results.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -12,7 +13,7 @@ public class GeneralExceptionHandler {
     @ResponseBody // return JSON response
     public Result handleException(Exception ex) {
         ex.printStackTrace();
-        return Result.failure(500, "System Error");
+        return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMsg());
     }
 
 }

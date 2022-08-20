@@ -86,8 +86,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public Result listArchives() {
-        return Result.success(articleMapper.listArchives());
+    public Result listArchiveSummary() {
+        return Result.success(articleMapper.listArchiveSummary());
     }
 
     private List<ArticleVo> copyList(List<Article> records, boolean isTagsRequired, boolean isAuthorRequired) {

@@ -37,6 +37,6 @@ public interface ArticleService {
      *
      * @return list of articles
      */
-    Result listArchives();
+    Result listArchiveSummary();
 
 }

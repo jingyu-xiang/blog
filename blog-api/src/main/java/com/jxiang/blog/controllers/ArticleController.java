@@ -33,8 +33,8 @@ public class ArticleController {
     }
 
     @PostMapping("archives")
-    public Result listArchives() {
-        return articleService.listArchives();
+    public Result listArchiveSummary() {
+        return articleService.listArchiveSummary();
     }
 
 }
