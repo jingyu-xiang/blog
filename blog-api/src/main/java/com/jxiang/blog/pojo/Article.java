@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "ms_article")
+// can not use primitive types in mp data modals. Because primitive types have default values, and mp will update any non-null fields
 public class Article {
 
     public static final int Article_TOP = 1;
@@ -27,7 +28,7 @@ public class Article {
 
     private Integer viewCounts;
 
-    private Integer weight = Article_Common;
+    private Integer weight;
 
     private Long authorId;
 

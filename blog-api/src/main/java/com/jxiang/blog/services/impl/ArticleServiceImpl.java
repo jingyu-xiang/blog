@@ -10,6 +10,7 @@ import com.jxiang.blog.services.ArticleService;
 import com.jxiang.blog.services.CategoryService;
 import com.jxiang.blog.services.SysUserService;
 import com.jxiang.blog.services.TagService;
+import com.jxiang.blog.services.Thread.ThreadService;
 import com.jxiang.blog.vo.ArticleBodyVo;
 import com.jxiang.blog.vo.ArticleVo;
 import com.jxiang.blog.vo.params.LimitParam;
@@ -40,6 +41,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ThreadService threadService;
 
     @Override
     public Result listArticles(PageParams pageParams) {
@@ -108,6 +112,10 @@ public class ArticleServiceImpl implements ArticleService {
     public Result findArticleById(Long articleId) {
         Article article = articleMapper.selectById(articleId);
         ArticleVo articleVo = copy(article, true, true, true, true);
+
+        // use thread pool to process the add review count operation, isolated from the main program thread
+        threadService.updateArticleViewCount(articleMapper, article);
+        
         return Result.success(articleVo);
     }
 
