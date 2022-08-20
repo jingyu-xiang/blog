@@ -1,8 +1,6 @@
 package com.jxiang.blog.services.Thread;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.jxiang.blog.dao.ArticleMapper;
 import com.jxiang.blog.pojo.Article;
 import org.springframework.scheduling.annotation.Async;

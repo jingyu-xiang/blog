@@ -115,7 +115,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         // use thread pool to process the add review count operation, isolated from the main program thread
         threadService.updateArticleViewCount(articleMapper, article);
-        
+
         return Result.success(articleVo);
     }
 

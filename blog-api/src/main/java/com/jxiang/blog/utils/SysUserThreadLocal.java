@@ -4,11 +4,11 @@ import com.jxiang.blog.pojo.SysUser;
 
 public class SysUserThreadLocal {
 
+    private static final ThreadLocal<SysUser> LOCAL = new ThreadLocal<>();
+
     // a local storage for each thread specifically
     private SysUserThreadLocal() {
     }
-
-    private static final ThreadLocal<SysUser> LOCAL = new ThreadLocal<>();
 
     public static void put(SysUser sysUser) {
         LOCAL.set(sysUser);
