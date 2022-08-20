@@ -2,10 +2,10 @@ package com.jxiang.blog.utils;
 
 import com.jxiang.blog.pojo.SysUser;
 
-public class UserThreadLocal {
+public class SysUserThreadLocal {
 
     // a local storage for each thread specifically
-    private UserThreadLocal() {
+    private SysUserThreadLocal() {
     }
 
     private static final ThreadLocal<SysUser> LOCAL = new ThreadLocal<>();

@@ -56,7 +56,10 @@ public class AuthServiceImpl implements AuthService {
         SysUser sysUser = sysUserService.findAuthUserForLogin(account, password);
 
         if (sysUser == null) {
-            return Result.failure(ErrorCode.ACCOUNT_PWD_NOT_EXIST.getCode(), ErrorCode.ACCOUNT_PWD_NOT_EXIST.getMsg());
+            return Result.failure(
+                ErrorCode.ACCOUNT_PWD_NOT_EXIST.getCode(),
+                ErrorCode.ACCOUNT_PWD_NOT_EXIST.getMsg()
+            );
         }
 
         String token = jwtUtils.createToken(sysUser.getId());

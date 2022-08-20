@@ -2,11 +2,15 @@ package com.jxiang.blog.services.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jxiang.blog.dao.ArticleBodyMapper;
 import com.jxiang.blog.dao.ArticleMapper;
 import com.jxiang.blog.pojo.Article;
+import com.jxiang.blog.pojo.ArticleBody;
 import com.jxiang.blog.services.ArticleService;
+import com.jxiang.blog.services.CategoryService;
 import com.jxiang.blog.services.SysUserService;
 import com.jxiang.blog.services.TagService;
+import com.jxiang.blog.vo.ArticleBodyVo;
 import com.jxiang.blog.vo.ArticleVo;
 import com.jxiang.blog.vo.params.LimitParam;
 import com.jxiang.blog.vo.params.PageParams;
@@ -31,6 +35,12 @@ public class ArticleServiceImpl implements ArticleService {
     @Autowired
     SysUserService sysUserService;
 
+    @Autowired
+    private ArticleBodyMapper articleBodyMapper;
+
+    @Autowired
+    private CategoryService categoryService;
+
     @Override
     public Result listArticles(PageParams pageParams) {
         Page<Article> page = new Page<>(pageParams.getPage(), pageParams.getPageSize());
@@ -42,7 +52,11 @@ public class ArticleServiceImpl implements ArticleService {
 
         final Page<Article> articlePage = articleMapper.selectPage(page, queryWrapper);
 
-        final List<ArticleVo> articleVoList = copyList(articlePage.getRecords(), true, true);
+        final List<ArticleVo> articleVoList = copyList(
+            articlePage.getRecords(),
+            true,
+            true
+        );
 
         return articleVoList.size() != 0
             ? Result.success(articleVoList)
@@ -90,22 +104,45 @@ public class ArticleServiceImpl implements ArticleService {
         return Result.success(articleMapper.listArchiveSummary());
     }
 
+    @Override
+    public Result findArticleById(Long articleId) {
+        Article article = articleMapper.selectById(articleId);
+        ArticleVo articleVo = copy(article, true, true, true, true);
+        return Result.success(articleVo);
+    }
+
     private List<ArticleVo> copyList(List<Article> records, boolean isTagsRequired, boolean isAuthorRequired) {
         List<ArticleVo> articleVoList = new ArrayList<>();
         for (Article record : records) {
             // author and tags are required
-            articleVoList.add(copy(record, isTagsRequired, isAuthorRequired));
+            articleVoList.add(copy(record, isTagsRequired, isAuthorRequired, false, false));
         }
         return articleVoList;
     }
 
-    private ArticleVo copy(Article article, boolean isTagsRequired, boolean isAuthorRequired) {
+    private ArticleVo copy(
+        Article article,
+        boolean isTagsRequired,
+        boolean isAuthorRequired,
+        boolean isBody,
+        boolean isCategory
+    ) {
         ArticleVo articleVo = new ArticleVo();
         // copy properties of article to articleVo, set field of articleVo to null if it is not in article
         BeanUtils.copyProperties(article, articleVo);
         articleVo.setCreateDate(new DateTime(article.getCreateDate()).toString("yyyy-MM-dd HH:mm"));
 
-        if (isTagsRequired) {
+        if (isBody) {
+            Long bodyId = article.getBodyId();
+            articleVo.setBody(findArticleBodyById(bodyId));
+        }
+
+        if (isCategory) { // article category
+            Long categoryId = article.getCategoryId();
+            articleVo.setCategory(categoryService.findCategoryById(categoryId));
+        }
+
+        if (isTagsRequired) { // article tags
             Long articleId = articleVo.getId();
             articleVo.setTags(tagService.findTagsByArticleId(articleId));
         }
@@ -116,6 +153,13 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         return articleVo;
+    }
+
+    private ArticleBodyVo findArticleBodyById(Long bodyId) {
+        ArticleBody articleBody = articleBodyMapper.selectById(bodyId);
+        ArticleBodyVo articleBodyVo = new ArticleBodyVo();
+        articleBodyVo.setContent(articleBody.getContent());
+        return articleBodyVo;
     }
 
 }

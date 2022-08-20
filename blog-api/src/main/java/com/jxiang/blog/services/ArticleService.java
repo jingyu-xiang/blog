@@ -39,4 +39,9 @@ public interface ArticleService {
      */
     Result listArchiveSummary();
 
+    /**
+     * @return
+     */
+    Result findArticleById(Long articleId);
+
 }

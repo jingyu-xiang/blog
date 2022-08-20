@@ -25,8 +25,8 @@ public class ArticleVo {
 
     private List<TagVo> tags; // list of user-tags
 
-    // private List<CategoryVo> categories;
+    private CategoryVo category;
 
-    // private ArticleBodyVo body;
+    private ArticleBodyVo body;
 
 }
