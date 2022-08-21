@@ -1,6 +1,7 @@
 package com.jxiang.blog.services;
 
 import com.jxiang.blog.pojo.SysUser;
+import com.jxiang.blog.vo.SysUserVo;
 import com.jxiang.blog.vo.results.Result;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +47,13 @@ public interface SysUserService {
      * @param sysUser new created sysUser object
      */
     void save(SysUser sysUser);
+
+    /**
+     * given author id, generate a corresponding sysUserVo
+     *
+     * @param sysUserId sysUserId
+     * @return Result sysUserVo object
+     */
+    SysUserVo getSysUserVoById(Long sysUserId);
 
 }

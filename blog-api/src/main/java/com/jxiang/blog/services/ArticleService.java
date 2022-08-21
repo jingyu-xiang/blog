@@ -40,7 +40,10 @@ public interface ArticleService {
     Result listArchiveSummary();
 
     /**
-     * @return
+     * get single article by its id
+     *
+     * @return Result
+     * @Param articleId  id
      */
     Result findArticleById(Long articleId);
 

@@ -5,7 +5,7 @@ import com.jxiang.blog.dao.SysUserMapper;
 import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.services.AuthService;
 import com.jxiang.blog.services.SysUserService;
-import com.jxiang.blog.vo.AuthUserVo;
+import com.jxiang.blog.vo.SysUserVo;
 import com.jxiang.blog.vo.results.ErrorCode;
 import com.jxiang.blog.vo.results.Result;
 import org.springframework.beans.BeanUtils;
@@ -23,12 +23,12 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public SysUser findUserById(Long id) {
-        SysUser user = sysUserMapper.selectById(id);
-        if (user == null) {
-            user = new SysUser();
-            user.setNickname("unknown");
+        SysUser sysUser = sysUserMapper.selectById(id);
+        if (sysUser == null) {
+            sysUser = new SysUser();
+            sysUser.setNickname("unknown");
         }
-        return user;
+        return sysUser;
     }
 
     @Override
@@ -62,10 +62,10 @@ public class SysUserServiceImpl implements SysUserService {
             return Result.failure(ErrorCode.TOKEN_INVALID.getCode(), ErrorCode.TOKEN_INVALID.getMsg());
         }
 
-        AuthUserVo authUserVo = new AuthUserVo();
-        BeanUtils.copyProperties(sysUser, authUserVo);
+        SysUserVo sysUserVo = new SysUserVo();
+        BeanUtils.copyProperties(sysUser, sysUserVo);
 
-        return Result.success(authUserVo);
+        return Result.success(sysUserVo);
     }
 
     @Override
@@ -81,6 +81,23 @@ public class SysUserServiceImpl implements SysUserService {
     public void save(SysUser sysUser) {
         // id is auto-generated with 雪花算法
         sysUserMapper.insert(sysUser);
+    }
+
+    @Override
+    public SysUserVo getSysUserVoById(Long sysUserId) {
+        SysUser sysUser = sysUserMapper.selectById(sysUserId);
+        if (sysUser == null) {
+            // generate a template for all anonymous users
+            sysUser = new SysUser();
+            sysUser.setAccount("anonymous user");
+            sysUser.setAvatar("unknown.png");
+            sysUser.setNickname("unknown");
+        }
+
+        SysUserVo sysUserVo = new SysUserVo();
+        BeanUtils.copyProperties(sysUser, sysUserVo); // copy field values of sysUser to sysUserVo if match
+
+        return sysUserVo;
     }
 
 }

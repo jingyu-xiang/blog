@@ -3,7 +3,7 @@ package com.jxiang.blog.vo;
 import lombok.Data;
 
 @Data
-public class AuthUserVo {
+public class SysUserVo {
 
     private Long id;
 
