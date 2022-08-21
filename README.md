@@ -23,8 +23,8 @@ SpringBoot Blog System
 <br/>
 
 2. used thread pool to update view counts for articles:
-   * update view counts would be time-consuming, and may trigger exceptions. But it should not affect user viewing the article
-   * apply optimistic when upating viewcount to achieve thread safty
+   * update view counts would be time-consuming, and may trigger exceptions. But it should not affect users viewing the article
+   * applied optimistic lock when upating viewcount to achieve thread safty
    ```
    update ms_article set view_count=100 where view_count={viewCount} and id={article.getId()}
    ```
