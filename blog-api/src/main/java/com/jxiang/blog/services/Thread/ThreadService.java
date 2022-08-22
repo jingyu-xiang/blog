@@ -2,7 +2,9 @@ package com.jxiang.blog.services.Thread;
 
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.jxiang.blog.dao.ArticleMapper;
+import com.jxiang.blog.dao.SysUserMapper;
 import com.jxiang.blog.pojo.Article;
+import com.jxiang.blog.pojo.SysUser;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +15,7 @@ public class ThreadService {
     public void updateArticleViewCount(ArticleMapper articleMapper, Article article) {
         // manual delay ...
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1500);
             System.out.println("update is done !");
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -29,8 +31,20 @@ public class ThreadService {
             .eq(Article::getViewCounts, viewCount); // optimistic lock
 
         articleMapper.update(updated, updateWrapper);
+    }
 
+    @Async("taskExecutor")
+    public void updateLastLogin(SysUser sysUser, SysUserMapper sysUserMapper) {
+        // manual delay ...
+        try {
+            Thread.sleep(1500);
+            System.out.println("update is done !");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
+        sysUser.setLastLogin(System.currentTimeMillis());
+        sysUserMapper.updateById(sysUser);
     }
 
 }

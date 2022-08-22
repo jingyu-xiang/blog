@@ -5,6 +5,7 @@ import com.jxiang.blog.dao.SysUserMapper;
 import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.services.AuthService;
 import com.jxiang.blog.services.SysUserService;
+import com.jxiang.blog.services.Thread.ThreadService;
 import com.jxiang.blog.vo.SysUserVo;
 import com.jxiang.blog.vo.results.ErrorCode;
 import com.jxiang.blog.vo.results.Result;
@@ -20,6 +21,9 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Autowired
     AuthService authService;
+
+    @Autowired
+    ThreadService threadService;
 
     @Override
     public SysUser findUserById(Long id) {
@@ -44,8 +48,8 @@ public class SysUserServiceImpl implements SysUserService {
         SysUser sysUser = sysUserMapper.selectOne(queryWrapper);
 
         if (sysUser != null) {
-            sysUser.setLastLogin(System.currentTimeMillis());
-            sysUserMapper.updateById(sysUser);
+            // use thread pool to change lastLogin, isolated from the main program thread
+            threadService.updateLastLogin(sysUser, sysUserMapper);
             return sysUser;
         }
 
