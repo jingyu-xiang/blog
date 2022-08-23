@@ -11,6 +11,7 @@ SpringBoot Blog System
 ## Frontend
 
 * React.js
+* Redux
 
 
 ## Tech highlights:
