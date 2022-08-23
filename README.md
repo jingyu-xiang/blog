@@ -13,7 +13,7 @@ SpringBoot Blog System
 * React.js
 
 
-## tech highlights:
+## Tech highlights:
 1. used ThreadLocal instances to persist user information in controller methods' execution scope, and remove it from thread local after controllers finish execution:
     * each thread has a ThreadLocalMap, with keys to be week referenced ThreadLocal instances, values to be strong referenced copies of thread variables
     * ThreadLocal instance (key) could be grabage-collected. But the value will not. So a manual threadLocal.remove() is called to remove the key-val pair to prevent memory leak
