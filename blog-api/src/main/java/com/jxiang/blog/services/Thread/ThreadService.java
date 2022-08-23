@@ -15,7 +15,7 @@ public class ThreadService {
     public void updateArticleViewCount(ArticleMapper articleMapper, Article article) {
         // manual delay ...
         try {
-            Thread.sleep(1500);
+            Thread.sleep(3000);
             System.out.println("update is done !");
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -37,7 +37,7 @@ public class ThreadService {
     public void updateLastLogin(SysUser sysUser, SysUserMapper sysUserMapper) {
         // manual delay ...
         try {
-            Thread.sleep(1500);
+            Thread.sleep(3000);
             System.out.println("update is done !");
         } catch (InterruptedException e) {
             e.printStackTrace();

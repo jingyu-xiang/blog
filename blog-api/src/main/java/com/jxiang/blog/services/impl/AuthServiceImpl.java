@@ -47,9 +47,6 @@ public class AuthServiceImpl implements AuthService {
             return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
         }
 
-        System.out.println("salt: " + environment.getProperty("credentials.salt"));
-        System.out.println("key: " + environment.getProperty("credentials.secret-key"));
-
         // encode (password + salt)
         password = DigestUtils.md5Hex(password + environment.getProperty("credentials.salt"));
 
