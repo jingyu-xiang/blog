@@ -3,7 +3,6 @@ package com.jxiang.blog.services.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.dao.CommentMapper;
 import com.jxiang.blog.pojo.Comment;
-import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.services.CommentService;
 import com.jxiang.blog.services.SysUserService;
 import com.jxiang.blog.vo.CommentVo;
@@ -64,12 +63,14 @@ public class CommentServiceImpl implements CommentService {
         commentVo.setCreateDate(new DateTime(comment.getCreateDate()).toString("yyyy-MM-dd HH:mm"));
 
         Integer level = comment.getLevel();
-        if (level == 1) { // leve 1 comments have child comments
+        // leve 1 comments have child comments
+        if (level == 1) {
             List<CommentVo> commentVoList = findChildCommentVosByParentId(comment.getId());
             commentVo.setChildren(commentVoList);
         }
 
-        if (level == 2) { // level 2 comments do not have child comments have a to-sysUser id
+        // level 2 comments do not have child comments， but have a to-sysUser id to indicate who created parent comment
+        if (level == 2) {
             Long toUid = comment.getToUid();
             SysUserVo toSysUserVo = sysUserService.getSysUserVoById(toUid);
             commentVo.setToUser(toSysUserVo);
