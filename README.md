@@ -30,6 +30,6 @@ SpringBoot Blog System
    update ms_article set view_count=100 where view_count={viewCount} and id={article.getId()}
    ```
    
-3. used  junction tables to represent many-to-many relationships such as article-tag. Therefore, 1 tag can be associated with many articles and 1 article can be associated with many tags.
-
-4. applyed indexes on commonly-queried columns.
+3. MySql highlights: 
+   * used  junction tables to represent many-to-many relationships such as article-tag. Therefore, 1 tag can be associated with many articles and 1 article can be associated with many tags.
+   * applyed indexes on commonly-queried columns.
