@@ -24,7 +24,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry // Todo
             .addInterceptor(authInterceptor)
             .addPathPatterns("/api/users/me")
-            .addPathPatterns("/api/articles/comments");
+            .addPathPatterns("/api/articles/comments")
+            .addPathPatterns("/api/articles/publish");
     }
 
 }

@@ -1,6 +1,7 @@
 package com.jxiang.blog.controllers;
 
 import com.jxiang.blog.services.ArticleService;
+import com.jxiang.blog.vo.params.ArticleParam;
 import com.jxiang.blog.vo.params.LimitParam;
 import com.jxiang.blog.vo.params.PageParams;
 import com.jxiang.blog.vo.results.Result;
@@ -37,6 +38,11 @@ public class ArticleController {
     @PostMapping("{id}")
     public Result findArticleById(@PathVariable("id") Long articleId) {
         return articleService.findArticleById(articleId);
+    }
+
+    @PostMapping("publish")
+    public Result publishArticle(@RequestBody ArticleParam articleParam) {
+        return articleService.createArticle(articleParam);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.jxiang.blog.services;
 
+import com.jxiang.blog.vo.params.ArticleParam;
 import com.jxiang.blog.vo.params.LimitParam;
 import com.jxiang.blog.vo.params.PageParams;
 import com.jxiang.blog.vo.results.Result;
@@ -46,5 +47,13 @@ public interface ArticleService {
      * @Param articleId  id
      */
     Result findArticleById(Long articleId);
+
+    /**
+     * Create an article
+     *
+     * @param articleParam {content, contentHtml}
+     * @return Result
+     */
+    Result createArticle(ArticleParam articleParam);
 
 }
