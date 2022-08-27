@@ -9,8 +9,6 @@ import java.util.List;
 @Data
 public class ArticleParam {
 
-    private Long id;
-
     private ArticleBodyParam body;
 
     private CategoryVo category;
