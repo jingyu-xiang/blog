@@ -15,7 +15,7 @@ SpringBoot Blog System
 
 
 ## Tech highlights:
-1. used ThreadLocal instances to persist user information in controller methods' execution scope, and remove it from thread local after controllers finish execution:
+1. used ThreadLocal instances to thread-safely persist user information in controller methods' execution scope, instead of re-retrieving it from redis every time. And remove it from thread local after controllers finish execution:
     * each thread has a ThreadLocalMap, with keys to be week referenced ThreadLocal instances, values to be strong referenced copies of thread variables
     * ThreadLocal instance (key) could be grabage-collected. But the value will not. So a manual threadLocal.remove() is called to remove the key-val pair to prevent memory leak
     
@@ -29,3 +29,7 @@ SpringBoot Blog System
    ```
    update ms_article set view_count=100 where view_count={viewCount} and id={article.getId()}
    ```
+   
+3. used  junction tables to represent many-to-many relationships such as article-tag. Therefore, 1 tag can be associated with many articles and 1 article can be associated with many tags.
+
+4. applyed indexes on commonly-queried columns.
