@@ -15,7 +15,7 @@ SpringBoot Blog System
 
 
 ## Tech highlights:
-1. used ThreadLocal instances to thread-safely persist user information in controller methods' execution scope, instead of re-retrieving it from redis every time. And remove it from thread local after controllers finish execution:
+1. used ThreadLocal instances to thread-safely persist user information in controller methods' execution scope, instead of re-retrieving it from redis every time. Also, it is removed from thread local after controllers finish execution:
     * each thread has a ThreadLocalMap, with keys to be week referenced ThreadLocal instances, values to be strong referenced copies of thread variables
     * ThreadLocal instance (key) could be grabage-collected. But the value will not. So a manual threadLocal.remove() is called to remove the key-val pair to prevent memory leak
     
