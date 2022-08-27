@@ -1,5 +1,6 @@
 package com.jxiang.blog.services.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.dao.TagMapper;
 import com.jxiang.blog.pojo.Tag;
 import com.jxiang.blog.services.TagService;
@@ -38,6 +39,12 @@ public class TagServiceImpl implements TagService {
     public List<TagVo> findTagsByArticleId(Long articleId) {
         List<Tag> tags = tagMapper.findTagsByArticleId(articleId);
         return copyList(tags);
+    }
+
+    @Override
+    public Result getAllTags() {
+        List<Tag> tags = tagMapper.selectList(new LambdaQueryWrapper<>());
+        return Result.success(copyList(tags));
     }
 
     private TagVo copy(Tag tag) {

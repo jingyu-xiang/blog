@@ -1,7 +1,7 @@
 package com.jxiang.blog.services;
 
+import com.jxiang.blog.vo.params.CommentParam;
 import com.jxiang.blog.vo.results.Result;
-import org.springframework.stereotype.Service;
 
 public interface CommentService {
 
@@ -13,5 +13,14 @@ public interface CommentService {
      * @return comments of the article with article id to be id
      */
     Result getCommentsByArticleId(String id);
+
+    /**
+     * comment on an article
+     * the creator of comment must log in first
+     *
+     * @param commentParam {articleId, content, parentId, toUserId}
+     * @return Result
+     */
+    Result createComment(CommentParam commentParam);
 
 }

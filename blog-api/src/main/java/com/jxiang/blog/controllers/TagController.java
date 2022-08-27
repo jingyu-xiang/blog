@@ -4,10 +4,7 @@ import com.jxiang.blog.services.TagService;
 import com.jxiang.blog.vo.params.LimitParam;
 import com.jxiang.blog.vo.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("api/tags")
@@ -19,6 +16,11 @@ public class TagController {
     @PostMapping("hots")
     public Result retrieveMostPopularTags(@RequestBody LimitParam limitParam) {
         return tagService.listHotTags(limitParam);
+    }
+
+    @GetMapping
+    public Result getAllTags() {
+        return tagService.getAllTags();
     }
 
 }

@@ -1,6 +1,7 @@
 package com.jxiang.blog.services;
 
 import com.jxiang.blog.vo.CategoryVo;
+import com.jxiang.blog.vo.results.Result;
 
 public interface CategoryService {
 
@@ -11,5 +12,12 @@ public interface CategoryService {
      * @return Result
      */
     CategoryVo findCategoryById(Long categoryId);
+
+    /**
+     * find all categories
+     *
+     * @return Result
+     */
+    Result findAll();
 
 }

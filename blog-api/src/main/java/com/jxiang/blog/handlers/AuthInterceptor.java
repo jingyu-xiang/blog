@@ -16,6 +16,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.*;
 
 @Component
 @Slf4j
@@ -38,7 +39,16 @@ public class AuthInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        String token = jwtUtils.removeHeader(request.getHeader("Authorization"));
+        String token = request.getHeader("Authorization");
+
+        if (token == null) {
+            Result result = Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
+            response.setContentType("application/json;charset=utf-8");
+            response.getWriter().print(JSON.toJSONString(result));
+            return false;
+        }
+
+        token = jwtUtils.removeHeader(token);
 
         log.info("============request start============");
         log.info("request URI: {}", request.getRequestURI());

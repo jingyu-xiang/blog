@@ -25,4 +25,11 @@ public interface TagService {
      */
     List<TagVo> findTagsByArticleId(Long articleId);
 
+    /**
+     * list all tags
+     *
+     * @return Result
+     */
+    Result getAllTags();
+
 }
