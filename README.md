@@ -32,4 +32,4 @@ SpringBoot Blog System
    
 3. MySql highlights: 
    * used  junction tables to represent many-to-many relationships such as article-tag. Therefore, 1 tag can be associated with many articles and 1 article can be associated with many tags.
-   * applyed indexes on commonly-queried columns.
+   * applied indexes on commonly-queried columns.
