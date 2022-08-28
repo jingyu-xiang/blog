@@ -1,10 +1,12 @@
 package com.jxiang.blog.controllers;
 
+import com.jxiang.blog.aop.log.LogAnnotation;
 import com.jxiang.blog.services.ArticleService;
 import com.jxiang.blog.vo.params.ArticleParam;
 import com.jxiang.blog.vo.params.LimitParam;
 import com.jxiang.blog.vo.params.PageParams;
 import com.jxiang.blog.vo.results.Result;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,7 @@ public class ArticleController {
     @Autowired
     ArticleService articleService;
 
+    @LogAnnotation(module = "article", operator = "get articles") // AOP log
     @PostMapping
     public Result listArticles(@RequestBody PageParams pageParams) {
         return articleService.listArticles(pageParams);
