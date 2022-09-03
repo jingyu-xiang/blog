@@ -25,13 +25,13 @@ public class FileUploadController {
         Long userId = sysUser.getId();
 
         String originalFilename = file.getOriginalFilename();
-        String fileNameToUpload = "article/" + userId + "/" + originalFilename;
+        String fileNameToUpload = "users/" + userId + "/" + originalFilename;
 
         Map<String, Object> result = qiniuUtils.upload(file, fileNameToUpload);
-        Boolean success = (Boolean) result.get("result");
+        Boolean success = (Boolean) result.get("success");
 
         if (success) {
-            return Result.success(result.get("url") + "/" + fileNameToUpload);
+            return Result.success(result.get("urn") + "/" + fileNameToUpload);
         }
         return Result.failure(ErrorCode.FILE_UPLOAD_FAILURE.getCode(), ErrorCode.FILE_UPLOAD_FAILURE.getMsg());
     }

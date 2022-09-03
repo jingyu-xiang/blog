@@ -37,15 +37,15 @@ public class QiniuUtils {
             Response response = uploadManager.put(uploadBytes, fileName, upToken);
             DefaultPutRet putRet = JSON.parseObject(response.bodyString(), DefaultPutRet.class);
             Map<String, Object> result = new HashMap();
-            result.put("result", true);
-            result.put("url", environment.getProperty("credentials.qiniu.url"));
+            result.put("success", true);
+            result.put("urn", environment.getProperty("credentials.qiniu.url"));
             return result;
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         Map<String, Object> result = new HashMap();
-        result.put("result", false);
-        result.put("url", environment.getProperty("credentials.qiniu.url"));
+        result.put("success", false);
+        result.put("urn", environment.getProperty("credentials.qiniu.url"));
         return result;
     }
 

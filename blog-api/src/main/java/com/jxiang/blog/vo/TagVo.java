@@ -9,4 +9,6 @@ public class TagVo {
 
     private String tagName;
 
+    private String avatar;
+
 }

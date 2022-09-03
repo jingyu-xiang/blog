@@ -2,7 +2,10 @@ package com.jxiang.blog.services;
 
 import com.jxiang.blog.vo.TagVo;
 import com.jxiang.blog.vo.params.LimitParam;
+import com.jxiang.blog.vo.params.TagParam;
 import com.jxiang.blog.vo.results.Result;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,6 +21,22 @@ public interface TagService {
     Result listHotTags(LimitParam limitParam);
 
     /**
+     * list all tags
+     *
+     * @return Result
+     */
+    Result getAllTags();
+
+    /**
+     * admin only
+     * create tag
+     *
+     * @return Result
+     */
+    @Transactional
+    Result createTag(String tagName, MultipartFile file);
+
+    /**
      * list tags, given the articleId of the article that they are tagged with
      *
      * @param articleId article's id
@@ -25,11 +44,5 @@ public interface TagService {
      */
     List<TagVo> findTagsByArticleId(Long articleId);
 
-    /**
-     * list all tags
-     *
-     * @return Result
-     */
-    Result getAllTags();
 
 }

@@ -6,12 +6,13 @@ public enum ErrorCode {
     PARAMS_ERROR(400, "invalid parameters"),
     ACCOUNT_PWD_NOT_EXIST(404, "username or password does not exist"),
     NO_PERMISSION(404, "no permission"),
-    SESSION_TIME_OUT(90001, "session time out"),
+    SESSION_TIME_OUT(408, "request time out"),
     NO_LOGIN(401, "require log in"),
     TOKEN_INVALID(401, "invalid jwt token "),
     SYSTEM_ERROR(500, "System error"),
     NOT_FOUND(404, "Item not found"),
-    FILE_UPLOAD_FAILURE(500, "failed to upload image to Qiniu cloud");
+    FILE_UPLOAD_FAILURE(500, "failed to upload image to Qiniu cloud"),
+    TAG_ALREADY_EXISTS(409, "tag already exists");
 
     private int code;
 

@@ -25,9 +25,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
             .addInterceptor(authInterceptor)
             .addPathPatterns("/api/users/me")
             .addPathPatterns("/api/upload")
+            .addPathPatterns("/api/tags/create")
+            .addPathPatterns("/api/categories/create")
             .addPathPatterns("/api/articles/comments")
             .addPathPatterns("/api/articles/publish");
-
     }
 
 }
