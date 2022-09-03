@@ -10,7 +10,8 @@ public enum ErrorCode {
     NO_LOGIN(401, "require log in"),
     TOKEN_INVALID(401, "invalid jwt token "),
     SYSTEM_ERROR(500, "System error"),
-    NOT_FOUND(404, "Item not found");
+    NOT_FOUND(404, "Item not found"),
+    FILE_UPLOAD_FAILURE(500, "failed to upload image to Qiniu cloud");
 
     private int code;
 

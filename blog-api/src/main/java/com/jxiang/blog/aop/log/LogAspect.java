@@ -25,7 +25,7 @@ public class LogAspect {
 
     @Around("pt()")
     public Object logInfo(ProceedingJoinPoint joinPoint) throws Throwable { // joinPoint is the method invoked
-        Long beginTime = System.currentTimeMillis();
+        long beginTime = System.currentTimeMillis();
 
         Object result = joinPoint.proceed();
 

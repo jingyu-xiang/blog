@@ -3,6 +3,12 @@ spring:
     active: ${profile.active}
   main:
     banner-mode: off
+  servlet:
+    multipart:
+      # max total file size
+      max-request-size: 20MB
+      # max single file size
+      max-file-size: 5MB
 mybatis-plus:
   global-config:
     banner: false
@@ -26,8 +32,14 @@ spring:
 server:
   port: 8000
 credentials:
-  secret-key: "u8dh39hd9312"
-  salt: "89j3@129%"
+  secret-key: u8dh39hd9312
+  salt: 89j3@129%
+  qiniu:
+    url: rhlzi0l5u.bkt.gdipper.com
+    bucket: sbblog-images
+    accessKey: Kp_Y3bYqBHHqi4FPE56lKz-JI1J1yxBzO0GHpY17
+    accessSecretKey: P9KBmg0CwKwiquMI4dSgADNBPO9AC-Jic6K4dzDv
+
 
 ---
 
@@ -46,7 +58,13 @@ spring:
 server:
   port: 8080
 credentials:
-  secret-key: "u8dh39hd9312"
-  salt: "89j3@129%"
+  secret-key: u8dh39hd9312
+  salt: 89j3@129%
+  qiniu:
+    url: rhlzi0l5u.bkt.gdipper.com
+    bucket: sbblog-images
+    accessKey: Kp_Y3bYqBHHqi4FPE56lKz-JI1J1yxBzO0GHpY17
+    accessSecretKey: P9KBmg0CwKwiquMI4dSgADNBPO9AC-Jic6K4dzDv
+
 
 ---
