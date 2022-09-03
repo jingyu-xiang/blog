@@ -5,7 +5,6 @@ import com.jxiang.blog.utils.QiniuUtils;
 import com.jxiang.blog.utils.SysUserThreadLocal;
 import com.jxiang.blog.vo.results.ErrorCode;
 import com.jxiang.blog.vo.results.Result;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,12 +20,12 @@ public class FileUploadController {
     QiniuUtils qiniuUtils;
 
     @PostMapping
-    public Result uploadImage(@RequestBody MultipartFile file) {
+    public Result uploadArticleImage(@RequestBody MultipartFile file) {
         SysUser sysUser = SysUserThreadLocal.get();
-        Long id = sysUser.getId();
+        Long userId = sysUser.getId();
 
         String originalFilename = file.getOriginalFilename();
-        String fileNameToUpload = id + "." + StringUtils.substringAfterLast(originalFilename, ".");
+        String fileNameToUpload = "article/" + userId + "/" + originalFilename;
 
         Map<String, Object> result = qiniuUtils.upload(file, fileNameToUpload);
         Boolean success = (Boolean) result.get("result");

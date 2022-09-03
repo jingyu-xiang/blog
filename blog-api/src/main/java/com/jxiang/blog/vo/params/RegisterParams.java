@@ -13,4 +13,6 @@ public class RegisterParams {
 
     private String email;
 
+    private String avatar;
+
 }

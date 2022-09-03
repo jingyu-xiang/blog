@@ -110,6 +110,7 @@ public class AuthServiceImpl implements AuthService {
         String password = registerParams.getPassword();
         String nickname = registerParams.getNickname();
         String email = registerParams.getEmail();
+        String avatarUrl = registerParams.getAvatar();
 
         if (StringUtils.isBlank(account)
             || StringUtils.isBlank(password)
@@ -132,7 +133,7 @@ public class AuthServiceImpl implements AuthService {
         sysUser.setEmail(email);
         sysUser.setCreateDate(System.currentTimeMillis());
         sysUser.setLastLogin(System.currentTimeMillis());
-        sysUser.setAvatar("/static/img/logo.b3a48c0.png");
+        sysUser.setAvatar(avatarUrl);
         sysUser.setAdmin(0); // not admin
         sysUser.setDeleted(0); // not deleted
         sysUser.setStatus("");

@@ -37,7 +37,7 @@ public interface AuthService {
     /**
      * Create a sysUser with account, password, nickname
      *
-     * @param registerParams object of account, password and nickname
+     * @param registerParams object of account, password, nickname, email and avatar
      * @return Result
      */
     @Transactional
