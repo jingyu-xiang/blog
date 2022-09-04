@@ -6,7 +6,6 @@ import com.jxiang.blog.vo.params.ArticleParam;
 import com.jxiang.blog.vo.params.LimitParam;
 import com.jxiang.blog.vo.params.PageParams;
 import com.jxiang.blog.vo.results.Result;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

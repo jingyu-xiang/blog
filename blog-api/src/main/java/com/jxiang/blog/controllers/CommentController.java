@@ -6,8 +6,6 @@ import com.jxiang.blog.vo.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.management.DescriptorKey;
-
 @RestController
 @RequestMapping("api")
 public class CommentController {
