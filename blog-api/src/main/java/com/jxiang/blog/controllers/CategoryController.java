@@ -1,11 +1,11 @@
 package com.jxiang.blog.controllers;
 
 import com.jxiang.blog.services.CategoryService;
+import com.jxiang.blog.vo.params.CategoryParam;
 import com.jxiang.blog.vo.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("api/categories")
@@ -17,6 +17,11 @@ public class CategoryController {
     @GetMapping
     public Result getCategories() {
         return categoryService.findAll();
+    }
+
+    @PostMapping("create")
+    public Result createCategory(@RequestPart CategoryParam categoryParam, @RequestPart MultipartFile file) {
+        return categoryService.createCategory(categoryParam, file);
     }
 
 }

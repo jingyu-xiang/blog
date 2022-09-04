@@ -15,7 +15,7 @@ public interface TagService {
      * return the first {limit} records, and order by the number of article_ids
      *
      * @param limitParam object of page and pageSize
-     * @return list of
+     * @return list of tags
      */
     Result listHotTags(LimitParam limitParam);
 
@@ -27,15 +27,6 @@ public interface TagService {
     Result getAllTags();
 
     /**
-     * admin only
-     * create tag
-     *
-     * @return Result
-     */
-    @Transactional
-    Result createTag(String tagName, MultipartFile file);
-
-    /**
      * list tags, given the articleId of the article that they are tagged with
      *
      * @param articleId article's id
@@ -43,5 +34,14 @@ public interface TagService {
      */
     List<TagVo> findTagsByArticleId(Long articleId);
 
+    /**
+     * create a tag. Admin only
+     *
+     * @param tagName tag name
+     * @param file    tag image file
+     * @return Result
+     */
+    @Transactional
+    Result createTag(String tagName, MultipartFile file);
 
 }

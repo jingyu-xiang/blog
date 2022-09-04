@@ -62,8 +62,7 @@ public class TagServiceImpl implements TagService {
         queryWrapper.eq(Tag::getTagName, tagName).last("LIMIT 1");
         List<Tag> tags = tagMapper.selectList(queryWrapper);
         if (tags.size() >= 1) {
-            System.out.println(tags);
-            return Result.failure(ErrorCode.TAG_ALREADY_EXISTS.getCode(), ErrorCode.TAG_ALREADY_EXISTS.getMsg());
+            return Result.failure(ErrorCode.ITEM_ALREADY_EXISTS.getCode(), ErrorCode.ITEM_ALREADY_EXISTS.getMsg());
         }
 
         Tag tag = new Tag();
