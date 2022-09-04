@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.dao.ArticleMapper;
 import com.jxiang.blog.dao.CommentMapper;
 import com.jxiang.blog.dao.SysUserMapper;
-import com.jxiang.blog.pojo.Article;
 import com.jxiang.blog.pojo.Comment;
 import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.services.CommentService;

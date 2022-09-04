@@ -9,6 +9,7 @@ import com.jxiang.blog.services.Thread.ThreadService;
 import com.jxiang.blog.vo.SysUserVo;
 import com.jxiang.blog.vo.results.ErrorCode;
 import com.jxiang.blog.vo.results.Result;
+import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,38 +37,49 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
-    public SysUser findAuthUserForLogin(String account, String password) {
+    public SysUserVo getSysUserVoById(Long sysUserId) {
+        SysUser sysUser = sysUserMapper.selectById(sysUserId);
+        if (sysUser == null) {
+            // generate a template for all anonymous users
+            sysUser = new SysUser();
+            sysUser.setAccount("anonymous user");
+            sysUser.setAvatar("unknown.png");
+            sysUser.setNickname("unknown");
+        }
+
+        SysUserVo sysUserVo = new SysUserVo();
+        BeanUtils.copyProperties(sysUser, sysUserVo); // copy field values of sysUser to sysUserVo if match
+        System.out.println(sysUserVo);
+
+        return sysUserVo;
+    }
+
+    @Override
+    public SysUser findUserForLogin(String account, String password) {
         LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
 
         queryWrapper
             .eq(SysUser::getAccount, account)
             .eq(SysUser::getPassword, password)
-            .select(SysUser::getId, SysUser::getAccount, SysUser::getAvatar, SysUser::getNickname)
             .last("LIMIT 1");
 
-        SysUser sysUser = sysUserMapper.selectOne(queryWrapper);
-
-        if (sysUser != null) {
-            // use thread pool to change lastLogin, isolated from the main program thread
-            threadService.updateLastLogin(sysUser, sysUserMapper);
-            return sysUser;
-        }
-
-        return null;
+        return sysUserMapper.selectOne(queryWrapper);
     }
 
     @Override
-    public Result findUserByToken(String token) {
-
-
+    public Result findCurrentLoginUserVoByToken(String token) {
         SysUser sysUser = authService.checkToken(token);
 
         if (sysUser == null) {
             return Result.failure(ErrorCode.TOKEN_INVALID.getCode(), ErrorCode.TOKEN_INVALID.getMsg());
         }
 
+        // use thread pool to change lastLogin, isolated from the main program thread
+        threadService.updateLastLogin(sysUser, token, sysUserMapper);
+
         SysUserVo sysUserVo = new SysUserVo();
         BeanUtils.copyProperties(sysUser, sysUserVo);
+        sysUserVo.setLastLogin(new DateTime(sysUser.getLastLogin()).toString("yyyy-MM-dd HH:mm"));
 
         return Result.success(sysUserVo);
     }
@@ -83,25 +95,9 @@ public class SysUserServiceImpl implements SysUserService {
 
     @Override
     public void save(SysUser sysUser) {
-        // id is auto-generated with 雪花算法
+        // id is auto-generated with snowflakes
         sysUserMapper.insert(sysUser);
     }
 
-    @Override
-    public SysUserVo getSysUserVoById(Long sysUserId) {
-        SysUser sysUser = sysUserMapper.selectById(sysUserId);
-        if (sysUser == null) {
-            // generate a template for all anonymous users
-            sysUser = new SysUser();
-            sysUser.setAccount("anonymous user");
-            sysUser.setAvatar("unknown.png");
-            sysUser.setNickname("unknown");
-        }
-
-        SysUserVo sysUserVo = new SysUserVo();
-        BeanUtils.copyProperties(sysUser, sysUserVo); // copy field values of sysUser to sysUserVo if match
-
-        return sysUserVo;
-    }
 
 }

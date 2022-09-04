@@ -23,7 +23,7 @@ public interface SysUserService {
      * @param password user password
      * @return Result
      */
-    SysUser findAuthUserForLogin(String account, String password);
+    SysUser findUserForLogin(String account, String password);
 
     /**
      * retrieve user's authUserVo according to token
@@ -31,7 +31,7 @@ public interface SysUserService {
      * @param token jwt token
      * @return Result
      */
-    Result findUserByToken(String token);
+    Result findCurrentLoginUserVoByToken(String token);
 
     /**
      * find sysUser according to account (unique)

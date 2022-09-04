@@ -22,7 +22,7 @@ public class UserController {
 
     @GetMapping("me")
     public Result currentUser(@RequestHeader("Authorization") String token) {
-        return sysUserService.findUserByToken(jwtUtils.removeHeader(token));
+        return sysUserService.findCurrentLoginUserVoByToken(jwtUtils.removeHeader(token));
     }
 
 }

@@ -13,4 +13,8 @@ public class SysUserVo {
 
     private String avatar;
 
+    private String lastLogin;
+
+    private String email;
+
 }
