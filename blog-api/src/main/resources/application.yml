@@ -40,7 +40,6 @@ credentials:
     accessKey: Kp_Y3bYqBHHqi4FPE56lKz-JI1J1yxBzO0GHpY17
     accessSecretKey: P9KBmg0CwKwiquMI4dSgADNBPO9AC-Jic6K4dzDv
 
-
 ---
 
 spring:
@@ -65,6 +64,5 @@ credentials:
     bucket: sbblog-images
     accessKey: Kp_Y3bYqBHHqi4FPE56lKz-JI1J1yxBzO0GHpY17
     accessSecretKey: P9KBmg0CwKwiquMI4dSgADNBPO9AC-Jic6K4dzDv
-
 
 ---

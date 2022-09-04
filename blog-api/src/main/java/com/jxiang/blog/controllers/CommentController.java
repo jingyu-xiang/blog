@@ -6,14 +6,16 @@ import com.jxiang.blog.vo.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.DescriptorKey;
+
 @RestController
-@RequestMapping("api/articles")
+@RequestMapping("api")
 public class CommentController {
 
     @Autowired
     CommentService commentService;
 
-    @PostMapping("{id}/comments")
+    @PostMapping("articles/{id}/comments")
     public Result getArticleComments(@PathVariable String id) {
         return commentService.getCommentsByArticleId(id);
     }
@@ -21,6 +23,12 @@ public class CommentController {
     @PostMapping("comments")
     public Result createComment(@RequestBody CommentParam commentParam) {
         return commentService.createComment(commentParam);
+    }
+
+    @DeleteMapping("comments/{id}")
+    public Result deleteComment(@PathVariable("id") Long commentId) {
+        // Todo
+        return null;
     }
 
 }
