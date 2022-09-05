@@ -4,6 +4,7 @@ import com.jxiang.blog.vo.params.ArticleParam;
 import com.jxiang.blog.vo.params.LimitParam;
 import com.jxiang.blog.vo.params.PageParams;
 import com.jxiang.blog.vo.results.Result;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface ArticleService {
 
@@ -55,5 +56,15 @@ public interface ArticleService {
      * @return Result
      */
     Result createArticle(ArticleParam articleParam);
+
+    /**
+     * delete an article by its author
+     * delete all it's comments
+     *
+     * @param articleId article id
+     * @return Result
+     */
+    @Transactional
+    Result deleteArticleById(Long articleId);
 
 }

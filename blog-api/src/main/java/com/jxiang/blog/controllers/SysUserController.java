@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/users")
-public class UserController {
+public class SysUserController {
 
     @Autowired
     private SysUserService sysUserService;

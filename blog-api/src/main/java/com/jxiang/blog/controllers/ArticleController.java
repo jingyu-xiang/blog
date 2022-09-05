@@ -47,10 +47,9 @@ public class ArticleController {
         return articleService.createArticle(articleParam);
     }
 
-    @DeleteMapping("{id}")
-    public Result deleteArticle(@PathVariable("id") Long articleId) {
-        // Todo
-        return null;
+    @DeleteMapping("delete/{id}")
+    public Result deleteArticleById(@PathVariable("id") Long articleId) {
+        return articleService.deleteArticleById(articleId);
     }
 
 }

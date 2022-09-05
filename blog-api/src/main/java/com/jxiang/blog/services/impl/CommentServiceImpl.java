@@ -98,11 +98,10 @@ public class CommentServiceImpl implements CommentService {
             return Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
         }
 
-        comment.setDeleted(true);
         commentMapper.deleteById(comment);
 
         if (comment.getLevel() == 2) {
-            return Result.success(comment);
+            return Result.success("Success");
         }
 
         if (comment.getLevel() == 1) {
@@ -121,10 +120,20 @@ public class CommentServiceImpl implements CommentService {
                 commentMapper.deleteChildComments(commentIds);
             }
 
-            return Result.success(childComments);
+            return Result.success("Success");
         }
 
         return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMsg());
+    }
+
+    @Override
+    public Boolean deleteArticleComments(Long articleId) {
+        try {
+            commentMapper.deleteArticleComments(articleId);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 
     private List<CommentVo> copyList(List<Comment> comments) {

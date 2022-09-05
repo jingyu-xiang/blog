@@ -37,4 +37,12 @@ public interface CommentService {
     @Transactional
     Result deleteCommentById(Long commentId);
 
+    /**
+     * delete an article's all comments
+     *
+     * @param articleId article id
+     * @return Result
+     */
+    Boolean deleteArticleComments(Long articleId);
+
 }

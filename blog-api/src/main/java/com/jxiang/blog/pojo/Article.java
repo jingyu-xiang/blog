@@ -1,5 +1,6 @@
 package com.jxiang.blog.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,5 +36,8 @@ public class Article {
     private Long bodyId;
 
     private Long categoryId;
+
+    @TableLogic
+    private Boolean deleted;
 
 }

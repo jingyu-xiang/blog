@@ -5,14 +5,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jxiang.blog.dao.mapper.ArticleBodyMapper;
 import com.jxiang.blog.dao.mapper.ArticleMapper;
 import com.jxiang.blog.dao.mapper.ArticleTagMapper;
-import com.jxiang.blog.pojo.Article;
-import com.jxiang.blog.pojo.ArticleBody;
-import com.jxiang.blog.pojo.ArticleTag;
-import com.jxiang.blog.pojo.SysUser;
-import com.jxiang.blog.services.ArticleService;
-import com.jxiang.blog.services.CategoryService;
-import com.jxiang.blog.services.SysUserService;
-import com.jxiang.blog.services.TagService;
+import com.jxiang.blog.pojo.*;
+import com.jxiang.blog.services.*;
 import com.jxiang.blog.services.Thread.ThreadService;
 import com.jxiang.blog.utils.SysUserThreadLocal;
 import com.jxiang.blog.vo.ArticleBodyVo;
@@ -21,6 +15,7 @@ import com.jxiang.blog.vo.TagVo;
 import com.jxiang.blog.vo.params.ArticleParam;
 import com.jxiang.blog.vo.params.LimitParam;
 import com.jxiang.blog.vo.params.PageParams;
+import com.jxiang.blog.vo.results.ErrorCode;
 import com.jxiang.blog.vo.results.Result;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
@@ -44,6 +39,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
     private ArticleBodyMapper articleBodyMapper;
+
+    @Autowired
+    private CommentService commentService;
 
     @Autowired
     private CategoryService categoryService;
@@ -170,6 +168,30 @@ public class ArticleServiceImpl implements ArticleService {
         articleMapper.updateById(article);
 
         return Result.success(article);
+    }
+
+    @Override
+    public Result deleteArticleById(Long articleId) {
+        Article articleToDelete = articleMapper.selectById(articleId);
+
+        if (articleToDelete == null) {
+            return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+        }
+
+        if (!articleToDelete.getAuthorId().equals(SysUserThreadLocal.get().getId())) {
+            return Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
+        }
+
+        articleMapper.deleteById(articleToDelete);
+
+        // delete article's comments
+        Boolean deleted = commentService.deleteArticleComments(articleId);
+
+        if (deleted) {
+            return Result.success("Success");
+        }
+
+        return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMsg());
     }
 
     private List<ArticleVo> copyList(List<Article> records, boolean isTagsRequired, boolean isAuthorRequired) {
