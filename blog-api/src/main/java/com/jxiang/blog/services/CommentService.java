@@ -2,6 +2,7 @@ package com.jxiang.blog.services;
 
 import com.jxiang.blog.vo.params.CommentParam;
 import com.jxiang.blog.vo.results.Result;
+import org.springframework.transaction.annotation.Transactional;
 
 public interface CommentService {
 
@@ -17,10 +18,23 @@ public interface CommentService {
     /**
      * comment on an article
      * the creator of comment must log in first
+     * if the comment is level 1, set parentId = -1 and toUser = -1
+     * if the comment is level 2, set parentId to level1 comment and toUser to level1 comment author
      *
      * @param commentParam {articleId, content, parentId, toUserId}
      * @return Result
      */
     Result createComment(CommentParam commentParam);
+
+    /**
+     * delete a comment by its author, providing commentId
+     * if the comment is level 2, just delete it by set deleted to true
+     * if the comment is level 1, delete it's level 2 comments as well by set deleted to true
+     *
+     * @param commentId comment id
+     * @return Result
+     */
+    @Transactional
+    Result deleteCommentById(Long commentId);
 
 }

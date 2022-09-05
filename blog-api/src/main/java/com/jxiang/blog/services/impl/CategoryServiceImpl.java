@@ -1,7 +1,7 @@
 package com.jxiang.blog.services.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.jxiang.blog.dao.CategoryMapper;
+import com.jxiang.blog.dao.mapper.CategoryMapper;
 import com.jxiang.blog.pojo.Category;
 import com.jxiang.blog.services.CategoryService;
 import com.jxiang.blog.utils.QiniuUtils;

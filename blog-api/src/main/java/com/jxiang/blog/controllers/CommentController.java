@@ -24,9 +24,8 @@ public class CommentController {
     }
 
     @DeleteMapping("comments/{id}")
-    public Result deleteComment(@PathVariable("id") Long commentId) {
-        // Todo
-        return null;
+    public Result deleteComment(@PathVariable("id") String commentId) {
+        return commentService.deleteCommentById(Long.valueOf(commentId));
     }
 
 }

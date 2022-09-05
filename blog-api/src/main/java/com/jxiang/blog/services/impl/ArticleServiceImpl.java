@@ -2,9 +2,9 @@ package com.jxiang.blog.services.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.jxiang.blog.dao.ArticleBodyMapper;
-import com.jxiang.blog.dao.ArticleMapper;
-import com.jxiang.blog.dao.ArticleTagMapper;
+import com.jxiang.blog.dao.mapper.ArticleBodyMapper;
+import com.jxiang.blog.dao.mapper.ArticleMapper;
+import com.jxiang.blog.dao.mapper.ArticleTagMapper;
 import com.jxiang.blog.pojo.Article;
 import com.jxiang.blog.pojo.ArticleBody;
 import com.jxiang.blog.pojo.ArticleTag;

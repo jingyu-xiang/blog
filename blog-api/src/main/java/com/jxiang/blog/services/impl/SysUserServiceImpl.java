@@ -1,7 +1,7 @@
 package com.jxiang.blog.services.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.jxiang.blog.dao.SysUserMapper;
+import com.jxiang.blog.dao.mapper.SysUserMapper;
 import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.services.AuthService;
 import com.jxiang.blog.services.SysUserService;

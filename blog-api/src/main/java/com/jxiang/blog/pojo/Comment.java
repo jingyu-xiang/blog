@@ -27,5 +27,7 @@ public class Comment {
 
     private Integer level;
 
+    private Boolean deleted;
+
 }
 

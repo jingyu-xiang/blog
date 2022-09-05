@@ -2,8 +2,8 @@ package com.jxiang.blog.services.Thread;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.jxiang.blog.dao.ArticleMapper;
-import com.jxiang.blog.dao.SysUserMapper;
+import com.jxiang.blog.dao.mapper.ArticleMapper;
+import com.jxiang.blog.dao.mapper.SysUserMapper;
 import com.jxiang.blog.pojo.Article;
 import com.jxiang.blog.pojo.SysUser;
 import org.springframework.beans.factory.annotation.Autowired;

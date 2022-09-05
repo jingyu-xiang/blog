@@ -1,9 +1,9 @@
 package com.jxiang.blog.services.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.jxiang.blog.dao.ArticleMapper;
-import com.jxiang.blog.dao.CommentMapper;
-import com.jxiang.blog.dao.SysUserMapper;
+import com.jxiang.blog.dao.mapper.ArticleMapper;
+import com.jxiang.blog.dao.mapper.CommentMapper;
+import com.jxiang.blog.dao.mapper.SysUserMapper;
 import com.jxiang.blog.pojo.Comment;
 import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.services.CommentService;
@@ -67,20 +67,63 @@ public class CommentServiceImpl implements CommentService {
         comment.setContent(commentParam.getContent());
         comment.setCreateDate(System.currentTimeMillis());
 
-        Long parent = commentParam.getParent();
-        if (parent == null) {
+        Long parentId = commentParam.getParent();
+        Long toUserId = commentParam.getToUserId();
+        if (parentId == -1L) {
+            // level1
             comment.setLevel(1);
+            comment.setParentId(-1L);
+            comment.setToUid(-1L);
         } else {
+            // level2
             comment.setLevel(2);
+            comment.setParentId(parentId);
+            comment.setToUid(toUserId);
         }
-
-        comment.setParentId(parent == null ? 0 : parent);
-
-        comment.setToUid(commentParam.getToUserId() == null ? 0 : commentParam.getToUserId());
 
         commentMapper.insert(comment);
 
         return Result.success(comment);
+    }
+
+    @Override
+    public Result deleteCommentById(Long commentId) {
+        Comment comment = commentMapper.selectById(commentId);
+
+        if (comment == null) {
+            return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+        }
+
+        comment.setDeleted(true);
+        commentMapper.updateById(comment);
+
+        if (comment.getLevel() == 2) {
+            return Result.success(comment);
+        }
+
+        if (comment.getLevel() == 1) {
+            LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
+            List<Comment> childComments = commentMapper
+                .selectList(
+                    queryWrapper.eq(Comment::getParentId, commentId)
+                );
+
+            // logically delete all child comments
+            List<Long> commentIds = new ArrayList<>();
+            childComments.forEach(cmt -> {
+                cmt.setDeleted(true);
+                commentIds.add(cmt.getId());
+            });
+
+            // only delete child comments if they exist
+            if (commentIds.size() > 0) {
+                commentMapper.deleteChildComments(commentIds);
+            }
+
+            return Result.success(childComments);
+        }
+
+        return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMsg());
     }
 
     private List<CommentVo> copyList(List<Comment> comments) {
