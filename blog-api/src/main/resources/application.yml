@@ -12,6 +12,9 @@ spring:
 mybatis-plus:
   global-config:
     banner: false
+    logic-delete-field: flag
+    logic-delete-value: true
+    logic-not-delete-value: false
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 

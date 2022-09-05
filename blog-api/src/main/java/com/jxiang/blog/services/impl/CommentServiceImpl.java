@@ -94,8 +94,12 @@ public class CommentServiceImpl implements CommentService {
             return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
         }
 
+        if (!comment.getAuthorId().equals(SysUserThreadLocal.get().getId())) {
+            return Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
+        }
+
         comment.setDeleted(true);
-        commentMapper.updateById(comment);
+        commentMapper.deleteById(comment);
 
         if (comment.getLevel() == 2) {
             return Result.success(comment);
@@ -103,10 +107,7 @@ public class CommentServiceImpl implements CommentService {
 
         if (comment.getLevel() == 1) {
             LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
-            List<Comment> childComments = commentMapper
-                .selectList(
-                    queryWrapper.eq(Comment::getParentId, commentId)
-                );
+            List<Comment> childComments = commentMapper.selectList(queryWrapper.eq(Comment::getParentId, commentId));
 
             // logically delete all child comments
             List<Long> commentIds = new ArrayList<>();

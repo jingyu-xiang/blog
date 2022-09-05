@@ -1,6 +1,7 @@
 package com.jxiang.blog.configs;
 
 import com.jxiang.blog.handlers.AuthInterceptor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -23,12 +24,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
         WebMvcConfigurer.super.addInterceptors(registry);
         registry // Todo
             .addInterceptor(authInterceptor)
-            .addPathPatterns("/api/users/me")
-            .addPathPatterns("/api/upload")
-            .addPathPatterns("/api/tags/create")
-            .addPathPatterns("/api/categories/create")
-            .addPathPatterns("/api/articles/comments")
-            .addPathPatterns("/api/articles/publish");
+            .addPathPatterns("/api/users/me") // get current user
+            .addPathPatterns("/api/upload") // upload image for article
+            .addPathPatterns("/api/tags/create") // create tag
+            .addPathPatterns("/api/categories/create") // create category
+            .addPathPatterns("/api/comments") // create comment
+            .addPathPatterns("/api/comments/*") // delete comment
+            .addPathPatterns("/api/articles/publish") // create article
+        ;
     }
 
 }
