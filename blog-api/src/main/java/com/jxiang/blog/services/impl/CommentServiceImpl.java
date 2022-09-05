@@ -110,9 +110,9 @@ public class CommentServiceImpl implements CommentService {
 
             // logically delete all child comments
             List<Long> commentIds = new ArrayList<>();
-            childComments.forEach(cmt -> {
-                cmt.setDeleted(true);
-                commentIds.add(cmt.getId());
+            childComments.forEach(child -> {
+                child.setDeleted(true);
+                commentIds.add(child.getId());
             });
 
             // only delete child comments if they exist
