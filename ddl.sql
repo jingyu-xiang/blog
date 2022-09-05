@@ -1,29 +1,24 @@
-USE blog;
-SET NAMES utf8mb4;
-SET
-FOREIGN_KEY_CHECKS = 0;
-
-
-create table ms_article
+create table if not exists ms_article
 (
     id             bigint auto_increment
-        primary key,
-    comment_counts int          null comment '评论数量',
-    create_date    bigint       null comment '创建时间',
-    summary        varchar(255) null comment '简介',
-    title          varchar(64)  null comment '标题',
-    view_counts    int          null comment '浏览数量',
-    weight         int          not null comment '是否置顶',
-    author_id      bigint       null comment '作者id',
-    body_id        bigint       null comment '内容id',
-    category_id    int          null comment '类别id'
-)
+    primary key,
+    comment_counts int              null comment 'comment count',
+    create_date    bigint           null comment 'create datetime',
+    summary        varchar(255)     null comment 'description',
+    title          varchar(64)      null comment 'title',
+    view_counts    int              null comment 'view count',
+    weight         int              not null comment 'set on top',
+    author_id      bigint           null comment 'author id',
+    body_id        bigint           null comment 'article body id',
+    category_id    int              null comment 'category id',
+    deleted        bit default b'0' not null comment 'logical delete'
+    )
     charset = utf8mb3;
 
-create table ms_article_body
+create table if not exists ms_article_body
 (
     id           bigint auto_increment
-        primary key,
+    primary key,
     content      longtext null,
     content_html longtext null,
     article_id   bigint   not null
@@ -33,10 +28,10 @@ create table ms_article_body
 create index article_id
     on ms_article_body (article_id);
 
-create table ms_article_tag
+create table if not exists ms_article_tag
 (
     id         bigint auto_increment
-        primary key,
+    primary key,
     article_id bigint not null,
     tag_id     bigint not null
 )
@@ -48,37 +43,38 @@ create index article_id
 create index tag_id
     on ms_article_tag (tag_id);
 
-create table ms_category
+create table if not exists ms_category
 (
     id            bigint auto_increment
-        primary key,
+    primary key,
     avatar        varchar(255) collate utf8mb4_unicode_ci null,
     category_name varchar(255) collate utf8mb4_unicode_ci null,
     description   varchar(255) collate utf8mb4_unicode_ci null
-)
+    )
     charset = utf8mb3;
 
-create table ms_comment
+create table if not exists ms_comment
 (
     id          bigint auto_increment
-        primary key,
+    primary key,
     content     varchar(255) collate utf8mb4_unicode_ci not null,
     create_date bigint                                  not null,
     article_id  int                                     not null,
     author_id   bigint                                  not null,
     parent_id   bigint                                  null,
     to_uid      bigint                                  not null,
-    level       int                                     not null
-)
+    level       int                                     not null,
+    deleted     bit default b'0'                        not null comment 'logical delete'
+    )
     charset = utf8mb3;
 
 create index article_id
     on ms_comment (article_id);
 
-create table ms_sys_log
+create table if not exists ms_sys_log
 (
     id          bigint auto_increment
-        primary key,
+    primary key,
     create_date bigint                                 null,
     ip          varchar(15) collate utf8mb3_bin        null,
     method      varchar(100) collate utf8mb3_bin       null,
@@ -88,35 +84,32 @@ create table ms_sys_log
     params      varchar(255) collate utf8mb3_bin       null,
     time        bigint                                 null,
     userid      bigint                                 null
-)
+    )
     collate = utf8mb3_unicode_ci;
 
-create table ms_sys_user
+create table if not exists ms_sys_user
 (
     id          bigint auto_increment
-        primary key,
-    account     varchar(64)  null comment '账号',
-    admin       bit          null comment '是否管理员',
-    avatar      varchar(255) null comment '头像',
-    create_date bigint       null comment '注册时间',
-    deleted     bit          null comment '是否删除',
-    email       varchar(128) null comment '邮箱',
-    last_login  bigint       null comment '最后登录时间',
-    nickname    varchar(255) null comment '昵称',
-    password    varchar(64)  null comment '密码',
-    status      varchar(255) null comment '状态'
-)
+    primary key,
+    account     varchar(64)  null comment 'account',
+    admin       bit          null comment 'admin',
+    avatar      varchar(255) null comment 'avatar',
+    create_date bigint       null comment 'register datetime',
+    deleted     bit          null comment 'logical delete',
+    email       varchar(128) null comment 'email',
+    last_login  bigint       null comment 'last login datetime',
+    nickname    varchar(255) null comment 'display name',
+    password    varchar(64)  null comment 'password',
+    status      varchar(255) null comment 'status'
+    )
     charset = utf8mb3;
 
-create table ms_tag
+create table if not exists ms_tag
 (
     id       bigint auto_increment
-        primary key,
+    primary key,
     avatar   varchar(255) collate utf8mb4_unicode_ci null,
     tag_name varchar(255) collate utf8mb4_unicode_ci null
-)
+    )
     charset = utf8mb3;
 
-
-SET
-FOREIGN_KEY_CHECKS = 1;
