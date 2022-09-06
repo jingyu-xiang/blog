@@ -18,12 +18,12 @@ public class CommentController {
         return commentService.getCommentsByArticleId(id);
     }
 
-    @PostMapping("comments")
+    @PostMapping("comments/create")
     public Result createComment(@RequestBody CommentParam commentParam) {
         return commentService.createComment(commentParam);
     }
 
-    @DeleteMapping("comments/{id}")
+    @DeleteMapping("comments/delete/{id}")
     public Result deleteComment(@PathVariable("id") Long commentId) {
         return commentService.deleteCommentById(commentId);
     }

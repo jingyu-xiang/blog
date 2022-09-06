@@ -42,7 +42,7 @@ public class ArticleController {
         return articleService.findArticleById(articleId);
     }
 
-    @PostMapping("publish")
+    @PostMapping("create")
     public Result publishArticle(@RequestBody ArticleParam articleParam) {
         return articleService.createArticle(articleParam);
     }

@@ -27,9 +27,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
             .addPathPatterns("/api/upload") // upload image for article
             .addPathPatterns("/api/tags/create") // create tag
             .addPathPatterns("/api/categories/create") // create category
-            .addPathPatterns("/api/comments") // create comment
-            .addPathPatterns("/api/comments/*") // delete comment
-            .addPathPatterns("/api/articles/publish") // create article
+            .addPathPatterns("/api/comments/create") // create comment
+            .addPathPatterns("/api/comments/delete/*") // delete comment
+            .addPathPatterns("/api/articles/create") // create article
             .addPathPatterns("/api/articles/delete/*") // delete article
         ;
     }
