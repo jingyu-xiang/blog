@@ -60,10 +60,10 @@ public class CommentServiceImpl implements CommentService {
             return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
         }
 
-        SysUser sysUser = SysUserThreadLocal.get();
+        SysUser author = SysUserThreadLocal.get();
         Comment comment = new Comment();
         comment.setArticleId(commentParam.getArticleId());
-        comment.setAuthorId(sysUser.getId());
+        comment.setAuthorId(author.getId());
         comment.setContent(commentParam.getContent());
         comment.setCreateDate(System.currentTimeMillis());
 
@@ -82,7 +82,6 @@ public class CommentServiceImpl implements CommentService {
         }
 
         commentMapper.insert(comment);
-
         return Result.success(comment);
     }
 

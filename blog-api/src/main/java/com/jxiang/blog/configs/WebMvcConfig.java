@@ -1,7 +1,6 @@
 package com.jxiang.blog.configs;
 
 import com.jxiang.blog.handlers.AuthInterceptor;
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

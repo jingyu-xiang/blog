@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jxiang.blog.dao.mapper.ArticleBodyMapper;
 import com.jxiang.blog.dao.mapper.ArticleMapper;
 import com.jxiang.blog.dao.mapper.ArticleTagMapper;
-import com.jxiang.blog.pojo.*;
+import com.jxiang.blog.pojo.Article;
+import com.jxiang.blog.pojo.ArticleBody;
+import com.jxiang.blog.pojo.ArticleTag;
+import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.services.*;
 import com.jxiang.blog.services.Thread.ThreadService;
 import com.jxiang.blog.utils.SysUserThreadLocal;
@@ -118,6 +121,11 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Result findArticleById(Long articleId) {
         Article article = articleMapper.selectById(articleId);
+
+        if (article == null) {
+            return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+        }
+
         ArticleVo articleVo = copy(article, true, true, true, true);
 
         // use thread pool to process the add review count operation, isolated from the main program thread
@@ -162,7 +170,7 @@ public class ArticleServiceImpl implements ArticleService {
         articleBody.setContent(articleParam.getBody().getContent());
         articleBody.setContentHtml(articleParam.getBody().getContentHtml());
         articleBodyMapper.insert(articleBody);
-        article.setBodyId(articleBody.getArticleId());
+        article.setBodyId(articleBody.getId());
 
         // update article
         articleMapper.updateById(article);

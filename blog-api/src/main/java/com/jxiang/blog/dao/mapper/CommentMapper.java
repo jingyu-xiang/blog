@@ -22,7 +22,7 @@ public interface CommentMapper extends BaseMapper<Comment> {
     })
     void deleteChildComments(List<Long> commentIds);
 
-    @Delete("DELETE FROM ms_comment c WHERE c.article_id = #{articleId}")
+    @Delete("UPDATE ms_comment c SET c.deleted=true WHERE c.article_id = #{articleId}")
     void deleteArticleComments(Long articleId);
 
 }
