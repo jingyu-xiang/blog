@@ -1,8 +1,6 @@
 package com.jxiang.blog.services;
 
-import com.jxiang.blog.vo.params.ArticleParam;
-import com.jxiang.blog.vo.params.LimitParam;
-import com.jxiang.blog.vo.params.PageParams;
+import com.jxiang.blog.vo.params.*;
 import com.jxiang.blog.vo.results.Result;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,5 +64,23 @@ public interface ArticleService {
      */
     @Transactional
     Result deleteArticleById(Long articleId);
+
+    /**
+     * update an article body by its author
+     *
+     * @param articleId   article id
+     * @param articleBody {content, contentHtml}
+     * @return Result
+     */
+    @Transactional
+    Result updateArticleBodyById(Long articleId, ArticleBodyParam articleBody);
+
+    /**
+     * update an article's title or summary by its author
+     *
+     * @param articleUpdateParam {title, summary}
+     * @return Result
+     */
+    Result updateArticleById(Long articleId, ArticleUpdateParam articleUpdateParam);
 
 }

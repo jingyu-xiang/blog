@@ -2,9 +2,7 @@ package com.jxiang.blog.controllers;
 
 import com.jxiang.blog.aop.log.LogAnnotation;
 import com.jxiang.blog.services.ArticleService;
-import com.jxiang.blog.vo.params.ArticleParam;
-import com.jxiang.blog.vo.params.LimitParam;
-import com.jxiang.blog.vo.params.PageParams;
+import com.jxiang.blog.vo.params.*;
 import com.jxiang.blog.vo.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -50,6 +48,22 @@ public class ArticleController {
     @DeleteMapping("delete/{id}")
     public Result deleteArticleById(@PathVariable("id") Long articleId) {
         return articleService.deleteArticleById(articleId);
+    }
+
+    @PatchMapping("update/body/{id}")
+    public Result updateArticleBodyById(
+        @PathVariable("id") Long articleId,
+        @RequestBody ArticleBodyParam articleBody
+    ) {
+        return articleService.updateArticleBodyById(articleId, articleBody);
+    }
+
+    @PatchMapping("update/{id}")
+    public Result updateArticleById(
+        @PathVariable("id") Long articleId,
+        @RequestBody ArticleUpdateParam articleUpdateParam
+    ) {
+        return articleService.updateArticleById(articleId, articleUpdateParam);
     }
 
 }

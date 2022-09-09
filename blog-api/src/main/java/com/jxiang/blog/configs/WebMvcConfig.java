@@ -23,14 +23,20 @@ public class WebMvcConfig implements WebMvcConfigurer {
         WebMvcConfigurer.super.addInterceptors(registry);
         registry // Todo
             .addInterceptor(authInterceptor)
+
             .addPathPatterns("/api/users/me") // get current user
-            .addPathPatterns("/api/upload") // upload image for article
+
             .addPathPatterns("/api/tags/create") // create tag
             .addPathPatterns("/api/categories/create") // create category
+
             .addPathPatterns("/api/comments/create") // create comment
             .addPathPatterns("/api/comments/delete/*") // delete comment
+
+            .addPathPatterns("/api/upload") // upload image for article
             .addPathPatterns("/api/articles/create") // create article
             .addPathPatterns("/api/articles/delete/*") // delete article
+            .addPathPatterns("/api/articles/update/body/*") // update article body
+            .addPathPatterns("/api/articles/update/*") // update article title & summary
         ;
     }
 
