@@ -1,6 +1,7 @@
 package com.jxiang.blog.configs;
 
 import com.jxiang.blog.handlers.AuthInterceptor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -19,11 +20,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     @Override
-    public void addInterceptors(InterceptorRegistry registry) {
+    public void addInterceptors(@NotNull InterceptorRegistry registry) {
         WebMvcConfigurer.super.addInterceptors(registry);
         registry // Todo
             .addInterceptor(authInterceptor)
-
             .addPathPatterns("/api/users/me") // get current user
 
             .addPathPatterns("/api/tags/create") // create tag
