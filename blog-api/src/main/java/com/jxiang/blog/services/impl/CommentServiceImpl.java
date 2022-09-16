@@ -82,6 +82,8 @@ public class CommentServiceImpl implements CommentService {
         }
 
         commentMapper.insert(comment);
+
+        // TODO: increase comment count by one, using thread service
         return Result.success(comment);
     }
 
