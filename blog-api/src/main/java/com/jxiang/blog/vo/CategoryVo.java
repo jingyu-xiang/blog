@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class CategoryVo {
 
-    private Long id;
+  private Long id;
 
-    private String avatar;
+  private String avatar;
 
-    private String categoryName;
+  private String categoryName;
 
 }

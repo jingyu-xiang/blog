@@ -13,31 +13,31 @@ import lombok.NoArgsConstructor;
 // can not use primitive types in mp data modals. Because primitive types have default values, and mp will update any non-null fields
 public class Article {
 
-    public static final int Article_TOP = 1;
+  public static final int Article_TOP = 1;
 
-    public static final int Article_Common = 0;
+  public static final int Article_Common = 0;
 
-    private Long id;
+  private Long id;
 
-    private Integer commentCounts;
+  private Integer commentCounts;
 
-    private Long createDate;
+  private Long createDate;
 
-    private String summary;
+  private String summary;
 
-    private String title;
+  private String title;
 
-    private Integer viewCounts;
+  private Integer viewCounts;
 
-    private Integer weight;
+  private Integer weight;
 
-    private Long authorId;
+  private Long authorId;
 
-    private Long bodyId;
+  private Long bodyId;
 
-    private Long categoryId;
+  private Long categoryId;
 
-    @TableLogic
-    private Boolean deleted;
+  @TableLogic
+  private Boolean deleted;
 
 }

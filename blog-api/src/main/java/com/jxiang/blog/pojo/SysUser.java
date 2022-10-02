@@ -13,27 +13,27 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SysUser {
 
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
+  @TableId(type = IdType.ASSIGN_ID)
+  private Long id;
 
-    private String account;
+  private String account;
 
-    private Integer admin;
+  private Integer admin;
 
-    private String avatar;
+  private String avatar;
 
-    private Long createDate;
+  private Long createDate;
 
-    private Integer deleted;
+  private Integer deleted;
 
-    private String email;
+  private String email;
 
-    private Long lastLogin;
+  private Long lastLogin;
 
-    private String nickname;
+  private String nickname;
 
-    private String password;
+  private String password;
 
-    private String status;
+  private String status;
 
 }

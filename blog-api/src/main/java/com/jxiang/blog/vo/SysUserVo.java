@@ -5,16 +5,16 @@ import lombok.Data;
 @Data
 public class SysUserVo {
 
-    private Long id;
+  private Long id;
 
-    private String account;
+  private String account;
 
-    private String nickname;
+  private String nickname;
 
-    private String avatar;
+  private String avatar;
 
-    private String lastLogin;
+  private String lastLogin;
 
-    private String email;
+  private String email;
 
 }

@@ -8,29 +8,29 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface CategoryService {
 
-    /**
-     * retrieve category object given categoryId
-     *
-     * @param categoryId category id
-     * @return Result
-     */
-    CategoryVo findCategoryById(Long categoryId);
+  /**
+   * retrieve category object given categoryId
+   *
+   * @param categoryId category id
+   * @return Result
+   */
+  CategoryVo findCategoryById(Long categoryId);
 
-    /**
-     * find all categories
-     *
-     * @return Result
-     */
-    Result findAll();
+  /**
+   * find all categories
+   *
+   * @return Result
+   */
+  Result findAll();
 
-    /**
-     * create a category, admin only
-     *
-     * @param categoryParam object of categoryName and description
-     * @param file          category image file
-     * @return Result
-     */
-    @Transactional
-    Result createCategory(CategoryParam categoryParam, MultipartFile file);
+  /**
+   * create a category, admin only
+   *
+   * @param categoryParam object of categoryName and description
+   * @param file          category image file
+   * @return Result
+   */
+  @Transactional
+  Result createCategory(CategoryParam categoryParam, MultipartFile file);
 
 }

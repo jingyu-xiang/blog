@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @TableName(value = "ms_article_tag")
 public class ArticleTag {
 
-    private Long id;
+  private Long id;
 
-    private Long articleId;
+  private Long articleId;
 
-    private Long tagId;
+  private Long tagId;
 
 }

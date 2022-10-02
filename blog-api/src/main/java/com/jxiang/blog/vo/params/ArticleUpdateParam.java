@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class ArticleUpdateParam {
 
-    String summary;
+  String summary;
 
-    String title;
+  String title;
 
 }

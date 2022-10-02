@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("api/users")
 public class SysUserController {
 
-    @Autowired
-    private SysUserService sysUserService;
+  @Autowired
+  private SysUserService sysUserService;
 
-    @Autowired
-    private JwtUtils jwtUtils;
+  @Autowired
+  private JwtUtils jwtUtils;
 
-    @GetMapping("me")
-    public Result currentUser(@RequestHeader("Authorization") String token) {
-        return sysUserService.findCurrentLoginUserVoByToken(jwtUtils.removeHeader(token));
-    }
+  @GetMapping("me")
+  public Result currentUser(@RequestHeader("Authorization") String token) {
+    return sysUserService.findCurrentLoginUserVoByToken(jwtUtils.removeHeader(token));
+  }
 
 }

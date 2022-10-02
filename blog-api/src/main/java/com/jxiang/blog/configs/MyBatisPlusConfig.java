@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Configuration;
 @MapperScan("com.jxiang.blog.dao.mapper")
 public class MyBatisPlusConfig {
 
-    @Bean
-    public MybatisPlusInterceptor mybatisPlusInterceptor() {
-        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
-        interceptor.addInnerInterceptor(new PaginationInnerInterceptor()); // pagination unit
-        return interceptor;
-    }
+  @Bean
+  public MybatisPlusInterceptor mybatisPlusInterceptor() {
+    MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+    interceptor.addInnerInterceptor(new PaginationInnerInterceptor()); // pagination unit
+    return interceptor;
+  }
 
 }

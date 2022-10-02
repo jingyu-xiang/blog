@@ -5,14 +5,14 @@ import lombok.Data;
 @Data
 public class RegisterParams {
 
-    private String account;
+  private String account;
 
-    private String password;
+  private String password;
 
-    private String nickname;
+  private String nickname;
 
-    private String email;
+  private String email;
 
-    private String avatar;
+  private String avatar;
 
 }

@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class LimitParam {
 
-    private int limit = 3;
+  private int limit = 3;
 
 }

@@ -7,10 +7,10 @@ import lombok.Data;
 @TableName(value = "ms_tag")
 public class Tag {
 
-    private Long id;
+  private Long id;
 
-    private String avatar;
+  private String avatar;
 
-    private String tagName;
+  private String tagName;
 
 }
