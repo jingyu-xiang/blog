@@ -4,10 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.dao.mapper.ArticleMapper;
 import com.jxiang.blog.dao.mapper.CommentMapper;
 import com.jxiang.blog.dao.mapper.SysUserMapper;
+import com.jxiang.blog.pojo.Article;
 import com.jxiang.blog.pojo.Comment;
 import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.services.CommentService;
 import com.jxiang.blog.services.SysUserService;
+import com.jxiang.blog.services.Thread.ThreadService;
 import com.jxiang.blog.utils.SysUserThreadLocal;
 import com.jxiang.blog.vo.CommentVo;
 import com.jxiang.blog.vo.SysUserVo;
@@ -36,6 +38,9 @@ public class CommentServiceImpl implements CommentService {
   @Autowired
   private SysUserService sysUserService;
 
+  @Autowired
+  private ThreadService threadService;
+
   @Override
   public Result getCommentsByArticleId(String id) {
     LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
@@ -53,9 +58,16 @@ public class CommentServiceImpl implements CommentService {
 
   @Override
   public Result createComment(CommentParam commentParam) {
-    if (commentParam.getArticleId() == null ||
-        articleMapper.selectById(commentParam.getArticleId()) == null
-    ) {
+
+    if (commentParam.getArticleId() == null) {
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+    }
+
+    Article article;
+
+    try {
+      article = articleMapper.selectById(commentParam.getArticleId());
+    } catch (Exception e) {
       return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
     }
 
@@ -82,7 +94,7 @@ public class CommentServiceImpl implements CommentService {
 
     commentMapper.insert(comment);
 
-    // TODO: increase comment count by one, using thread service
+    threadService.updateCommentCount(articleMapper, article);
     return Result.success(comment);
   }
 
