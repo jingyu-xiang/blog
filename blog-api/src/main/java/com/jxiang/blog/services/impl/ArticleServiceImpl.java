@@ -342,6 +342,7 @@ public class ArticleServiceImpl implements ArticleService {
     ArticleBody articleBody = articleBodyMapper.selectById(bodyId);
     ArticleBodyVo articleBodyVo = new ArticleBodyVo();
     articleBodyVo.setContent(articleBody.getContent());
+    articleBodyVo.setContentHtml(articleBody.getContentHtml());
     return articleBodyVo;
   }
 
