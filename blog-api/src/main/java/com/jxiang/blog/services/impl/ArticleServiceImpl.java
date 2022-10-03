@@ -72,6 +72,21 @@ public class ArticleServiceImpl implements ArticleService {
       queryWrapper.eq(Article::getCategoryId, categoryId);
     }
 
+    Long tagId = pageParams.getTagId();
+    if (tagId != null) {
+      // article_id 1 -- * tag_id
+      LambdaQueryWrapper<ArticleTag> articleTagLambdaQueryWrapper = new LambdaQueryWrapper<>();
+      articleTagLambdaQueryWrapper.eq(ArticleTag::getTagId, tagId);
+      List<ArticleTag> articleTagList = articleTagMapper.selectList(articleTagLambdaQueryWrapper);
+
+      List<Long> articleIdList = new ArrayList<>();
+      articleTagList.forEach(articleTag -> articleIdList.add(articleTag.getArticleId()));
+
+      if (articleIdList.size() > 0) {
+        queryWrapper.in(Article::getId, articleIdList);
+      }
+    }
+
     queryWrapper // order by create_date DESC & weight DESC
         .orderByDesc(Article::getCreateDate)
         .orderByDesc(Article::getWeight);

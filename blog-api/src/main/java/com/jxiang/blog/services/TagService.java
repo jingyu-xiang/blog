@@ -43,4 +43,11 @@ public interface TagService {
   @Transactional
   Result createTag(String tagName, MultipartFile file);
 
+  /**
+   * retrieve a tag vo by its id
+   *
+   * @param id tag id
+   * @return Result
+   */
+  Result findTagVoById(Long id);
 }

@@ -86,6 +86,16 @@ public class TagServiceImpl implements TagService {
         ErrorCode.FILE_UPLOAD_FAILURE.getMsg());
   }
 
+  @Override
+  public Result findTagVoById(Long id) {
+    try {
+      Tag tag = tagMapper.selectById(id);
+      return Result.success(tag);
+    } catch (Exception e) {
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+    }
+  }
+
   private TagVo copy(Tag tag) {
     TagVo tagVo = new TagVo();
     // copy properties of tag to tagVo, set field of tagVo to null if it is not in tag
