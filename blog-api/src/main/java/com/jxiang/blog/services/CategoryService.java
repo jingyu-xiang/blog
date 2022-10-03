@@ -33,4 +33,11 @@ public interface CategoryService {
   @Transactional
   Result createCategory(CategoryParam categoryParam, MultipartFile file);
 
+  /**
+   * retrieve a single category's detail by id
+   *
+   * @param id id of the category to retrieve
+   * @return Result
+   */
+  Result getCategoryDetailById(Long id);
 }

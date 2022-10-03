@@ -76,6 +76,16 @@ public class CategoryServiceImpl implements CategoryService {
         ErrorCode.FILE_UPLOAD_FAILURE.getMsg());
   }
 
+  @Override
+  public Result getCategoryDetailById(Long id) {
+    try {
+      Category category = categoryMapper.selectById(id);
+      return Result.success(copy(category));
+    } catch (Exception e) {
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.name());
+    }
+  }
+
   private CategoryVo copy(Category category) {
     CategoryVo categoryVo = new CategoryVo();
     BeanUtils.copyProperties(category, categoryVo);

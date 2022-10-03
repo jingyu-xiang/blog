@@ -5,6 +5,7 @@ import com.jxiang.blog.vo.params.CategoryParam;
 import com.jxiang.blog.vo.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -24,9 +25,16 @@ public class CategoryController {
   }
 
   @PostMapping("create")
-  public Result createCategory(@RequestPart CategoryParam categoryParam,
-      @RequestPart MultipartFile file) {
+  public Result createCategory(
+      @RequestPart CategoryParam categoryParam,
+      @RequestPart MultipartFile file
+  ) {
     return categoryService.createCategory(categoryParam, file);
+  }
+
+  @GetMapping("{id}")
+  public Result getCategoryDetailById(@PathVariable Long id) {
+    return categoryService.getCategoryDetailById(id);
   }
 
 }
