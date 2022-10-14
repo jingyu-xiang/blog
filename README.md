@@ -16,14 +16,18 @@ SpringBoot Blog System
 
 ## Tech highlights:
 
-1. used ThreadLocal instances to thread-safely persist user information in controller methods'
+1. used ThreadLocal instances to thread-safely persist user information in
+   controller methods'
    execution scope, instead
-   of re-retrieving it from redis every time. Also, it is removed from thread local after
+   of re-retrieving it from redis every time. Also, it is removed from thread
+   local after
    controllers finish execution:
-    * each thread has a ThreadLocalMap, with keys to be week referenced ThreadLocal instances,
+    * each thread has a ThreadLocalMap, with keys to be week referenced
+      ThreadLocal instances,
       values to be strong
       referenced copies of thread variables
-    * ThreadLocal instance (key) could be grabage-collected. But the value will not. So a manual
+    * ThreadLocal instance (key) could be grabage-collected. But the value will
+      not. So a manual
       threadLocal.remove() is
       called to remove the key-val pair to prevent memory leak
 
@@ -32,7 +36,8 @@ SpringBoot Blog System
 <br/>
 
 2. used thread pool to update view counts for articles:
-    * update view counts would be time-consuming, and may trigger exceptions. But it should not
+    * update view counts would be time-consuming, and may trigger exceptions.
+      But it should not
       affect users viewing the
       article
     * applied optimistic lock when updating view count to achieve thread safety
@@ -41,7 +46,9 @@ SpringBoot Blog System
    ```
 
 3. MySql highlights:
-    * used junction tables to represent many-to-many relationships such as article-tag. Therefore, 1
+    * used junction tables to represent many-to-many relationships such as
+      article-tag. Therefore, 1
       tag can be
-      associated with many articles and 1 article can be associated with many tags.
+      associated with many articles and 1 article can be associated with many
+      tags.
     * applied indexes on commonly-queried columns.

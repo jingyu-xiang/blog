@@ -22,7 +22,8 @@ public class ThreadService {
 
   @Async(THREAD_POOL_ID)
   // put the following task in a configured thread pool, without affecting main thread
-  public void updateArticleViewCount(ArticleMapper articleMapper, Article article) {
+  public void updateArticleViewCount(ArticleMapper articleMapper,
+      Article article) {
     int viewCount = article.getViewCounts();
     Article toUpdate = new Article();
     toUpdate.setViewCounts(viewCount + 1);
@@ -50,7 +51,8 @@ public class ThreadService {
   }
 
   @Async(THREAD_POOL_ID)
-  public void updateLastLogin(SysUser sysUser, String token, SysUserMapper sysUserMapper) {
+  public void updateLastLogin(SysUser sysUser, String token,
+      SysUserMapper sysUserMapper) {
     sysUser.setLastLogin(System.currentTimeMillis());
     sysUserMapper.updateById(sysUser);
 

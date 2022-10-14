@@ -64,7 +64,8 @@ public class ArticleServiceImpl implements ArticleService {
 
   @Override
   public Result listArticles(PageParams pageParams) {
-    Page<Article> page = new Page<>(pageParams.getPage(), pageParams.getPageSize());
+    Page<Article> page = new Page<>(pageParams.getPage(),
+        pageParams.getPageSize());
     LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
 
     Long categoryId = pageParams.getCategoryId();
@@ -77,10 +78,12 @@ public class ArticleServiceImpl implements ArticleService {
       // article_id 1 -- * tag_id
       LambdaQueryWrapper<ArticleTag> articleTagLambdaQueryWrapper = new LambdaQueryWrapper<>();
       articleTagLambdaQueryWrapper.eq(ArticleTag::getTagId, tagId);
-      List<ArticleTag> articleTagList = articleTagMapper.selectList(articleTagLambdaQueryWrapper);
+      List<ArticleTag> articleTagList = articleTagMapper.selectList(
+          articleTagLambdaQueryWrapper);
 
       List<Long> articleIdList = new ArrayList<>();
-      articleTagList.forEach(articleTag -> articleIdList.add(articleTag.getArticleId()));
+      articleTagList.forEach(
+          articleTag -> articleIdList.add(articleTag.getArticleId()));
 
       if (articleIdList.size() > 0) {
         queryWrapper.in(Article::getId, articleIdList);
@@ -91,7 +94,8 @@ public class ArticleServiceImpl implements ArticleService {
         .orderByDesc(Article::getCreateDate)
         .orderByDesc(Article::getWeight);
 
-    final Page<Article> articlePage = articleMapper.selectPage(page, queryWrapper);
+    final Page<Article> articlePage = articleMapper.selectPage(page,
+        queryWrapper);
 
     final List<ArticleVo> articleVoList = copyList(
         articlePage.getRecords(),
@@ -150,7 +154,8 @@ public class ArticleServiceImpl implements ArticleService {
     Article article = articleMapper.selectById(articleId);
 
     if (article == null) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+          ErrorCode.NOT_FOUND.getMsg());
     }
 
     ArticleVo articleVo = copy(article, true, true, true, true);
@@ -210,11 +215,14 @@ public class ArticleServiceImpl implements ArticleService {
     Article articleToDelete = articleMapper.selectById(articleId);
 
     if (articleToDelete == null) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+          ErrorCode.NOT_FOUND.getMsg());
     }
 
-    if (!articleToDelete.getAuthorId().equals(SysUserThreadLocal.get().getId())) {
-      return Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
+    if (!articleToDelete.getAuthorId()
+        .equals(SysUserThreadLocal.get().getId())) {
+      return Result.failure(ErrorCode.NO_LOGIN.getCode(),
+          ErrorCode.NO_LOGIN.getMsg());
     }
 
     articleMapper.deleteById(articleToDelete);
@@ -226,26 +234,32 @@ public class ArticleServiceImpl implements ArticleService {
       return Result.success(articleToDelete.getId());
     }
 
-    return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMsg());
+    return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
+        ErrorCode.SYSTEM_ERROR.getMsg());
   }
 
   @Override
-  public Result updateArticleBodyById(Long articleId, ArticleBodyParam articleBody) {
+  public Result updateArticleBodyById(Long articleId,
+      ArticleBodyParam articleBody) {
     LambdaQueryWrapper<ArticleBody> queryWrapper = new LambdaQueryWrapper<>();
     queryWrapper.eq(ArticleBody::getArticleId, articleId).last("LIMIT " + 1);
     ArticleBody articleBodyToUpdate = articleBodyMapper.selectOne(queryWrapper);
     Article articleToUpdate = articleMapper.selectById(articleId);
 
     if (articleToUpdate == null) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+          ErrorCode.NOT_FOUND.getMsg());
     }
 
-    if (!articleToUpdate.getAuthorId().equals(SysUserThreadLocal.get().getId())) {
-      return Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
+    if (!articleToUpdate.getAuthorId()
+        .equals(SysUserThreadLocal.get().getId())) {
+      return Result.failure(ErrorCode.NO_LOGIN.getCode(),
+          ErrorCode.NO_LOGIN.getMsg());
     }
 
     if (articleBodyToUpdate == null) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+          ErrorCode.NOT_FOUND.getMsg());
     }
 
     String content = articleBody.getContent();
@@ -254,7 +268,8 @@ public class ArticleServiceImpl implements ArticleService {
     // not update if the content has not changed
     if (content.equals(articleBodyToUpdate.getContent()) &&
         contentHtml.equals(articleBodyToUpdate.getContentHtml())) {
-      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
+      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(),
+          ErrorCode.PARAMS_ERROR.getMsg());
     }
 
     articleBodyToUpdate.setContent(content);
@@ -264,41 +279,50 @@ public class ArticleServiceImpl implements ArticleService {
 
     return success == 1
         ? Result.success("Success")
-        : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMsg());
+        : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
+            ErrorCode.SYSTEM_ERROR.getMsg());
   }
 
   @Override
-  public Result updateArticleById(Long articleId, ArticleUpdateParam articleUpdateParam) {
+  public Result updateArticleById(Long articleId,
+      ArticleUpdateParam articleUpdateParam) {
     Article articleToUpdate = articleMapper.selectById(articleId);
 
     if (articleToUpdate == null) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+          ErrorCode.NOT_FOUND.getMsg());
     }
 
-    if (!articleToUpdate.getAuthorId().equals(SysUserThreadLocal.get().getId())) {
-      return Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
+    if (!articleToUpdate.getAuthorId()
+        .equals(SysUserThreadLocal.get().getId())) {
+      return Result.failure(ErrorCode.NO_LOGIN.getCode(),
+          ErrorCode.NO_LOGIN.getMsg());
     }
 
     String title = articleUpdateParam.getTitle();
     String summary = articleUpdateParam.getSummary();
 
     if (title == null && summary == null) {
-      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
+      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(),
+          ErrorCode.PARAMS_ERROR.getMsg());
     }
 
     if (title != null) {
       if (!title.equals("") && !title.equals(articleToUpdate.getTitle())) {
         articleToUpdate.setTitle(title);
       } else {
-        return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
+        return Result.failure(ErrorCode.PARAMS_ERROR.getCode(),
+            ErrorCode.PARAMS_ERROR.getMsg());
       }
     }
 
     if (summary != null) {
-      if (!summary.equals("") && !summary.equals(articleToUpdate.getSummary())) {
+      if (!summary.equals("") && !summary.equals(
+          articleToUpdate.getSummary())) {
         articleToUpdate.setSummary(summary);
       } else {
-        return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
+        return Result.failure(ErrorCode.PARAMS_ERROR.getCode(),
+            ErrorCode.PARAMS_ERROR.getMsg());
       }
     }
 
@@ -310,15 +334,18 @@ public class ArticleServiceImpl implements ArticleService {
 
     return success == 1
         ? Result.success(res)
-        : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMsg());
+        : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
+            ErrorCode.SYSTEM_ERROR.getMsg());
   }
 
-  private List<ArticleVo> copyList(List<Article> records, boolean isTagsRequired,
+  private List<ArticleVo> copyList(List<Article> records,
+      boolean isTagsRequired,
       boolean isAuthorRequired) {
     List<ArticleVo> articleVoList = new ArrayList<>();
     for (Article record : records) {
       // author and tags are required
-      articleVoList.add(copy(record, isTagsRequired, isAuthorRequired, false, false));
+      articleVoList.add(
+          copy(record, isTagsRequired, isAuthorRequired, false, false));
     }
     return articleVoList;
   }
@@ -333,7 +360,8 @@ public class ArticleServiceImpl implements ArticleService {
     ArticleVo articleVo = new ArticleVo();
     // copy properties of article to articleVo, set field of articleVo to null if it is not in article
     BeanUtils.copyProperties(article, articleVo);
-    articleVo.setCreateDate(new DateTime(article.getCreateDate()).toString("yyyy-MM-dd HH:mm"));
+    articleVo.setCreateDate(
+        new DateTime(article.getCreateDate()).toString("yyyy-MM-dd HH:mm"));
 
     if (isBody) {
       Long bodyId = article.getBodyId();

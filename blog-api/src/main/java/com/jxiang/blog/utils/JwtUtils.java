@@ -28,11 +28,13 @@ public class JwtUtils {
     claims.put("userId", userId);
 
     JwtBuilder jwtBuilder = Jwts.builder()
-        .signWith(SignatureAlgorithm.HS256, environment.getProperty("credentials.secret-key"))
+        .signWith(SignatureAlgorithm.HS256,
+            environment.getProperty("credentials.secret-key"))
         .setClaims(claims)
         .setIssuedAt(new Date())
         .setExpiration(
-            new Date(System.currentTimeMillis() + 24L * 60 * 60 * 1000)); // valid for 1 day
+            new Date(System.currentTimeMillis()
+                + 24L * 60 * 60 * 1000)); // valid for 1 day
 
     return jwtBuilder.compact();
   }
@@ -45,9 +47,7 @@ public class JwtUtils {
    */
   public Map<String, Object> checkToken(String token) {
     try {
-      Jwt parse = Jwts
-          .parser()
-          .setSigningKey(environment.getProperty("credentials.secret-key"))
+      Jwt parse = Jwts.parser().setSigningKey(environment.getProperty("credentials.secret-key"))
           .parse(token);
       return (Map<String, Object>) parse.getBody();
     } catch (Exception e) {

@@ -60,7 +60,8 @@ public class CommentServiceImpl implements CommentService {
   public Result createComment(CommentParam commentParam) {
 
     if (commentParam.getArticleId() == null) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+          ErrorCode.NOT_FOUND.getMsg());
     }
 
     Article article;
@@ -68,7 +69,8 @@ public class CommentServiceImpl implements CommentService {
     try {
       article = articleMapper.selectById(commentParam.getArticleId());
     } catch (Exception e) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+          ErrorCode.NOT_FOUND.getMsg());
     }
 
     SysUser author = SysUserThreadLocal.get();
@@ -103,11 +105,13 @@ public class CommentServiceImpl implements CommentService {
     Comment comment = commentMapper.selectById(commentId);
 
     if (comment == null) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+          ErrorCode.NOT_FOUND.getMsg());
     }
 
     if (!comment.getAuthorId().equals(SysUserThreadLocal.get().getId())) {
-      return Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
+      return Result.failure(ErrorCode.NO_LOGIN.getCode(),
+          ErrorCode.NO_LOGIN.getMsg());
     }
 
     commentMapper.deleteById(comment);
@@ -136,7 +140,8 @@ public class CommentServiceImpl implements CommentService {
       return Result.success("Success");
     }
 
-    return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMsg());
+    return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
+        ErrorCode.SYSTEM_ERROR.getMsg());
   }
 
   @Override
@@ -169,12 +174,14 @@ public class CommentServiceImpl implements CommentService {
     Long authorId = comment.getAuthorId();
     SysUserVo sysUserVo = sysUserService.getSysUserVoById(authorId);
     commentVo.setAuthor(sysUserVo);
-    commentVo.setCreateDate(new DateTime(comment.getCreateDate()).toString("yyyy-MM-dd HH:mm"));
+    commentVo.setCreateDate(
+        new DateTime(comment.getCreateDate()).toString("yyyy-MM-dd HH:mm"));
 
     Integer level = comment.getLevel();
     // leve 1 comments have child comments
     if (level == 1) {
-      List<CommentVo> commentVoList = findChildCommentVosByParentId(comment.getId());
+      List<CommentVo> commentVoList = findChildCommentVosByParentId(
+          comment.getId());
       commentVo.setChildren(commentVoList);
     }
 

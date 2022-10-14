@@ -14,7 +14,8 @@ public class GeneralExceptionHandler {
   @ResponseBody // return JSON response
   public Result handleException(Exception ex) {
     ex.printStackTrace();
-    return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMsg());
+    return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
+        ErrorCode.SYSTEM_ERROR.getMsg());
   }
 
 }

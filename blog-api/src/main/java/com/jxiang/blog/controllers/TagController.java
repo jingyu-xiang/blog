@@ -21,7 +21,8 @@ public class TagController {
   TagService tagService;
 
   @PostMapping("create")
-  public Result createTag(@RequestPart String tagName, @RequestPart MultipartFile file) {
+  public Result createTag(@RequestPart String tagName,
+      @RequestPart MultipartFile file) {
     return tagService.createTag(tagName, file);
   }
 

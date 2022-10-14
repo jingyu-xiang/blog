@@ -1,129 +1,130 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <artifactId>blog</artifactId>
-  <build>
-    <plugins>
-      <plugin>
-        <artifactId>spring-boot-maven-plugin</artifactId>
+        xmlns="http://maven.apache.org/POM/4.0.0"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <artifactId>blog</artifactId>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.springframework.boot</groupId>
+            </plugin>
+
+            <!--allow application.yml to read pom.xml-->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <useDefaultDelimiters>true</useDefaultDelimiters>
+                </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>3.2.0</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <artifactId>commons-collections</artifactId>
+                <groupId>commons-collections</groupId>
+                <version>3.2.1</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>commons-lang3</artifactId>
+                <groupId>org.apache.commons</groupId>
+                <version>3.12.0</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>lombok</artifactId>
+                <groupId>org.projectlombok</groupId>
+                <version>1.18.24</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>fastjson</artifactId>
+                <groupId>com.alibaba</groupId>
+                <version>1.2.76</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <groupId>com.baomidou</groupId>
+                <version>3.5.2</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>joda-time</artifactId>
+                <groupId>joda-time</groupId>
+                <version>2.10.10</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>jjwt</artifactId>
+                <groupId>io.jsonwebtoken</groupId>
+                <version>0.9.1</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>qiniu-java-sdk</artifactId>
+                <groupId>com.qiniu</groupId>
+                <version>[7.7.0, 7.10.99]</version>
+            </dependency>
+
+            <dependency>
+                <artifactId>commons-codec</artifactId>
+                <groupId>commons-codec</groupId>
+                <version>1.11</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <groupId>com.jxiang</groupId>
+    <modelVersion>4.0.0</modelVersion>
+    <modules>
+        <module>blog-api</module>
+    </modules>
+    <name>blog</name>
+
+    <packaging>pom</packaging>
+
+    <parent>
+        <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
-      </plugin>
+        <relativePath/>
+        <version>2.6.10</version> <!-- lookup parent from repository -->
+    </parent>
 
-      <!--allow application.yml to read pom.xml-->
-      <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
-        <configuration>
-          <encoding>UTF-8</encoding>
-          <useDefaultDelimiters>true</useDefaultDelimiters>
-        </configuration>
-        <groupId>org.apache.maven.plugins</groupId>
-        <version>3.2.0</version>
-      </plugin>
-    </plugins>
-  </build>
+    <profiles>
+        <!--dev env-->
+        <profile>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <id>dev</id>
+            <properties>
+                <profile.active>dev</profile.active>
+            </properties>
+        </profile>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <artifactId>commons-collections</artifactId>
-        <groupId>commons-collections</groupId>
-        <version>3.2.1</version>
-      </dependency>
+        <!--test env-->
+        <profile>
+            <id>test</id>
+            <properties>
+                <profile.active>test</profile.active>
+            </properties>
+        </profile>
+    </profiles>
 
-      <dependency>
-        <artifactId>commons-lang3</artifactId>
-        <groupId>org.apache.commons</groupId>
-        <version>3.12.0</version>
-      </dependency>
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8
+        </project.reporting.outputEncoding>
+    </properties>
 
-      <dependency>
-        <artifactId>lombok</artifactId>
-        <groupId>org.projectlombok</groupId>
-        <version>1.18.24</version>
-      </dependency>
-
-      <dependency>
-        <artifactId>fastjson</artifactId>
-        <groupId>com.alibaba</groupId>
-        <version>1.2.76</version>
-      </dependency>
-
-      <dependency>
-        <artifactId>mybatis-plus-boot-starter</artifactId>
-        <groupId>com.baomidou</groupId>
-        <version>3.5.2</version>
-      </dependency>
-
-      <dependency>
-        <artifactId>joda-time</artifactId>
-        <groupId>joda-time</groupId>
-        <version>2.10.10</version>
-      </dependency>
-
-      <dependency>
-        <artifactId>jjwt</artifactId>
-        <groupId>io.jsonwebtoken</groupId>
-        <version>0.9.1</version>
-      </dependency>
-
-      <dependency>
-        <artifactId>qiniu-java-sdk</artifactId>
-        <groupId>com.qiniu</groupId>
-        <version>[7.7.0, 7.10.99]</version>
-      </dependency>
-
-      <dependency>
-        <artifactId>commons-codec</artifactId>
-        <groupId>commons-codec</groupId>
-        <version>1.11</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
-  <groupId>com.jxiang</groupId>
-  <modelVersion>4.0.0</modelVersion>
-  <modules>
-    <module>blog-api</module>
-  </modules>
-  <name>blog</name>
-
-  <packaging>pom</packaging>
-
-  <parent>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <groupId>org.springframework.boot</groupId>
-    <relativePath/>
-    <version>2.6.10</version> <!-- lookup parent from repository -->
-  </parent>
-
-  <profiles>
-    <!--dev env-->
-    <profile>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <id>dev</id>
-      <properties>
-        <profile.active>dev</profile.active>
-      </properties>
-    </profile>
-
-    <!--test env-->
-    <profile>
-      <id>test</id>
-      <properties>
-        <profile.active>test</profile.active>
-      </properties>
-    </profile>
-  </profiles>
-
-  <properties>
-    <java.version>1.8</java.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-  </properties>
-
-  <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
 
 </project>

@@ -43,11 +43,13 @@ public class AuthServiceImpl implements AuthService {
     String password = loginParams.getPassword();
 
     if (StringUtils.isBlank(account) || StringUtils.isBlank(password)) {
-      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
+      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(),
+          ErrorCode.PARAMS_ERROR.getMsg());
     }
 
     // encode (password + salt)
-    password = DigestUtils.md5Hex(password + environment.getProperty("credentials.salt"));
+    password = DigestUtils.md5Hex(
+        password + environment.getProperty("credentials.salt"));
 
     SysUser sysUser = sysUserService.findUserForLogin(account, password);
 
@@ -99,7 +101,8 @@ public class AuthServiceImpl implements AuthService {
       return Result.success(JSON.parseObject(userJson, SysUser.class).getId());
     }
 
-    return Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
+    return Result.failure(ErrorCode.NO_LOGIN.getCode(),
+        ErrorCode.NO_LOGIN.getMsg());
   }
 
   @Override
@@ -115,7 +118,8 @@ public class AuthServiceImpl implements AuthService {
         || StringUtils.isBlank(nickname)
         || StringUtils.isBlank(email)
     ) {
-      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
+      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(),
+          ErrorCode.PARAMS_ERROR.getMsg());
     }
 
     // check if sysUser already exists
@@ -128,7 +132,8 @@ public class AuthServiceImpl implements AuthService {
     sysUser = new SysUser();
     sysUser.setNickname(nickname);
     sysUser.setAccount(account);
-    sysUser.setPassword(DigestUtils.md5Hex(password + environment.getProperty("credentials.salt")));
+    sysUser.setPassword(DigestUtils.md5Hex(
+        password + environment.getProperty("credentials.salt")));
     sysUser.setEmail(email);
     sysUser.setCreateDate(System.currentTimeMillis());
     sysUser.setLastLogin(System.currentTimeMillis());

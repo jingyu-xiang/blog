@@ -84,6 +84,7 @@ public interface ArticleService {
    * @return Result
    */
   @Transactional
-  Result updateArticleById(Long articleId, ArticleUpdateParam articleUpdateParam);
+  Result updateArticleById(Long articleId,
+      ArticleUpdateParam articleUpdateParam);
 
 }

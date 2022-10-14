@@ -31,7 +31,8 @@ public class ArticleController {
   }
 
   @PostMapping("hots")
-  public Result retrieveMostPopularArticles(@RequestBody LimitParam limitParam) {
+  public Result retrieveMostPopularArticles(
+      @RequestBody LimitParam limitParam) {
     return articleService.listHotArticles(limitParam);
   }
 

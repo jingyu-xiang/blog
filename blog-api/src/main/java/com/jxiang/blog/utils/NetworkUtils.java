@@ -24,7 +24,8 @@ public class NetworkUtils {
       if (StringUtils.isEmpty(ip) || unknown.equalsIgnoreCase(ip)) {
         ip = request.getHeader("Proxy-Client-IP");
       }
-      if (StringUtils.isEmpty(ip) || ip.length() == 0 || unknown.equalsIgnoreCase(ip)) {
+      if (StringUtils.isEmpty(ip) || ip.length() == 0
+          || unknown.equalsIgnoreCase(ip)) {
         ip = request.getHeader("WL-Proxy-Client-IP");
       }
       if (StringUtils.isEmpty(ip) || unknown.equalsIgnoreCase(ip)) {

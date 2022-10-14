@@ -71,7 +71,8 @@ public class TagServiceImpl implements TagService {
     Long tagId = tag.getId();
 
     String originalFilename = file.getOriginalFilename();
-    String fileNameToUpload = "tags/" + tagId.toString() + "/" + originalFilename;
+    String fileNameToUpload =
+        "tags/" + tagId.toString() + "/" + originalFilename;
     tag.setAvatar(fileNameToUpload);
 
     Map<String, Object> uploaded = qiniuUtils.upload(file, fileNameToUpload);
@@ -92,7 +93,8 @@ public class TagServiceImpl implements TagService {
       Tag tag = tagMapper.selectById(id);
       return Result.success(tag);
     } catch (Exception e) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+          ErrorCode.NOT_FOUND.getMsg());
     }
   }
 

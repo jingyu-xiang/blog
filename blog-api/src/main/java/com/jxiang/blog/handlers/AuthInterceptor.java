@@ -40,7 +40,8 @@ public class AuthInterceptor implements HandlerInterceptor {
     String token = request.getHeader("Authorization");
 
     if (token == null) {
-      Result result = Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
+      Result result = Result.failure(ErrorCode.NO_LOGIN.getCode(),
+          ErrorCode.NO_LOGIN.getMsg());
       response.setContentType("application/json;charset=utf-8");
       response.getWriter().print(JSON.toJSONString(result));
       return false;
@@ -57,7 +58,8 @@ public class AuthInterceptor implements HandlerInterceptor {
     SysUser sysUser = authService.checkToken(token);
 
     if (StringUtils.isBlank(token) || sysUser == null) {
-      Result result = Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
+      Result result = Result.failure(ErrorCode.NO_LOGIN.getCode(),
+          ErrorCode.NO_LOGIN.getMsg());
       response.setContentType("application/json;charset=utf-8");
       response.getWriter().print(JSON.toJSONString(result));
       return false;

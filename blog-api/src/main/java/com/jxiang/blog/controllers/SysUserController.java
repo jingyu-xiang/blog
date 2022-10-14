@@ -22,7 +22,8 @@ public class SysUserController {
 
   @GetMapping("me")
   public Result currentUser(@RequestHeader("Authorization") String token) {
-    return sysUserService.findCurrentLoginUserVoByToken(jwtUtils.removeHeader(token));
+    return sysUserService.findCurrentLoginUserVoByToken(
+        jwtUtils.removeHeader(token));
   }
 
 }

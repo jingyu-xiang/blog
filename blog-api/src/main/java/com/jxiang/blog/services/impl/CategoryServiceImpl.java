@@ -34,12 +34,14 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public Result findAll() {
-    List<Category> categories = categoryMapper.selectList(new LambdaQueryWrapper<>());
+    List<Category> categories = categoryMapper.selectList(
+        new LambdaQueryWrapper<>());
     return Result.success(copyList(categories));
   }
 
   @Override
-  public Result createCategory(CategoryParam categoryParam, MultipartFile file) {
+  public Result createCategory(CategoryParam categoryParam,
+      MultipartFile file) {
     String categoryName = categoryParam.getCategoryName();
     String description = categoryParam.getDescription();
 
@@ -61,7 +63,8 @@ public class CategoryServiceImpl implements CategoryService {
     Long categoryId = category.getId();
 
     String originalFilename = file.getOriginalFilename();
-    String fileNameToUpload = "categories/" + categoryId.toString() + "/" + originalFilename;
+    String fileNameToUpload =
+        "categories/" + categoryId.toString() + "/" + originalFilename;
     category.setAvatar(fileNameToUpload);
 
     Map<String, Object> uploaded = qiniuUtils.upload(file, fileNameToUpload);
@@ -82,7 +85,8 @@ public class CategoryServiceImpl implements CategoryService {
       Category category = categoryMapper.selectById(id);
       return Result.success(copy(category));
     } catch (Exception e) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.name());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+          ErrorCode.NOT_FOUND.name());
     }
   }
 

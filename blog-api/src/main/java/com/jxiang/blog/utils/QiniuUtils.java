@@ -30,11 +30,13 @@ public class QiniuUtils {
       byte[] uploadBytes = file.getBytes();
       Auth auth = Auth.create(
           environment.getProperty("credentials.qiniu.accessKey"),
-          Objects.requireNonNull(environment.getProperty("credentials.qiniu.accessSecretKey"))
+          Objects.requireNonNull(
+              environment.getProperty("credentials.qiniu.accessSecretKey"))
       );
       String upToken = auth.uploadToken(bucket);
       Response response = uploadManager.put(uploadBytes, fileName, upToken);
-      DefaultPutRet putRet = JSON.parseObject(response.bodyString(), DefaultPutRet.class);
+      DefaultPutRet putRet = JSON.parseObject(response.bodyString(),
+          DefaultPutRet.class);
       Map<String, Object> result = new HashMap();
       result.put("success", true);
       result.put("urn", environment.getProperty("credentials.qiniu.url"));

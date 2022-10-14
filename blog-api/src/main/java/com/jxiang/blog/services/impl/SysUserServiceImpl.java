@@ -72,7 +72,8 @@ public class SysUserServiceImpl implements SysUserService {
     SysUser sysUser = authService.checkToken(token);
 
     if (sysUser == null) {
-      return Result.failure(ErrorCode.TOKEN_INVALID.getCode(), ErrorCode.TOKEN_INVALID.getMsg());
+      return Result.failure(ErrorCode.TOKEN_INVALID.getCode(),
+          ErrorCode.TOKEN_INVALID.getMsg());
     }
 
     // use thread pool to change lastLogin, isolated from the main program thread
@@ -80,7 +81,8 @@ public class SysUserServiceImpl implements SysUserService {
 
     SysUserVo sysUserVo = new SysUserVo();
     BeanUtils.copyProperties(sysUser, sysUserVo);
-    sysUserVo.setLastLogin(new DateTime(sysUser.getLastLogin()).toString("yyyy-MM-dd HH:mm"));
+    sysUserVo.setLastLogin(
+        new DateTime(sysUser.getLastLogin()).toString("yyyy-MM-dd HH:mm"));
 
     return Result.success(sysUserVo);
   }
