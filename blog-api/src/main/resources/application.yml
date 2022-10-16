@@ -56,7 +56,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
     host: localhost
-    port: 6380
+    port: 6379
 server:
   port: 8080
 credentials:
