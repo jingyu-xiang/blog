@@ -17,7 +17,6 @@ public interface TagService {
    * @param limitParam object of page and pageSize
    * @return list of tags
    */
-  @MySpringCache(name = "listHotTags")
   Result listHotTags(LimitParam limitParam);
 
   /**
@@ -25,7 +24,6 @@ public interface TagService {
    *
    * @return Result
    */
-  @MySpringCache(name = "getAllTags")
   Result getAllTags();
 
   /**
@@ -43,7 +41,6 @@ public interface TagService {
    * @param file    tag image file
    * @return Result
    */
-  @Transactional
   Result createTag(String tagName, MultipartFile file);
 
   /**

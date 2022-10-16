@@ -39,7 +39,6 @@ public interface AuthService {
    * @param registerParams object of account, password, nickname, email and avatar
    * @return Result
    */
-  @Transactional
   Result register(RegisterParams registerParams);
 
 }

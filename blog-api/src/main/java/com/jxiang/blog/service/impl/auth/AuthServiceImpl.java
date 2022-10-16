@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @EnableConfigurationProperties
@@ -103,6 +104,7 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
+  @Transactional
   public Result register(RegisterParams registerParams) {
     String account = registerParams.getAccount();
     String password = registerParams.getPassword();

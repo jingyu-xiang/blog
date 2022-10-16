@@ -1,6 +1,7 @@
 package com.jxiang.blog.service.impl.category;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.jxiang.blog.aop.cache.MySpringCache;
 import com.jxiang.blog.dao.mapper.CategoryMapper;
 import com.jxiang.blog.pojo.Category;
 import com.jxiang.blog.service.CategoryService;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -32,6 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
+  @MySpringCache(name = "findAll")
   public Result findAll() {
     List<Category> categories = categoryMapper.selectList(
         new LambdaQueryWrapper<>());
@@ -39,6 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
+  @Transactional
   public Result createCategory(CategoryParam categoryParam,
       MultipartFile file) {
     String categoryName = categoryParam.getCategoryName();

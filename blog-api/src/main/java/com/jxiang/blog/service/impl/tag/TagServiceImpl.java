@@ -1,6 +1,7 @@
 package com.jxiang.blog.service.impl.tag;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.jxiang.blog.aop.cache.MySpringCache;
 import com.jxiang.blog.dao.mapper.TagMapper;
 import com.jxiang.blog.pojo.Tag;
 import com.jxiang.blog.service.TagService;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,6 +30,7 @@ public class TagServiceImpl implements TagService {
   private TagServiceUtil tagServiceUtil;
 
   @Override
+  @MySpringCache(name = "listHotTags")
   public Result listHotTags(LimitParam limitParam) {
     List<Long> tagIdList = tagMapper.findHotTagIds(limitParam.getLimit());
 
@@ -47,12 +50,14 @@ public class TagServiceImpl implements TagService {
   }
 
   @Override
+  @MySpringCache(name = "getAllTags")
   public Result getAllTags() {
     List<Tag> tags = tagMapper.selectList(new LambdaQueryWrapper<>());
     return Result.success(tagServiceUtil.copyList(tags));
   }
 
   @Override
+  @Transactional
   public Result createTag(String tagName, MultipartFile file) {
     // check repeat
     LambdaQueryWrapper<Tag> queryWrapper = new LambdaQueryWrapper<>();

@@ -33,7 +33,6 @@ public interface CommentService {
    * @param commentId comment id
    * @return Result
    */
-  @Transactional
   Result deleteCommentById(Long commentId);
 
   /**

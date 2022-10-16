@@ -1,6 +1,6 @@
 package com.jxiang.blog.controller;
 
-import com.jxiang.blog.aop.log.LogAnnotation;
+import com.jxiang.blog.aop.log.Log;
 import com.jxiang.blog.service.ArticleService;
 import com.jxiang.blog.vo.params.ArticleBodyParam;
 import com.jxiang.blog.vo.params.ArticleParam;
@@ -24,7 +24,7 @@ public class ArticleController {
   @Autowired
   ArticleService articleService;
 
-  @LogAnnotation(module = "article", operator = "get articles") // AOP log
+  @Log(module = "article", operator = "get articles") // AOP log
   @PostMapping
   public Result listArticles(@RequestBody PageParams pageParams) {
     return articleService.listArticles(pageParams);

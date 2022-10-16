@@ -22,7 +22,6 @@ public interface CategoryService {
    *
    * @return Result
    */
-  @MySpringCache(name = "findAll")
   Result findAll();
 
   /**
@@ -32,7 +31,6 @@ public interface CategoryService {
    * @param file          category image file
    * @return Result
    */
-  @Transactional
   Result createCategory(CategoryParam categoryParam, MultipartFile file);
 
   /**

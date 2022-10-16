@@ -67,7 +67,7 @@ public class MySpringCacheAspect {
       String redisValue = redisTemplate.opsForValue().get(redisKey);
 
       if (StringUtils.isNotEmpty(redisValue)) {
-        log.info("hit cache~~~ {}, {}", className, methodName);
+        log.info("hit cache: {}, {}", className, methodName);
         return JSON.parseObject(redisValue, Result.class);
       }
 
@@ -75,7 +75,7 @@ public class MySpringCacheAspect {
 
       redisTemplate.opsForValue()
           .set(redisKey, JSON.toJSONString(result), Duration.ofMillis(annotatedExpire));
-      log.info("cache~~~ {}, {}", className, methodName);
+      log.info("caching... {}, {}", className, methodName);
 
       return result;
     } catch (Throwable e) {

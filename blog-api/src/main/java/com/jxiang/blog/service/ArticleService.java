@@ -1,6 +1,7 @@
 package com.jxiang.blog.service;
 
 import com.jxiang.blog.aop.cache.MySpringCache;
+import com.jxiang.blog.aop.log.Log;
 import com.jxiang.blog.vo.params.ArticleBodyParam;
 import com.jxiang.blog.vo.params.ArticleParam;
 import com.jxiang.blog.vo.params.ArticleUpdateParam;
@@ -18,7 +19,6 @@ public interface ArticleService {
    * @param pageParams object of page and pageSize
    * @return list of articles
    */
-  @MySpringCache(name = "listArticles")
   Result listArticles(PageParams pageParams);
 
   /**
@@ -27,7 +27,6 @@ public interface ArticleService {
    * @param limitParam object of LIMIT variable
    * @return list of articles
    */
-  @MySpringCache(name = "listHotArticles")
   Result listHotArticles(LimitParam limitParam);
 
   /**
@@ -36,7 +35,6 @@ public interface ArticleService {
    * @param limitParam object of LIMIT variable
    * @return list of articles
    */
-  @MySpringCache(name = "listNewArticles")
   Result listNewArticles(LimitParam limitParam);
 
   /**
@@ -44,7 +42,6 @@ public interface ArticleService {
    *
    * @return list of articles
    */
-  @MySpringCache(name = "listArchiveSummary")
   Result listArchiveSummary();
 
   /**
@@ -69,7 +66,6 @@ public interface ArticleService {
    * @param articleId article id
    * @return Result
    */
-  @Transactional
   Result deleteArticleById(Long articleId);
 
   /**
@@ -79,7 +75,6 @@ public interface ArticleService {
    * @param articleBody {content, contentHtml}
    * @return Result
    */
-  @Transactional
   Result updateArticleBodyById(Long articleId, ArticleBodyParam articleBody);
 
   /**
@@ -88,7 +83,6 @@ public interface ArticleService {
    * @param articleUpdateParam {title, summary}
    * @return Result
    */
-  @Transactional
   Result updateArticleById(Long articleId,
       ArticleUpdateParam articleUpdateParam);
 

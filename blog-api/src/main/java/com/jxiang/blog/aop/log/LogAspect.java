@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class LogAspect {
 
-  @Pointcut("@annotation(com.jxiang.blog.aop.log.LogAnnotation)") // 切点
+  @Pointcut("@annotation(com.jxiang.blog.aop.log.Log)") // 切点
   public void pt() {
   }
 
@@ -38,27 +38,27 @@ public class LogAspect {
     // retrieve the invoked method properties (annotation in this case)
     MethodSignature signature = (MethodSignature) joinPoint.getSignature();
     Method method = signature.getMethod();
-    LogAnnotation logAnnotation = method.getAnnotation(LogAnnotation.class);
+    Log log = method.getAnnotation(Log.class);
 
-    log.info("=====================log start================================");
-    log.info("module:{}", logAnnotation.module());
-    log.info("operation:{}", logAnnotation.operator());
+    LogAspect.log.info("=====================log start================================");
+    LogAspect.log.info("module:{}", log.module());
+    LogAspect.log.info("operation:{}", log.operator());
 
     // method name
     String className = joinPoint.getTarget().getClass().getName();
     String methodName = signature.getName();
-    log.info("request method:{}", className + "." + methodName + "()");
+    LogAspect.log.info("request method:{}", className + "." + methodName + "()");
 
     // parameters
     Object[] args = joinPoint.getArgs();
     String params = JSON.toJSONString(args[0]);
-    log.info("params:{}", params);
+    LogAspect.log.info("params:{}", params);
 
     //retrieve request info such as ip address
     HttpServletRequest request = NetworkUtils.getHttpServletRequest();
-    log.info("ip:{}", NetworkUtils.getIpAddress(request));
+    LogAspect.log.info("ip:{}", NetworkUtils.getIpAddress(request));
 
-    log.info("execute time : {} ms", time);
-    log.info("=====================log end================================");
+    LogAspect.log.info("execute time : {} ms", time);
+    LogAspect.log.info("=====================log end================================");
   }
 }

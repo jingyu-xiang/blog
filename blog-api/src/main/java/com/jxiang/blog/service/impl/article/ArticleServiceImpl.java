@@ -2,6 +2,7 @@ package com.jxiang.blog.service.impl.article;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.jxiang.blog.aop.cache.MySpringCache;
 import com.jxiang.blog.dao.mapper.ArticleBodyMapper;
 import com.jxiang.blog.dao.mapper.ArticleMapper;
 import com.jxiang.blog.dao.mapper.ArticleTagMapper;
@@ -28,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -46,6 +48,7 @@ public class ArticleServiceImpl implements ArticleService {
   private ArticleServiceUtils articleServiceUtils;
 
   @Override
+  @MySpringCache(name = "listArticles")
   public Result listArticles(PageParams pageParams) {
     Page<Article> page = new Page<>(pageParams.getPage(),
         pageParams.getPageSize());
@@ -93,6 +96,7 @@ public class ArticleServiceImpl implements ArticleService {
   }
 
   @Override
+  @MySpringCache(name = "listHotArticles")
   public Result listHotArticles(LimitParam limitParam) {
     LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
 
@@ -113,6 +117,7 @@ public class ArticleServiceImpl implements ArticleService {
   }
 
   @Override
+  @MySpringCache(name = "listNewArticles")
   public Result listNewArticles(LimitParam limitParam) {
     LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
 
@@ -133,6 +138,7 @@ public class ArticleServiceImpl implements ArticleService {
   }
 
   @Override
+  @MySpringCache(name = "listArchiveSummary")
   public Result listArchiveSummary() {
     return Result.success(articleMapper.listArchiveSummary());
   }
@@ -201,6 +207,7 @@ public class ArticleServiceImpl implements ArticleService {
   }
 
   @Override
+  @Transactional
   public Result deleteArticleById(Long articleId) {
     Article articleToDelete = articleMapper.selectById(articleId);
 
@@ -229,6 +236,7 @@ public class ArticleServiceImpl implements ArticleService {
   }
 
   @Override
+  @Transactional
   public Result updateArticleBodyById(Long articleId,
       ArticleBodyParam articleBody) {
     LambdaQueryWrapper<ArticleBody> queryWrapper = new LambdaQueryWrapper<>();
@@ -274,6 +282,7 @@ public class ArticleServiceImpl implements ArticleService {
   }
 
   @Override
+  @Transactional
   public Result updateArticleById(Long articleId,
       ArticleUpdateParam articleUpdateParam) {
     Article articleToUpdate = articleMapper.selectById(articleId);
