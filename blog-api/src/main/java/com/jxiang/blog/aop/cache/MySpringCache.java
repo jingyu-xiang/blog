@@ -11,9 +11,9 @@ import java.lang.annotation.Target;
 @Documented
 public @interface MySpringCache {
 
-  int ONE_HOUR_IN_MILLISECONDS = 60 * 1000;
+  int THREE_MINUTE_IN_MILLISECONDS = 3 * 60 * 1000;
 
-  long expire() default ONE_HOUR_IN_MILLISECONDS;
+  long expire() default THREE_MINUTE_IN_MILLISECONDS;
 
   String name() default "";
 }

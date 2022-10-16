@@ -1,7 +1,6 @@
 package com.jxiang.blog.dao.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jxiang.blog.pojo.Article;
 import com.jxiang.blog.vo.ArchiveVo;
 import java.util.List;

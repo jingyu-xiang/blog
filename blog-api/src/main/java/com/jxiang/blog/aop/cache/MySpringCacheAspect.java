@@ -31,7 +31,7 @@ public class MySpringCacheAspect {
   public void pt() {
   }
 
-  @Around("pt()")
+  @Around("pt()") // 通知（环绕）
   public Object around(ProceedingJoinPoint pjp) {
     try {
       Signature signature = pjp.getSignature();
@@ -41,6 +41,7 @@ public class MySpringCacheAspect {
       Class<?>[] argTypes = new Class[pjp.getArgs().length];
       Object[] args = pjp.getArgs();
 
+      // generate a string of arguments
       StringBuilder argsString = new StringBuilder();
       for (int i = 0; i < args.length; i++) {
         if (args[i] != null) {
@@ -50,13 +51,14 @@ public class MySpringCacheAspect {
           argTypes[i] = null;
         }
       }
-
       if (StringUtils.isNotEmpty(argsString.toString())) {
+        // encode argsString
         argsString = new StringBuilder(DigestUtils.md5Hex(argsString.toString()));
       }
 
-      Method method = pjp.getSignature().getDeclaringType().getMethod(methodName, argTypes);
-
+      // get annotation info
+      Class<?> pjpClass = pjp.getSignature().getDeclaringType();
+      Method method = pjpClass.getMethod(methodName, argTypes);
       MySpringCache annotation = method.getAnnotation(MySpringCache.class);
       long annotatedExpire = annotation.expire();
       String annotatedName = annotation.name();

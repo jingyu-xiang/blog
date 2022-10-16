@@ -1,5 +1,6 @@
 package com.jxiang.blog.services;
 
+import com.jxiang.blog.aop.cache.MySpringCache;
 import com.jxiang.blog.vo.params.ArticleBodyParam;
 import com.jxiang.blog.vo.params.ArticleParam;
 import com.jxiang.blog.vo.params.ArticleUpdateParam;
@@ -17,6 +18,7 @@ public interface ArticleService {
    * @param pageParams object of page and pageSize
    * @return list of articles
    */
+  @MySpringCache(name = "listArticles")
   Result listArticles(PageParams pageParams);
 
   /**
@@ -25,6 +27,7 @@ public interface ArticleService {
    * @param limitParam object of LIMIT variable
    * @return list of articles
    */
+  @MySpringCache(name = "listHotArticles")
   Result listHotArticles(LimitParam limitParam);
 
   /**
@@ -33,6 +36,7 @@ public interface ArticleService {
    * @param limitParam object of LIMIT variable
    * @return list of articles
    */
+  @MySpringCache(name = "listNewArticles")
   Result listNewArticles(LimitParam limitParam);
 
   /**
@@ -40,6 +44,7 @@ public interface ArticleService {
    *
    * @return list of articles
    */
+  @MySpringCache(name = "listArchiveSummary")
   Result listArchiveSummary();
 
   /**

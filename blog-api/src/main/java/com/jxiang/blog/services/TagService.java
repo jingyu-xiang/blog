@@ -1,5 +1,6 @@
 package com.jxiang.blog.services;
 
+import com.jxiang.blog.aop.cache.MySpringCache;
 import com.jxiang.blog.vo.TagVo;
 import com.jxiang.blog.vo.params.LimitParam;
 import com.jxiang.blog.vo.results.Result;
@@ -16,6 +17,7 @@ public interface TagService {
    * @param limitParam object of page and pageSize
    * @return list of tags
    */
+  @MySpringCache(name = "listHotTags")
   Result listHotTags(LimitParam limitParam);
 
   /**
@@ -23,6 +25,7 @@ public interface TagService {
    *
    * @return Result
    */
+  @MySpringCache(name = "getAllTags")
   Result getAllTags();
 
   /**

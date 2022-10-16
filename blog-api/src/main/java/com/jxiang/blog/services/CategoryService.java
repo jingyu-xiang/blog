@@ -1,5 +1,6 @@
 package com.jxiang.blog.services;
 
+import com.jxiang.blog.aop.cache.MySpringCache;
 import com.jxiang.blog.vo.CategoryVo;
 import com.jxiang.blog.vo.params.CategoryParam;
 import com.jxiang.blog.vo.results.Result;
@@ -21,6 +22,7 @@ public interface CategoryService {
    *
    * @return Result
    */
+  @MySpringCache(name = "findAll")
   Result findAll();
 
   /**
