@@ -2,7 +2,34 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://maven.apache.org/POM/4.0.0"
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <artifactId>blog</artifactId>
+    <name>blog</name>
+    <groupId>com.jxiang</groupId>
+    <modelVersion>4.0.0</modelVersion>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <modules>
+        <module>blog-api</module>
+        <module>blog-admin</module>
+    </modules>
+
+    <packaging>pom</packaging>
+
+    <parent>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <groupId>org.springframework.boot</groupId>
+        <relativePath/>
+        <version>2.6.10</version> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8
+        </project.reporting.outputEncoding>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -81,22 +108,6 @@
         </dependencies>
     </dependencyManagement>
 
-    <groupId>com.jxiang</groupId>
-    <modelVersion>4.0.0</modelVersion>
-    <modules>
-        <module>blog-api</module>
-    </modules>
-    <name>blog</name>
-
-    <packaging>pom</packaging>
-
-    <parent>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <groupId>org.springframework.boot</groupId>
-        <relativePath/>
-        <version>2.6.10</version> <!-- lookup parent from repository -->
-    </parent>
-
     <profiles>
         <!--dev env-->
         <profile>
@@ -117,14 +128,5 @@
             </properties>
         </profile>
     </profiles>
-
-    <properties>
-        <java.version>1.8</java.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8
-        </project.reporting.outputEncoding>
-    </properties>
-
-    <version>0.0.1-SNAPSHOT</version>
 
 </project>

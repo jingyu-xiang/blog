@@ -22,11 +22,6 @@
         </dependency>
 
         <dependency>
-            <artifactId>spring-boot-starter-mail</artifactId>
-            <groupId>org.springframework.boot</groupId>
-        </dependency>
-
-        <dependency>
             <artifactId>spring-boot-starter-data-redis</artifactId>
             <groupId>org.springframework.boot</groupId>
         </dependency>
