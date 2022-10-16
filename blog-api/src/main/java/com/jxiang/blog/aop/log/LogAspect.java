@@ -1,7 +1,7 @@
 package com.jxiang.blog.aop.log;
 
 import com.alibaba.fastjson.JSON;
-import com.jxiang.blog.utils.NetworkUtils;
+import com.jxiang.blog.util.statics.NetworkUtils;
 import java.lang.reflect.Method;
 import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;

@@ -9,8 +9,8 @@ public class PageParams {
 
   private int pageSize = 5; // default 5 items per page
 
-  private Long categoryId;
+  private String categoryId;
 
-  private Long tagId;
+  private String tagId;
 
 }

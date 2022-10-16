@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class CommentVo {
 
-  private Long id;
+  private String id;
 
   private SysUserVo author;
 
