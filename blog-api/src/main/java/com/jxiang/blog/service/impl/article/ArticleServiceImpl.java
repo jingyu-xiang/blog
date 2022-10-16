@@ -51,13 +51,14 @@ public class ArticleServiceImpl implements ArticleService {
         pageParams.getPageSize());
     LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
 
-    Long categoryId = Long.valueOf(pageParams.getCategoryId());
-    if (categoryId != null) {
+    if (pageParams.getCategoryId() != null) {
+      Long categoryId = Long.valueOf(pageParams.getCategoryId());
       queryWrapper.eq(Article::getCategoryId, categoryId);
     }
 
-    Long tagId = Long.valueOf(pageParams.getTagId());
-    if (tagId != null) {
+    if (pageParams.getTagId() != null) {
+      Long tagId = Long.valueOf(pageParams.getTagId());
+
       // article_id 1 -- * tag_id
       LambdaQueryWrapper<ArticleTag> articleTagLambdaQueryWrapper = new LambdaQueryWrapper<>();
       articleTagLambdaQueryWrapper.eq(ArticleTag::getTagId, tagId);
