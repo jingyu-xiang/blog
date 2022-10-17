@@ -8,7 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TagServiceUtil {
+public class TagServiceUtils {
 
   TagVo copy(Tag tag) {
     TagVo tagVo = new TagVo();

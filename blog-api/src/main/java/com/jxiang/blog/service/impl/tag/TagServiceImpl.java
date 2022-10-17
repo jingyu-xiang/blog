@@ -27,7 +27,7 @@ public class TagServiceImpl implements TagService {
   @Autowired
   private QiniuUtils qiniuUtils;
   @Autowired
-  private TagServiceUtil tagServiceUtil;
+  private TagServiceUtils tagServiceUtils;
 
   @Override
   @MySpringCache(name = "listHotTags")
@@ -46,14 +46,14 @@ public class TagServiceImpl implements TagService {
   @Override
   public List<TagVo> findTagsByArticleId(Long articleId) {
     List<Tag> tags = tagMapper.findTagsByArticleId(articleId);
-    return tagServiceUtil.copyList(tags);
+    return tagServiceUtils.copyList(tags);
   }
 
   @Override
   @MySpringCache(name = "getAllTags")
   public Result getAllTags() {
     List<Tag> tags = tagMapper.selectList(new LambdaQueryWrapper<>());
-    return Result.success(tagServiceUtil.copyList(tags));
+    return Result.success(tagServiceUtils.copyList(tags));
   }
 
   @Override
@@ -84,7 +84,7 @@ public class TagServiceImpl implements TagService {
     if ((boolean) uploaded.get("success")) {
       tag.setAvatar(uploaded.get("urn") + "/" + fileNameToUpload);
       tagMapper.updateById(tag);
-      return Result.success(tagServiceUtil.copy(tag));
+      return Result.success(tagServiceUtils.copy(tag));
     }
 
     return Result.failure(ErrorCode.FILE_UPLOAD_FAILURE.getCode(),

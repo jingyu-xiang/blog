@@ -1,4 +1,4 @@
-package com.jxiang.blog.service.impl.auth;
+package com.jxiang.blog.service.impl.user;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.dao.mapper.SysUserMapper;
@@ -23,6 +23,8 @@ public class SysUserServiceImpl implements SysUserService {
   private AuthService authService;
   @Autowired
   private ThreadService threadService;
+  @Autowired
+  private SysUserServiceUtils sysUserServiceUtils;
 
   @Override
   public SysUser findUserById(Long id) {
