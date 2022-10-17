@@ -16,10 +16,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommentServiceUtils {
 
+  private final SysUserService sysUserService;
+  private final CommentMapper commentMapper;
+
   @Autowired
-  private SysUserService sysUserService;
-  @Autowired
-  private CommentMapper commentMapper;
+  public CommentServiceUtils(SysUserService sysUserService, CommentMapper commentMapper) {
+    this.sysUserService = sysUserService;
+    this.commentMapper = commentMapper;
+  }
 
   List<CommentVo> copyList(List<Comment> comments) {
     List<CommentVo> commentVoList = new ArrayList<>();

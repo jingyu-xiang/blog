@@ -17,8 +17,12 @@ public class ThreadService {
 
   final private String THREAD_POOL_ID = "taskExecutor";
 
+  private final RedisTemplate<String, String> redisTemplate;
+
   @Autowired
-  private RedisTemplate<String, String> redisTemplate;
+  public ThreadService(RedisTemplate<String, String> redisTemplate) {
+    this.redisTemplate = redisTemplate;
+  }
 
   @Async(THREAD_POOL_ID)
   // put the following task in a configured thread pool, without affecting main thread

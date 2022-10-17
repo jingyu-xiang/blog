@@ -20,12 +20,21 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
+
+  private final CategoryMapper categoryMapper;
+  private final QiniuUtils qiniuUtils;
+  private final CategoryServiceUtils categoryServiceUtils;
+
   @Autowired
-  private CategoryMapper categoryMapper;
-  @Autowired
-  private QiniuUtils qiniuUtils;
-  @Autowired
-  private CategoryServiceUtils categoryServiceUtils;
+  public CategoryServiceImpl(
+      CategoryMapper categoryMapper,
+      QiniuUtils qiniuUtils,
+      CategoryServiceUtils categoryServiceUtils
+  ) {
+    this.categoryMapper = categoryMapper;
+    this.qiniuUtils = qiniuUtils;
+    this.categoryServiceUtils = categoryServiceUtils;
+  }
 
   @Override
   public CategoryVo findCategoryById(Long categoryId) {

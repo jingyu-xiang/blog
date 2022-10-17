@@ -21,13 +21,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class TagServiceImpl implements TagService {
+  
+  private final TagMapper tagMapper;
+  private final QiniuUtils qiniuUtils;
+  private final TagServiceUtils tagServiceUtils;
 
   @Autowired
-  private TagMapper tagMapper;
-  @Autowired
-  private QiniuUtils qiniuUtils;
-  @Autowired
-  private TagServiceUtils tagServiceUtils;
+  public TagServiceImpl(
+      TagMapper tagMapper,
+      QiniuUtils qiniuUtils,
+      TagServiceUtils tagServiceUtils
+  ) {
+    this.tagMapper = tagMapper;
+    this.qiniuUtils = qiniuUtils;
+    this.tagServiceUtils = tagServiceUtils;
+  }
 
   @Override
   @MySpringCache(name = "listHotTags")

@@ -17,14 +17,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysUserServiceImpl implements SysUserService {
 
+  private final SysUserMapper sysUserMapper;
+  private final AuthService authService;
+  private final ThreadService threadService;
+  private final SysUserServiceUtils sysUserServiceUtils;
+
   @Autowired
-  private SysUserMapper sysUserMapper;
-  @Autowired
-  private AuthService authService;
-  @Autowired
-  private ThreadService threadService;
-  @Autowired
-  private SysUserServiceUtils sysUserServiceUtils;
+  public SysUserServiceImpl(
+      SysUserMapper sysUserMapper,
+      AuthService authService,
+      ThreadService threadService,
+      SysUserServiceUtils sysUserServiceUtils
+  ) {
+    this.sysUserMapper = sysUserMapper;
+    this.authService = authService;
+    this.threadService = threadService;
+    this.sysUserServiceUtils = sysUserServiceUtils;
+  }
 
   @Override
   public SysUser findUserById(Long id) {

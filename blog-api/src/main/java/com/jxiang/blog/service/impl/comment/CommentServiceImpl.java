@@ -22,14 +22,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CommentServiceImpl implements CommentService {
 
+  private final CommentMapper commentMapper;
+  private final ArticleMapper articleMapper;
+  private final ThreadService threadService;
+  private final CommentServiceUtils commentServiceUtils;
+  
   @Autowired
-  private CommentMapper commentMapper;
-  @Autowired
-  private ArticleMapper articleMapper;
-  @Autowired
-  private ThreadService threadService;
-  @Autowired
-  private CommentServiceUtils commentServiceUtils;
+  public CommentServiceImpl(
+      CommentMapper commentMapper,
+      ArticleMapper articleMapper,
+      ThreadService threadService,
+      CommentServiceUtils commentServiceUtils
+  ) {
+    this.commentMapper = commentMapper;
+    this.articleMapper = articleMapper;
+    this.threadService = threadService;
+    this.commentServiceUtils = commentServiceUtils;
+  }
 
   @Override
   public Result getCommentsByArticleId(String id) {

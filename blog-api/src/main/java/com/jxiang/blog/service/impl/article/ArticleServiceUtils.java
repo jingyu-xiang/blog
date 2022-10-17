@@ -18,14 +18,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class ArticleServiceUtils {
 
+  private final CategoryService categoryService;
+  private final TagService tagService;
+  private final SysUserService sysUserService;
+  private final ArticleBodyMapper articleBodyMapper;
+
   @Autowired
-  private CategoryService categoryService;
-  @Autowired
-  private TagService tagService;
-  @Autowired
-  private SysUserService sysUserService;
-  @Autowired
-  private ArticleBodyMapper articleBodyMapper;
+  public ArticleServiceUtils(
+      CategoryService categoryService,
+      TagService tagService,
+      SysUserService sysUserService,
+      ArticleBodyMapper articleBodyMapper
+  ) {
+    this.categoryService = categoryService;
+    this.tagService = tagService;
+    this.sysUserService = sysUserService;
+    this.articleBodyMapper = articleBodyMapper;
+  }
 
   List<ArticleVo> copyList(List<Article> records,
       boolean isTagsRequired,

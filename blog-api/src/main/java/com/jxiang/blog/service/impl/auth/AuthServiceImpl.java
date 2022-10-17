@@ -25,15 +25,24 @@ import org.springframework.transaction.annotation.Transactional;
 @EnableConfigurationProperties
 public class AuthServiceImpl implements AuthService {
 
+  private final Environment environment;
+  private final JwtUtils jwtUtils;
+  private final SysUserService sysUserService;
+  private final RedisTemplate<String, String> redisTemplate;
+
   @Autowired
-  private Environment environment;
-  @Autowired
-  private JwtUtils jwtUtils;
-  @Lazy
-  @Autowired
-  private SysUserService sysUserService;
-  @Autowired
-  private RedisTemplate<String, String> redisTemplate;
+  public AuthServiceImpl(
+      Environment environment,
+      JwtUtils jwtUtils,
+      @Lazy SysUserService sysUserService,
+      RedisTemplate<String, String> redisTemplate
+  ) {
+    this.environment = environment;
+    this.jwtUtils = jwtUtils;
+    this.sysUserService = sysUserService;
+    this.redisTemplate = redisTemplate;
+  }
+
 
   @Override
   public Result login(LoginParams loginParams) {

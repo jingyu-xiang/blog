@@ -34,18 +34,29 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
+  private final ArticleMapper articleMapper;
+  private final ArticleBodyMapper articleBodyMapper;
+  private final CommentService commentService;
+  private final ThreadService threadService;
+  private final ArticleTagMapper articleTagMapper;
+  private final ArticleServiceUtils articleServiceUtils;
+
   @Autowired
-  private ArticleMapper articleMapper;
-  @Autowired
-  private ArticleBodyMapper articleBodyMapper;
-  @Autowired
-  private CommentService commentService;
-  @Autowired
-  private ThreadService threadService;
-  @Autowired
-  private ArticleTagMapper articleTagMapper;
-  @Autowired
-  private ArticleServiceUtils articleServiceUtils;
+  public ArticleServiceImpl(
+      ArticleMapper articleMapper,
+      ArticleBodyMapper articleBodyMapper,
+      CommentService commentService,
+      ThreadService threadService,
+      ArticleTagMapper articleTagMapper,
+      ArticleServiceUtils articleServiceUtils
+  ) {
+    this.articleMapper = articleMapper;
+    this.articleBodyMapper = articleBodyMapper;
+    this.commentService = commentService;
+    this.threadService = threadService;
+    this.articleTagMapper = articleTagMapper;
+    this.articleServiceUtils = articleServiceUtils;
+  }
 
   @Override
   @MySpringCache(name = "listArticles")
