@@ -5,10 +5,10 @@ import com.jxiang.blog.service.AuthService;
 import com.jxiang.blog.service.SysUserService;
 import com.jxiang.blog.util.beans.JwtUtils;
 import com.jxiang.common.pojo.SysUser;
-import com.jxiang.common.vo.params.LoginParams;
-import com.jxiang.common.vo.params.RegisterParams;
-import com.jxiang.common.vo.results.ErrorCode;
-import com.jxiang.common.vo.results.Result;
+import com.jxiang.common.vo.param.LoginParam;
+import com.jxiang.common.vo.param.RegisterParam;
+import com.jxiang.common.vo.result.ErrorCode;
+import com.jxiang.common.vo.result.Result;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -45,9 +45,9 @@ public class AuthServiceImpl implements AuthService {
 
 
   @Override
-  public Result login(LoginParams loginParams) {
-    String account = loginParams.getAccount();
-    String password = loginParams.getPassword();
+  public Result login(LoginParam loginParam) {
+    String account = loginParam.getAccount();
+    String password = loginParam.getPassword();
 
     if (StringUtils.isBlank(account) || StringUtils.isBlank(password)) {
       return Result.failure(ErrorCode.PARAMS_ERROR.getCode(),
@@ -114,12 +114,12 @@ public class AuthServiceImpl implements AuthService {
 
   @Override
   @Transactional
-  public Result register(RegisterParams registerParams) {
-    String account = registerParams.getAccount();
-    String password = registerParams.getPassword();
-    String nickname = registerParams.getNickname();
-    String email = registerParams.getEmail();
-    String avatarUrl = registerParams.getAvatar();
+  public Result register(RegisterParam registerParam) {
+    String account = registerParam.getAccount();
+    String password = registerParam.getPassword();
+    String nickname = registerParam.getNickname();
+    String email = registerParam.getEmail();
+    String avatarUrl = registerParam.getAvatar();
 
     if (StringUtils.isBlank(account)
         || StringUtils.isBlank(password)

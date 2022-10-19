@@ -16,13 +16,13 @@ import com.jxiang.common.pojo.ArticleTag;
 import com.jxiang.common.pojo.SysUser;
 import com.jxiang.common.vo.ArticleVo;
 import com.jxiang.common.vo.TagVo;
-import com.jxiang.common.vo.params.ArticleBodyParam;
-import com.jxiang.common.vo.params.ArticleParam;
-import com.jxiang.common.vo.params.ArticleUpdateParam;
-import com.jxiang.common.vo.params.LimitParam;
-import com.jxiang.common.vo.params.PageParams;
-import com.jxiang.common.vo.results.ErrorCode;
-import com.jxiang.common.vo.results.Result;
+import com.jxiang.common.vo.param.ArticleBodyParam;
+import com.jxiang.common.vo.param.ArticleParam;
+import com.jxiang.common.vo.param.ArticleUpdateParam;
+import com.jxiang.common.vo.param.LimitParam;
+import com.jxiang.common.vo.param.PageParam;
+import com.jxiang.common.vo.result.ErrorCode;
+import com.jxiang.common.vo.result.Result;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,18 +60,18 @@ public class ArticleServiceImpl implements ArticleService {
 
   @Override
   @MySpringCache(name = "listArticles")
-  public Result listArticles(PageParams pageParams) {
-    Page<Article> page = new Page<>(pageParams.getPage(),
-        pageParams.getPageSize());
+  public Result listArticles(PageParam pageParam) {
+    Page<Article> page = new Page<>(pageParam.getPage(),
+        pageParam.getPageSize());
     LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
 
-    if (pageParams.getCategoryId() != null) {
-      Long categoryId = Long.valueOf(pageParams.getCategoryId());
+    if (pageParam.getCategoryId() != null) {
+      Long categoryId = Long.valueOf(pageParam.getCategoryId());
       queryWrapper.eq(Article::getCategoryId, categoryId);
     }
 
-    if (pageParams.getTagId() != null) {
-      Long tagId = Long.valueOf(pageParams.getTagId());
+    if (pageParam.getTagId() != null) {
+      Long tagId = Long.valueOf(pageParam.getTagId());
 
       // article_id 1 -- * tag_id
       LambdaQueryWrapper<ArticleTag> articleTagLambdaQueryWrapper = new LambdaQueryWrapper<>();

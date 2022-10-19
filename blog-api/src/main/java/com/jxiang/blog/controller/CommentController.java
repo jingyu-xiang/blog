@@ -1,8 +1,8 @@
 package com.jxiang.blog.controller;
 
 import com.jxiang.blog.service.CommentService;
-import com.jxiang.common.vo.params.CommentParam;
-import com.jxiang.common.vo.results.Result;
+import com.jxiang.common.vo.param.CommentParam;
+import com.jxiang.common.vo.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;

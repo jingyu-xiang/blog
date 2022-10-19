@@ -1,11 +1,11 @@
 package com.jxiang.blog.service;
 
-import com.jxiang.common.vo.params.ArticleBodyParam;
-import com.jxiang.common.vo.params.ArticleParam;
-import com.jxiang.common.vo.params.ArticleUpdateParam;
-import com.jxiang.common.vo.params.LimitParam;
-import com.jxiang.common.vo.params.PageParams;
-import com.jxiang.common.vo.results.Result;
+import com.jxiang.common.vo.param.ArticleBodyParam;
+import com.jxiang.common.vo.param.ArticleParam;
+import com.jxiang.common.vo.param.ArticleUpdateParam;
+import com.jxiang.common.vo.param.LimitParam;
+import com.jxiang.common.vo.param.PageParam;
+import com.jxiang.common.vo.result.Result;
 
 public interface ArticleService {
 
@@ -13,10 +13,10 @@ public interface ArticleService {
    * list all the articles, each article contains its tags and author nickname, and all other
    * information of an article
    *
-   * @param pageParams object of page and pageSize
+   * @param pageParam object of page and pageSize
    * @return list of articles
    */
-  Result listArticles(PageParams pageParams);
+  Result listArticles(PageParam pageParam);
 
   /**
    * list most viewed articles

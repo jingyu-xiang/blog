@@ -1,7 +1,7 @@
 package com.jxiang.blog.handler;
 
-import com.jxiang.common.vo.results.ErrorCode;
-import com.jxiang.common.vo.results.Result;
+import com.jxiang.common.vo.result.ErrorCode;
+import com.jxiang.common.vo.result.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;

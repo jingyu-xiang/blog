@@ -2,9 +2,9 @@ package com.jxiang.blog.controller;
 
 import com.jxiang.blog.service.AuthService;
 import com.jxiang.blog.util.beans.JwtUtils;
-import com.jxiang.common.vo.params.LoginParams;
-import com.jxiang.common.vo.params.RegisterParams;
-import com.jxiang.common.vo.results.Result;
+import com.jxiang.common.vo.param.LoginParam;
+import com.jxiang.common.vo.param.RegisterParam;
+import com.jxiang.common.vo.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +23,8 @@ public class AuthController {
   private JwtUtils jwtUtils;
 
   @PostMapping("login")
-  public Result login(@RequestBody LoginParams loginParams) {
-    return authService.login(loginParams);
+  public Result login(@RequestBody LoginParam loginParam) {
+    return authService.login(loginParam);
   }
 
   @PostMapping("logout")
@@ -33,8 +33,8 @@ public class AuthController {
   }
 
   @PostMapping("register")
-  public Result register(@RequestBody RegisterParams registerParams) {
-    return authService.register(registerParams);
+  public Result register(@RequestBody RegisterParam registerParam) {
+    return authService.register(registerParam);
   }
 
 }

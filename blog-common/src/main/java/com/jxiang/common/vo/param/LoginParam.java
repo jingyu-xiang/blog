@@ -1,9 +1,9 @@
-package com.jxiang.common.vo.params;
+package com.jxiang.common.vo.param;
 
 import lombok.Data;
 
 @Data
-public class LoginParams {
+public class LoginParam {
 
   private String account;
 

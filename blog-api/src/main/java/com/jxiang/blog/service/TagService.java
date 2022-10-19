@@ -1,8 +1,8 @@
 package com.jxiang.blog.service;
 
 import com.jxiang.common.vo.TagVo;
-import com.jxiang.common.vo.params.LimitParam;
-import com.jxiang.common.vo.results.Result;
+import com.jxiang.common.vo.param.LimitParam;
+import com.jxiang.common.vo.result.Result;
 import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 

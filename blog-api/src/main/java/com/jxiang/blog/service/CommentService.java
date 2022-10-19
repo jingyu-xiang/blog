@@ -1,8 +1,8 @@
 package com.jxiang.blog.service;
 
 
-import com.jxiang.common.vo.params.CommentParam;
-import com.jxiang.common.vo.results.Result;
+import com.jxiang.common.vo.param.CommentParam;
+import com.jxiang.common.vo.result.Result;
 
 public interface CommentService {
 

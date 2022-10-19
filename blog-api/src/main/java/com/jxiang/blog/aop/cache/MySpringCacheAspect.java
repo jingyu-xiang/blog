@@ -2,8 +2,8 @@ package com.jxiang.blog.aop.cache;
 
 
 import com.alibaba.fastjson.JSON;
-import com.jxiang.common.vo.results.ErrorCode;
-import com.jxiang.common.vo.results.Result;
+import com.jxiang.common.vo.result.ErrorCode;
+import com.jxiang.common.vo.result.Result;
 import java.lang.reflect.Method;
 import java.time.Duration;
 import lombok.extern.slf4j.Slf4j;

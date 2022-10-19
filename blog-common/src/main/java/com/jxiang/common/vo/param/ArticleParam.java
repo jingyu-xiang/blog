@@ -1,4 +1,4 @@
-package com.jxiang.common.vo.params;
+package com.jxiang.common.vo.param;
 
 import com.jxiang.common.vo.CategoryVo;
 import com.jxiang.common.vo.TagVo;

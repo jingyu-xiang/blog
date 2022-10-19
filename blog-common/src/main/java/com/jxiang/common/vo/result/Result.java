@@ -1,4 +1,4 @@
-package com.jxiang.common.vo.results;
+package com.jxiang.common.vo.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

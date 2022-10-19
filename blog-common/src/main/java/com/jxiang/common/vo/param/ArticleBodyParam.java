@@ -1,4 +1,4 @@
-package com.jxiang.common.vo.params;
+package com.jxiang.common.vo.param;
 
 import lombok.Data;
 

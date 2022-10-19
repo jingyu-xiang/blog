@@ -1,9 +1,9 @@
-package com.jxiang.common.vo.params;
+package com.jxiang.common.vo.param;
 
 import lombok.Data;
 
 @Data
-public class PageParams {
+public class PageParam {
 
   private int page = 1; // default first page
 

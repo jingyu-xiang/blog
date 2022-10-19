@@ -2,12 +2,12 @@ package com.jxiang.blog.controller;
 
 import com.jxiang.blog.aop.log.Log;
 import com.jxiang.blog.service.ArticleService;
-import com.jxiang.common.vo.params.ArticleBodyParam;
-import com.jxiang.common.vo.params.ArticleParam;
-import com.jxiang.common.vo.params.ArticleUpdateParam;
-import com.jxiang.common.vo.params.LimitParam;
-import com.jxiang.common.vo.params.PageParams;
-import com.jxiang.common.vo.results.Result;
+import com.jxiang.common.vo.param.ArticleBodyParam;
+import com.jxiang.common.vo.param.ArticleParam;
+import com.jxiang.common.vo.param.ArticleUpdateParam;
+import com.jxiang.common.vo.param.LimitParam;
+import com.jxiang.common.vo.param.PageParam;
+import com.jxiang.common.vo.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -26,8 +26,8 @@ public class ArticleController {
 
   @Log(module = "article", operator = "get articles") // AOP log
   @PostMapping
-  public Result listArticles(@RequestBody PageParams pageParams) {
-    return articleService.listArticles(pageParams);
+  public Result listArticles(@RequestBody PageParam pageParam) {
+    return articleService.listArticles(pageParam);
   }
 
   @PostMapping("hots")
