@@ -1,6 +1,6 @@
 package com.jxiang.blog.util.statics;
 
-import com.jxiang.blog.pojo.SysUser;
+import com.jxiang.common.pojo.SysUser;
 
 public class SysUserThreadLocal {
 

@@ -2,23 +2,23 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://maven.apache.org/POM/4.0.0"
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-
-    <artifactId>blog</artifactId>
-    <name>blog</name>
     <groupId>com.jxiang</groupId>
-    <modelVersion>4.0.0</modelVersion>
+    <artifactId>blog</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <name>blog</name>
+    <modelVersion>4.0.0</modelVersion>
 
     <modules>
         <module>blog-api</module>
         <module>blog-admin</module>
+        <module>blog-common</module>
     </modules>
 
     <packaging>pom</packaging>
 
     <parent>
-        <artifactId>spring-boot-starter-parent</artifactId>
         <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
         <relativePath/>
         <version>2.6.10</version> <!-- lookup parent from repository -->
     </parent>
@@ -31,23 +31,22 @@
     </properties>
 
     <build>
-        <plugins>
-            <plugin>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <groupId>org.springframework.boot</groupId>
-            </plugin>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <groupId>org.springframework.boot</groupId>
+                    <version>2.6.10</version>
+                </plugin>
 
-            <!--allow application.yml to read pom.xml-->
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                    <useDefaultDelimiters>true</useDefaultDelimiters>
-                </configuration>
-                <groupId>org.apache.maven.plugins</groupId>
-                <version>3.2.0</version>
-            </plugin>
-        </plugins>
+                <!--allow application.yml to read pom.xml-->
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <version>3.2.0</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <dependencyManagement>
@@ -128,5 +127,4 @@
             </properties>
         </profile>
     </profiles>
-
 </project>

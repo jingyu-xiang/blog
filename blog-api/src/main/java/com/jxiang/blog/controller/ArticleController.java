@@ -2,12 +2,12 @@ package com.jxiang.blog.controller;
 
 import com.jxiang.blog.aop.log.Log;
 import com.jxiang.blog.service.ArticleService;
-import com.jxiang.blog.vo.params.ArticleBodyParam;
-import com.jxiang.blog.vo.params.ArticleParam;
-import com.jxiang.blog.vo.params.ArticleUpdateParam;
-import com.jxiang.blog.vo.params.LimitParam;
-import com.jxiang.blog.vo.params.PageParams;
-import com.jxiang.blog.vo.results.Result;
+import com.jxiang.common.vo.params.ArticleBodyParam;
+import com.jxiang.common.vo.params.ArticleParam;
+import com.jxiang.common.vo.params.ArticleUpdateParam;
+import com.jxiang.common.vo.params.LimitParam;
+import com.jxiang.common.vo.params.PageParams;
+import com.jxiang.common.vo.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;

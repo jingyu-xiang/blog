@@ -1,10 +1,10 @@
 package com.jxiang.blog.controller;
 
-import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.util.beans.QiniuUtils;
 import com.jxiang.blog.util.statics.SysUserThreadLocal;
-import com.jxiang.blog.vo.results.ErrorCode;
-import com.jxiang.blog.vo.results.Result;
+import com.jxiang.common.pojo.SysUser;
+import com.jxiang.common.vo.results.ErrorCode;
+import com.jxiang.common.vo.results.Result;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

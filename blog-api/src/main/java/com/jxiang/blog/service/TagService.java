@@ -1,11 +1,9 @@
 package com.jxiang.blog.service;
 
-import com.jxiang.blog.aop.cache.MySpringCache;
-import com.jxiang.blog.vo.TagVo;
-import com.jxiang.blog.vo.params.LimitParam;
-import com.jxiang.blog.vo.results.Result;
+import com.jxiang.common.vo.TagVo;
+import com.jxiang.common.vo.params.LimitParam;
+import com.jxiang.common.vo.results.Result;
 import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface TagService {

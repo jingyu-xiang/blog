@@ -1,7 +1,8 @@
 package com.jxiang.blog.service.impl.tag;
 
-import com.jxiang.blog.pojo.Tag;
-import com.jxiang.blog.vo.TagVo;
+
+import com.jxiang.common.pojo.Tag;
+import com.jxiang.common.vo.TagVo;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeanUtils;

@@ -11,6 +11,7 @@ public class NetworkUtils {
 
   public static HttpServletRequest getHttpServletRequest() {
     ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+    assert attributes != null;
     return attributes.getRequest();
   }
 

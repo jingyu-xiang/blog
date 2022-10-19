@@ -2,18 +2,43 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns="http://maven.apache.org/POM/4.0.0"
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>blog</artifactId>
+        <groupId>com.jxiang</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
     <artifactId>blog-api</artifactId>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.springframework.boot</groupId>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <useDefaultDelimiters>true</useDefaultDelimiters>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <dependency>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <groupId>org.springframework.boot</groupId>
+            <groupId>com.jxiang</groupId>
+            <artifactId>blog-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>
-            <artifactId>spring-boot-starter-test</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
             <groupId>org.springframework.boot</groupId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -47,11 +72,6 @@
         </dependency>
 
         <dependency>
-            <artifactId>lombok</artifactId>
-            <groupId>org.projectlombok</groupId>
-        </dependency>
-
-        <dependency>
             <artifactId>fastjson</artifactId>
             <groupId>com.alibaba</groupId>
         </dependency>
@@ -76,12 +96,4 @@
             <groupId>com.qiniu</groupId>
         </dependency>
     </dependencies>
-
-    <modelVersion>4.0.0</modelVersion>
-
-    <parent>
-        <artifactId>blog</artifactId>
-        <groupId>com.jxiang</groupId>
-        <version>0.0.1-SNAPSHOT</version>
-    </parent>
 </project>

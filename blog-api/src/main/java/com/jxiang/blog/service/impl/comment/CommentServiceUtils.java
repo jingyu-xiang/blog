@@ -2,10 +2,10 @@ package com.jxiang.blog.service.impl.comment;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.dao.mapper.CommentMapper;
-import com.jxiang.blog.pojo.Comment;
 import com.jxiang.blog.service.SysUserService;
-import com.jxiang.blog.vo.CommentVo;
-import com.jxiang.blog.vo.SysUserVo;
+import com.jxiang.common.pojo.Comment;
+import com.jxiang.common.vo.CommentVo;
+import com.jxiang.common.vo.SysUserVo;
 import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.DateTime;

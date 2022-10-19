@@ -2,7 +2,7 @@ package com.jxiang.blog.controller;
 
 import com.jxiang.blog.service.SysUserService;
 import com.jxiang.blog.util.beans.JwtUtils;
-import com.jxiang.blog.vo.results.Result;
+import com.jxiang.common.vo.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;

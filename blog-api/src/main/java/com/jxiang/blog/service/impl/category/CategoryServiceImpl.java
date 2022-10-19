@@ -3,13 +3,13 @@ package com.jxiang.blog.service.impl.category;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.aop.cache.MySpringCache;
 import com.jxiang.blog.dao.mapper.CategoryMapper;
-import com.jxiang.blog.pojo.Category;
 import com.jxiang.blog.service.CategoryService;
 import com.jxiang.blog.util.beans.QiniuUtils;
-import com.jxiang.blog.vo.CategoryVo;
-import com.jxiang.blog.vo.params.CategoryParam;
-import com.jxiang.blog.vo.results.ErrorCode;
-import com.jxiang.blog.vo.results.Result;
+import com.jxiang.common.pojo.Category;
+import com.jxiang.common.vo.CategoryVo;
+import com.jxiang.common.vo.params.CategoryParam;
+import com.jxiang.common.vo.results.ErrorCode;
+import com.jxiang.common.vo.results.Result;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
-  
+
   private final CategoryMapper categoryMapper;
   private final QiniuUtils qiniuUtils;
   private final CategoryServiceUtils categoryServiceUtils;

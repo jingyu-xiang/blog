@@ -2,9 +2,9 @@ package com.jxiang.blog.controller;
 
 import com.jxiang.blog.service.AuthService;
 import com.jxiang.blog.util.beans.JwtUtils;
-import com.jxiang.blog.vo.params.LoginParams;
-import com.jxiang.blog.vo.params.RegisterParams;
-import com.jxiang.blog.vo.results.Result;
+import com.jxiang.common.vo.params.LoginParams;
+import com.jxiang.common.vo.params.RegisterParams;
+import com.jxiang.common.vo.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

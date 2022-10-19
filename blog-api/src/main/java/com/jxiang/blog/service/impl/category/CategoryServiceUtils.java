@@ -1,7 +1,8 @@
 package com.jxiang.blog.service.impl.category;
 
-import com.jxiang.blog.pojo.Category;
-import com.jxiang.blog.vo.CategoryVo;
+
+import com.jxiang.common.pojo.Category;
+import com.jxiang.common.vo.CategoryVo;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.BeanUtils;

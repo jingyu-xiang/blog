@@ -1,10 +1,8 @@
 package com.jxiang.blog.service;
 
-import com.jxiang.blog.aop.cache.MySpringCache;
-import com.jxiang.blog.vo.CategoryVo;
-import com.jxiang.blog.vo.params.CategoryParam;
-import com.jxiang.blog.vo.results.Result;
-import org.springframework.transaction.annotation.Transactional;
+import com.jxiang.common.vo.CategoryVo;
+import com.jxiang.common.vo.params.CategoryParam;
+import com.jxiang.common.vo.results.Result;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface CategoryService {

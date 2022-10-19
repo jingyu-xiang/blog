@@ -1,8 +1,8 @@
 package com.jxiang.blog.service;
 
-import com.jxiang.blog.vo.params.CommentParam;
-import com.jxiang.blog.vo.results.Result;
-import org.springframework.transaction.annotation.Transactional;
+
+import com.jxiang.common.vo.params.CommentParam;
+import com.jxiang.common.vo.results.Result;
 
 public interface CommentService {
 

@@ -1,10 +1,9 @@
 package com.jxiang.blog.service;
 
-import com.jxiang.blog.pojo.SysUser;
-import com.jxiang.blog.vo.params.LoginParams;
-import com.jxiang.blog.vo.params.RegisterParams;
-import com.jxiang.blog.vo.results.Result;
-import org.springframework.transaction.annotation.Transactional;
+import com.jxiang.common.pojo.SysUser;
+import com.jxiang.common.vo.params.LoginParams;
+import com.jxiang.common.vo.params.RegisterParams;
+import com.jxiang.common.vo.results.Result;
 
 public interface AuthService {
 

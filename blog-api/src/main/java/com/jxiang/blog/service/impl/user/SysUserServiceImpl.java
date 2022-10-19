@@ -2,13 +2,13 @@ package com.jxiang.blog.service.impl.user;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.dao.mapper.SysUserMapper;
-import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.service.AuthService;
 import com.jxiang.blog.service.SysUserService;
 import com.jxiang.blog.service.thread.ThreadService;
-import com.jxiang.blog.vo.SysUserVo;
-import com.jxiang.blog.vo.results.ErrorCode;
-import com.jxiang.blog.vo.results.Result;
+import com.jxiang.common.pojo.SysUser;
+import com.jxiang.common.vo.SysUserVo;
+import com.jxiang.common.vo.results.ErrorCode;
+import com.jxiang.common.vo.results.Result;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

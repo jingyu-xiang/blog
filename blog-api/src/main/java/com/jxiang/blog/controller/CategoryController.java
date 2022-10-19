@@ -1,8 +1,8 @@
 package com.jxiang.blog.controller;
 
 import com.jxiang.blog.service.CategoryService;
-import com.jxiang.blog.vo.params.CategoryParam;
-import com.jxiang.blog.vo.results.Result;
+import com.jxiang.common.vo.params.CategoryParam;
+import com.jxiang.common.vo.results.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

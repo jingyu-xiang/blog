@@ -1,14 +1,11 @@
 package com.jxiang.blog.service;
 
-import com.jxiang.blog.aop.cache.MySpringCache;
-import com.jxiang.blog.aop.log.Log;
-import com.jxiang.blog.vo.params.ArticleBodyParam;
-import com.jxiang.blog.vo.params.ArticleParam;
-import com.jxiang.blog.vo.params.ArticleUpdateParam;
-import com.jxiang.blog.vo.params.LimitParam;
-import com.jxiang.blog.vo.params.PageParams;
-import com.jxiang.blog.vo.results.Result;
-import org.springframework.transaction.annotation.Transactional;
+import com.jxiang.common.vo.params.ArticleBodyParam;
+import com.jxiang.common.vo.params.ArticleParam;
+import com.jxiang.common.vo.params.ArticleUpdateParam;
+import com.jxiang.common.vo.params.LimitParam;
+import com.jxiang.common.vo.params.PageParams;
+import com.jxiang.common.vo.results.Result;
 
 public interface ArticleService {
 

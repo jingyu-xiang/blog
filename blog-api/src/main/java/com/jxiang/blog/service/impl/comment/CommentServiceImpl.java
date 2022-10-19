@@ -3,16 +3,16 @@ package com.jxiang.blog.service.impl.comment;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.dao.mapper.ArticleMapper;
 import com.jxiang.blog.dao.mapper.CommentMapper;
-import com.jxiang.blog.pojo.Article;
-import com.jxiang.blog.pojo.Comment;
-import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.service.CommentService;
 import com.jxiang.blog.service.thread.ThreadService;
 import com.jxiang.blog.util.statics.SysUserThreadLocal;
-import com.jxiang.blog.vo.CommentVo;
-import com.jxiang.blog.vo.params.CommentParam;
-import com.jxiang.blog.vo.results.ErrorCode;
-import com.jxiang.blog.vo.results.Result;
+import com.jxiang.common.pojo.Article;
+import com.jxiang.common.pojo.Comment;
+import com.jxiang.common.pojo.SysUser;
+import com.jxiang.common.vo.CommentVo;
+import com.jxiang.common.vo.params.CommentParam;
+import com.jxiang.common.vo.results.ErrorCode;
+import com.jxiang.common.vo.results.Result;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class CommentServiceImpl implements CommentService {
   private final ArticleMapper articleMapper;
   private final ThreadService threadService;
   private final CommentServiceUtils commentServiceUtils;
-  
+
   @Autowired
   public CommentServiceImpl(
       CommentMapper commentMapper,

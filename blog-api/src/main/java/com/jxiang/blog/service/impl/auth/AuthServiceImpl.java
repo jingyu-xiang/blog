@@ -1,14 +1,14 @@
 package com.jxiang.blog.service.impl.auth;
 
 import com.alibaba.fastjson.JSON;
-import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.service.AuthService;
 import com.jxiang.blog.service.SysUserService;
 import com.jxiang.blog.util.beans.JwtUtils;
-import com.jxiang.blog.vo.params.LoginParams;
-import com.jxiang.blog.vo.params.RegisterParams;
-import com.jxiang.blog.vo.results.ErrorCode;
-import com.jxiang.blog.vo.results.Result;
+import com.jxiang.common.pojo.SysUser;
+import com.jxiang.common.vo.params.LoginParams;
+import com.jxiang.common.vo.params.RegisterParams;
+import com.jxiang.common.vo.results.ErrorCode;
+import com.jxiang.common.vo.results.Result;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import org.apache.commons.codec.digest.DigestUtils;

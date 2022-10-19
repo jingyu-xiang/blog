@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MySpringCache {
 
-  int THREE_MINUTE_IN_MILLISECONDS = 3 * 60 * 1000;
+  int THREE_MINUTE_IN_MILLISECONDS = 60 * 1000;
 
   long expire() default THREE_MINUTE_IN_MILLISECONDS;
 

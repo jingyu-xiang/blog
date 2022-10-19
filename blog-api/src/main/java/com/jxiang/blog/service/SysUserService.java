@@ -1,8 +1,8 @@
 package com.jxiang.blog.service;
 
-import com.jxiang.blog.pojo.SysUser;
-import com.jxiang.blog.vo.SysUserVo;
-import com.jxiang.blog.vo.results.Result;
+import com.jxiang.common.pojo.SysUser;
+import com.jxiang.common.vo.SysUserVo;
+import com.jxiang.common.vo.results.Result;
 import org.springframework.stereotype.Service;
 
 @Service

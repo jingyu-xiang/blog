@@ -1,13 +1,13 @@
 package com.jxiang.blog.service.impl.article;
 
 import com.jxiang.blog.dao.mapper.ArticleBodyMapper;
-import com.jxiang.blog.pojo.Article;
-import com.jxiang.blog.pojo.ArticleBody;
 import com.jxiang.blog.service.CategoryService;
 import com.jxiang.blog.service.SysUserService;
 import com.jxiang.blog.service.TagService;
-import com.jxiang.blog.vo.ArticleBodyVo;
-import com.jxiang.blog.vo.ArticleVo;
+import com.jxiang.common.pojo.Article;
+import com.jxiang.common.pojo.ArticleBody;
+import com.jxiang.common.vo.ArticleBodyVo;
+import com.jxiang.common.vo.ArticleVo;
 import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.DateTime;

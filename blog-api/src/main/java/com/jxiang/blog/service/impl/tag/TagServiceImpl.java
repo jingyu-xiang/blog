@@ -3,13 +3,13 @@ package com.jxiang.blog.service.impl.tag;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.aop.cache.MySpringCache;
 import com.jxiang.blog.dao.mapper.TagMapper;
-import com.jxiang.blog.pojo.Tag;
 import com.jxiang.blog.service.TagService;
 import com.jxiang.blog.util.beans.QiniuUtils;
-import com.jxiang.blog.vo.TagVo;
-import com.jxiang.blog.vo.params.LimitParam;
-import com.jxiang.blog.vo.results.ErrorCode;
-import com.jxiang.blog.vo.results.Result;
+import com.jxiang.common.pojo.Tag;
+import com.jxiang.common.vo.TagVo;
+import com.jxiang.common.vo.params.LimitParam;
+import com.jxiang.common.vo.results.ErrorCode;
+import com.jxiang.common.vo.results.Result;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class TagServiceImpl implements TagService {
-  
+
   private final TagMapper tagMapper;
   private final QiniuUtils qiniuUtils;
   private final TagServiceUtils tagServiceUtils;
