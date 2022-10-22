@@ -89,8 +89,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     queryWrapper // order by create_date DESC & weight DESC
-        .orderByDesc(Article::getCreateDate)
-        .orderByDesc(Article::getWeight);
+        .orderByDesc(Article::getCreateDate);
 
     final Page<Article> articlePage = articleMapper.selectPage(page,
         queryWrapper);
@@ -180,7 +179,6 @@ public class ArticleServiceImpl implements ArticleService {
     // article basic fields
     Article article = new Article();
     article.setAuthorId(sysUser.getId());
-    article.setWeight(Article.Article_Common);
     article.setViewCounts(0);
     article.setTitle(articleParam.getTitle());
     article.setSummary(articleParam.getSummary());

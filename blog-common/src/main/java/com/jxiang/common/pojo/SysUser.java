@@ -34,6 +34,4 @@ public class SysUser {
 
   private String password;
 
-  private String status;
-
 }

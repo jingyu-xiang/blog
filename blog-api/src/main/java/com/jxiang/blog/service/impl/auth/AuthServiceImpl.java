@@ -134,7 +134,7 @@ public class AuthServiceImpl implements AuthService {
     SysUser sysUser = sysUserService.findUserByAccount(account);
     if (sysUser != null) {
       return Result.failure(ErrorCode.ACCOUNT_EXISTS.getCode(),
-          ErrorCode.ACCOUNT_PWD_NOT_EXIST.getMsg());
+          ErrorCode.ACCOUNT_EXISTS.getMsg());
     }
 
     sysUser = new SysUser();
@@ -148,7 +148,6 @@ public class AuthServiceImpl implements AuthService {
     sysUser.setAvatar(avatarUrl);
     sysUser.setAdmin(0); // not admin
     sysUser.setDeleted(0); // not deleted
-    sysUser.setStatus("");
     sysUserService.save(sysUser);
 
     String token = jwtUtils.createToken(sysUser.getId());
