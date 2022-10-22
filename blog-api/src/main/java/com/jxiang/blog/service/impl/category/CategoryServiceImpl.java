@@ -38,6 +38,16 @@ public class CategoryServiceImpl implements CategoryService {
   @Override
   public CategoryVo findCategoryById(Long categoryId) {
     Category category = categoryMapper.selectById(categoryId);
+
+    if (category == null) {
+      category = new Category();
+      category.setId(-1L);
+      category.setAvatar(
+          "https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg");
+      category.setCategoryName("NOT FOUND");
+      category.setDescription("Category might be deleted or never exist");
+    }
+
     return categoryServiceUtils.copy(category);
   }
 
@@ -92,14 +102,29 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   public Result getCategoryDetailById(Long id) {
-    try {
-      Category category = categoryMapper.selectById(id);
-      return Result.success(categoryServiceUtils.copy(category));
-    } catch (Exception e) {
+    Category category = categoryMapper.selectById(id);
+    if (category == null) {
       return Result.failure(ErrorCode.NOT_FOUND.getCode(),
           ErrorCode.NOT_FOUND.name());
     }
+    return Result.success(categoryServiceUtils.copy(category));
   }
 
+  @Override
+  public Result deleteCategoryById(String id) {
+    Long categoryId = Long.parseLong(id);
+
+    Category categoryToDelete = categoryMapper.selectById(categoryId);
+
+    if (categoryToDelete != null) {
+      int success = categoryMapper.deleteById(categoryId);
+      return success == 1
+          ? Result.success(id)
+          : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
+              ErrorCode.SYSTEM_ERROR.getMsg());
+    }
+
+    return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+  }
 
 }

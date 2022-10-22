@@ -19,9 +19,8 @@ public class Category {
   private String categoryName;
 
   private String description;
-
-  // TODO: finish the delete logics
-//  @TableLogic
-//  private Boolean deleted;
+  
+  @TableLogic
+  private Boolean deleted;
 
 }

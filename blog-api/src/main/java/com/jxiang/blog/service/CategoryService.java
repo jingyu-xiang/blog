@@ -38,4 +38,12 @@ public interface CategoryService {
    * @return Result
    */
   Result getCategoryDetailById(Long id);
+
+  /**
+   * delete a category, given it's id
+   *
+   * @param id id of the category
+   * @return Result
+   */
+  Result deleteCategoryById(String id);
 }

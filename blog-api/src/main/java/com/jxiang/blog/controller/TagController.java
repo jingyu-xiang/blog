@@ -4,6 +4,7 @@ import com.jxiang.blog.service.TagService;
 import com.jxiang.common.vo.param.LimitParam;
 import com.jxiang.common.vo.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +40,11 @@ public class TagController {
   @GetMapping("{id}")
   public Result findTagDetailById(@PathVariable("id") Long id) {
     return tagService.findTagVoById(id);
+  }
+
+  @DeleteMapping("delete/{id}")
+  public Result deleteTagById(@PathVariable("id") String id) {
+    return tagService.deleteTagById(id);
   }
 
 }

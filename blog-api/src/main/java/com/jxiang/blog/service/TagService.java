@@ -48,4 +48,12 @@ public interface TagService {
    * @return Result
    */
   Result findTagVoById(Long id);
+
+  /**
+   * delete a tag, given it's id
+   *
+   * @param id
+   * @return Result
+   */
+  Result deleteTagById(String id);
 }

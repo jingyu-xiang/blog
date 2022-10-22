@@ -109,4 +109,23 @@ public class TagServiceImpl implements TagService {
           ErrorCode.NOT_FOUND.getMsg());
     }
   }
+
+  @Override
+  public Result deleteTagById(String id) {
+    Long tagId = Long.parseLong(id);
+    Tag tag = tagMapper.selectById(tagId);
+
+    if (tag != null) {
+      int success = tagMapper.deleteById(tagId);
+
+      return success == 1
+          ? Result.success(id)
+          : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
+              ErrorCode.SYSTEM_ERROR.getMsg());
+    }
+
+    System.out.println("hello");
+
+    return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
+  }
 }

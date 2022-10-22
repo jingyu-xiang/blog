@@ -4,6 +4,7 @@ import com.jxiang.blog.service.CategoryService;
 import com.jxiang.common.vo.param.CategoryParam;
 import com.jxiang.common.vo.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +36,11 @@ public class CategoryController {
   @GetMapping("{id}")
   public Result getCategoryDetailById(@PathVariable Long id) {
     return categoryService.getCategoryDetailById(id);
+  }
+
+  @DeleteMapping("/delete/{id}")
+  public Result deleteCategoryById(@PathVariable String id) {
+    return categoryService.deleteCategoryById(id);
   }
 
 }

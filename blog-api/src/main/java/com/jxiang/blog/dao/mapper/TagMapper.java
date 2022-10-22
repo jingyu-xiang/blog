@@ -12,7 +12,7 @@ public interface TagMapper extends BaseMapper<Tag> {
   @Select("" +
       "SELECT id, avatar, tag_name AS tagName " +
       "FROM ms_tag " +
-      "WHERE id IN (SELECT tag_id FROM ms_article_tag WHERE article_id = #{articleId}) "
+      "WHERE id IN (SELECT tag_id FROM ms_article_tag WHERE article_id = #{articleId} AND deleted = FALSE) "
   )
   List<Tag> findTagsByArticleId(Long articleId);
 

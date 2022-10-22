@@ -13,9 +13,8 @@ public class Tag {
   private String avatar;
 
   private String tagName;
-
-  // TODO: finish the delete logics
-//  @TableLogic
-//  private Boolean deleted;
+  
+  @TableLogic
+  private Boolean deleted;
 
 }
