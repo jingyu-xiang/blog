@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,8 +62,7 @@ public class ArticleServiceImpl implements ArticleService {
   @Override
   @MySpringCache(name = "listArticles")
   public Result listArticles(PageParam pageParam) {
-    Page<Article> page = new Page<>(pageParam.getPage(),
-        pageParam.getPageSize());
+    Page<Article> page = new Page<>(pageParam.getPage(), pageParam.getPageSize());
     LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
 
     if (pageParam.getCategoryId() != null) {
@@ -344,6 +344,25 @@ public class ArticleServiceImpl implements ArticleService {
         ? Result.success(res)
         : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
             ErrorCode.SYSTEM_ERROR.getMsg());
+  }
+
+  @Override
+  public Result listSearchedArticles(String queryString, PageParam pageParam) {
+    if (StringUtils.isEmpty(queryString)) {
+      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
+    }
+
+    final Page<Article> page = new Page<>(pageParam.getPage(), pageParam.getPageSize());
+    final Page<Article> articlePage = articleMapper.queryFullText(page, queryString);
+    final List<ArticleVo> articleVoList = articleServiceUtils.copyList(
+        articlePage.getRecords(),
+        true,
+        true
+    );
+
+    return articleVoList.size() != 0
+        ? Result.success(articleVoList)
+        : Result.success("No article yet");
   }
 
 }

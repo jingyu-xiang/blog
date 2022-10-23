@@ -83,4 +83,11 @@ public interface ArticleService {
   Result updateArticleById(Long articleId,
       ArticleUpdateParam articleUpdateParam);
 
+  /**
+   * list articles, filtered by a piece of text on title and summary
+   *
+   * @param queryString a piece of text for fulltext index search
+   * @return Result
+   */
+  Result listSearchedArticles(String queryString, PageParam pageParam);
 }

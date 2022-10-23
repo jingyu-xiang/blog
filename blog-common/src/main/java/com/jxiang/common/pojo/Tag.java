@@ -13,7 +13,7 @@ public class Tag {
   private String avatar;
 
   private String tagName;
-  
+
   @TableLogic
   private Boolean deleted;
 

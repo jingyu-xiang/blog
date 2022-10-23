@@ -9,9 +9,13 @@ create table ms_article
     view_counts    int null comment '浏览数量',
     author_id      bigint null comment '作者id',
     body_id        bigint null comment '内容id',
-    category_id    int null comment '类别id',
+    category_id    bigint null comment '类别id',
     deleted        bit default b'0' not null comment 'logical delete'
 ) charset = utf8mb3;
+
+create
+fulltext index idx_title_summary
+    on ms_article (title, summary);
 
 create table ms_article_body
 (
@@ -45,7 +49,8 @@ create table ms_category
         primary key,
     avatar        varchar(255) collate utf8mb4_unicode_ci null,
     category_name varchar(255) collate utf8mb4_unicode_ci null,
-    description   varchar(255) collate utf8mb4_unicode_ci null
+    description   varchar(255) collate utf8mb4_unicode_ci null,
+    deleted       bit default b'0' not null
 ) charset = utf8mb3;
 
 create table ms_comment
@@ -85,6 +90,7 @@ create table ms_tag
     id       bigint auto_increment
         primary key,
     avatar   varchar(255) collate utf8mb4_unicode_ci null,
-    tag_name varchar(255) collate utf8mb4_unicode_ci null
+    tag_name varchar(255) collate utf8mb4_unicode_ci null,
+    deleted  bit default b'0' not null
 ) charset = utf8mb3;
 

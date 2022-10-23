@@ -19,7 +19,7 @@ public class Category {
   private String categoryName;
 
   private String description;
-  
+
   @TableLogic
   private Boolean deleted;
 

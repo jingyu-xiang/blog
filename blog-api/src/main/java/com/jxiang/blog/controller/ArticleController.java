@@ -30,6 +30,12 @@ public class ArticleController {
     return articleService.listArticles(pageParam);
   }
 
+  @PostMapping("fulltext/{text}")
+  public Result listSearchedArticles(@PathVariable("text") String queryString,
+      @RequestBody PageParam pageParam) {
+    return articleService.listSearchedArticles(queryString, pageParam);
+  }
+
   @PostMapping("hots")
   public Result retrieveMostPopularArticles(
       @RequestBody LimitParam limitParam) {
