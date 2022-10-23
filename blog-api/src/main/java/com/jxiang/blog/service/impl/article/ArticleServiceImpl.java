@@ -81,7 +81,8 @@ public class ArticleServiceImpl implements ArticleService {
 
       List<Long> articleIdList = new ArrayList<>();
       articleTagList.forEach(
-          articleTag -> articleIdList.add(articleTag.getArticleId()));
+          articleTag -> articleIdList.add(articleTag.getArticleId())
+      );
 
       if (articleIdList.size() > 0) {
         queryWrapper.in(Article::getId, articleIdList);

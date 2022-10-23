@@ -13,7 +13,9 @@ import org.springframework.stereotype.Repository;
 public interface ArticleMapper extends BaseMapper<Article> {
 
   @Select("" +
-      "SELECT FROM_UNIXTIME(create_date/1000, '%y') AS year, FROM_UNIXTIME(create_date/1000, '%m') AS month, COUNT(*) as count "
+      "SELECT FROM_UNIXTIME(create_date/1000, '%y') AS year, "
+      + "FROM_UNIXTIME(create_date/1000, '%m') AS month, "
+      + "COUNT(*) as count "
       + "FROM ms_article "
       + "GROUP BY year, month;"
   )
