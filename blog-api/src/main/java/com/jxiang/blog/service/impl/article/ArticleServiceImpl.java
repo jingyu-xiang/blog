@@ -347,6 +347,7 @@ public class ArticleServiceImpl implements ArticleService {
   }
 
   @Override
+  @MySpringCache(name = "listSearchedArticles")
   public Result listSearchedArticles(String queryString, PageParam pageParam) {
     if (StringUtils.isEmpty(queryString)) {
       return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
