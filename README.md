@@ -35,7 +35,7 @@ SpringBoot Blog System
 
 <br/>
 
-2. used thread pool to update view counts for articles:
+2. Used thread pool to update view counts for articles:
     * Update view counts would be time-consuming, and may trigger exceptions.
       But it should not
       affect users viewing the
