@@ -35,7 +35,7 @@ SpringBoot Blog System
 
 <br/>
 
-2. used thread pool to update view counts for articles:
+2. Used thread pool to update view counts for articles:
     * Update view counts would be time-consuming, and may trigger exceptions.
       But it should not
       affect users viewing the
@@ -79,6 +79,6 @@ SpringBoot Blog System
 ### Admin features:
 
 1. Manage users' statuses as normal users or admins.
-2. Post Censorship.
+2. Delete posts.
 3. Add/ Edit/ Delete posts categories and tags.
 
