@@ -22,29 +22,31 @@ public class QiniuUtils {
   Environment environment;
 
   public Map<String, Object> upload(MultipartFile file, String fileName) {
-
     Configuration cfg = new Configuration(Region.regionNa0());
     UploadManager uploadManager = new UploadManager(cfg);
     String bucket = environment.getProperty("credentials.qiniu.bucket");
+
     try {
       byte[] uploadBytes = file.getBytes();
+
       Auth auth = Auth.create(
           environment.getProperty("credentials.qiniu.accessKey"),
           Objects.requireNonNull(
               environment.getProperty("credentials.qiniu.accessSecretKey"))
       );
+
       String upToken = auth.uploadToken(bucket);
       Response response = uploadManager.put(uploadBytes, fileName, upToken);
-      DefaultPutRet putRet = JSON.parseObject(response.bodyString(),
-          DefaultPutRet.class);
-      Map<String, Object> result = new HashMap();
+
+      DefaultPutRet putRet = JSON.parseObject(response.bodyString(), DefaultPutRet.class);
+      Map<String, Object> result = new HashMap<>();
       result.put("success", true);
       result.put("urn", environment.getProperty("credentials.qiniu.url"));
       return result;
     } catch (Exception ex) {
       ex.printStackTrace();
     }
-    Map<String, Object> result = new HashMap();
+    Map<String, Object> result = new HashMap<>();
     result.put("success", false);
     result.put("urn", environment.getProperty("credentials.qiniu.url"));
     return result;

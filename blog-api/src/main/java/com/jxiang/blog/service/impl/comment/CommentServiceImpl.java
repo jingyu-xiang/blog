@@ -148,6 +148,7 @@ public class CommentServiceImpl implements CommentService {
   public Boolean deleteArticleComments(Long articleId) {
     try {
       commentMapper.deleteArticleComments(articleId);
+      threadService.updateCommentCount(articleMapper, articleId, false);
     } catch (Exception e) {
       return false;
     }

@@ -26,8 +26,7 @@ public class ThreadService {
 
   @Async(THREAD_POOL_ID)
   // put the following task in a configured thread pool, without affecting main thread
-  public void updateArticleViewCount(ArticleMapper articleMapper,
-      Article article) {
+  public void updateArticleViewCount(ArticleMapper articleMapper, Article article) {
     int viewCount = article.getViewCounts();
     Article toUpdate = new Article();
     toUpdate.setViewCounts(viewCount + 1);
@@ -45,6 +44,28 @@ public class ThreadService {
     int commentCount = article.getCommentCounts();
     Article toUpdate = new Article();
     toUpdate.setCommentCounts(commentCount + 1);
+
+    LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
+    updateWrapper
+        .eq(Article::getId, article.getId())
+        .eq(Article::getCommentCounts, commentCount); // optimistic lock
+
+    articleMapper.update(toUpdate, updateWrapper);
+  }
+
+  // method overload
+  @Async(THREAD_POOL_ID)
+  public void updateCommentCount(ArticleMapper articleMapper, Long articleId, boolean add) {
+    Article article = articleMapper.selectById(articleId);
+
+    int commentCount = article.getCommentCounts();
+    Article toUpdate = new Article();
+
+    if (add) {
+      toUpdate.setCommentCounts(commentCount + 1);
+    } else {
+      toUpdate.setCommentCounts(commentCount - 1);
+    }
 
     LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
     updateWrapper
