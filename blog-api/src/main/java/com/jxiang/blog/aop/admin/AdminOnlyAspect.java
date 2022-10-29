@@ -18,7 +18,7 @@ public class AdminOnlyAspect {
   public void pt() {
   }
 
-  @Around("pt()") //@Before：前置通知，在原始方法运行之前执行
+  @Around("pt()")
   public Object around(ProceedingJoinPoint pjp) {
     try {
       SysUser requestUser = SysUserThreadLocal.get();
