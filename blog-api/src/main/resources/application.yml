@@ -23,7 +23,7 @@ mybatis-plus:
 spring:
   config:
     activate:
-      on-profile: dev
+      on-profile: prod
   datasource:
     url: jdbc:mysql://localhost:3306/blog
     username: root
@@ -48,7 +48,7 @@ credentials:
 spring:
   config:
     activate:
-      on-profile: test
+      on-profile: dev
   datasource:
     url: jdbc:mysql://localhost:3306/blog-test
     username: root
