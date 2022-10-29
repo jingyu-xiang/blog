@@ -22,7 +22,6 @@ public class AdminOnlyAspect {
   public Object around(ProceedingJoinPoint pjp) {
     try {
       SysUser requestUser = SysUserThreadLocal.get();
-      System.out.println(requestUser);
       if (requestUser.getAdmin() != 1) {
         return Result.failure(ErrorCode.NO_PERMISSION.getCode(), ErrorCode.NO_PERMISSION.getMsg());
       }
