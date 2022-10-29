@@ -40,6 +40,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
         .addPathPatterns("/api/categories/create") // create category
         .addPathPatterns("/api/categories/delete/*") // delete category
 
+        // both
+        .addPathPatterns("/api/articles/delete/*") // delete article
     ;
   }
 

@@ -1,6 +1,7 @@
 package com.jxiang.blog.service.impl.category;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.jxiang.blog.aop.admin.AdminOnly;
 import com.jxiang.blog.aop.cache.MySpringCache;
 import com.jxiang.blog.dao.mapper.CategoryMapper;
 import com.jxiang.blog.service.CategoryService;
@@ -61,6 +62,7 @@ public class CategoryServiceImpl implements CategoryService {
 
   @Override
   @Transactional
+  @AdminOnly
   public Result createCategory(CategoryParam categoryParam,
       MultipartFile file) {
     String categoryName = categoryParam.getCategoryName();
@@ -111,6 +113,7 @@ public class CategoryServiceImpl implements CategoryService {
   }
 
   @Override
+  @AdminOnly
   public Result deleteCategoryById(String id) {
     Long categoryId = Long.parseLong(id);
 

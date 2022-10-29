@@ -1,4 +1,4 @@
-package com.jxiang.blog.aop.cache;
+package com.jxiang.blog.aop.admin;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,12 +7,6 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD,})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface MySpringCache {
+public @interface AdminOnly {
 
-  int THREE_MINUTE_IN_MILLISECONDS = 60 * 1000;
-
-  long expire() default THREE_MINUTE_IN_MILLISECONDS;
-
-  String name() default "";
-  
 }

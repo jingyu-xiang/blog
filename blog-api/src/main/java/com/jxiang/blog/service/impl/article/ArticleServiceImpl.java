@@ -226,23 +226,24 @@ public class ArticleServiceImpl implements ArticleService {
           ErrorCode.NOT_FOUND.getMsg());
     }
 
-    if (!articleToDelete.getAuthorId()
-        .equals(SysUserThreadLocal.get().getId())) {
-      return Result.failure(ErrorCode.NO_LOGIN.getCode(),
-          ErrorCode.NO_LOGIN.getMsg());
+    SysUser requestUser = SysUserThreadLocal.get();
+
+    if (requestUser.getAdmin() == 1 || articleToDelete.getAuthorId().equals(requestUser.getId())) {
+      articleMapper.deleteById(articleToDelete);
+
+      // delete article's comments
+      boolean deleted = commentService.deleteArticleComments(articleId);
+
+      if (deleted) {
+        return Result.success(articleToDelete.getId());
+      }
+
+      return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
+          ErrorCode.SYSTEM_ERROR.getMsg());
+    } else {
+      return Result.failure(ErrorCode.NO_PERMISSION.getCode(),
+          ErrorCode.NO_PERMISSION.getMsg());
     }
-
-    articleMapper.deleteById(articleToDelete);
-
-    // delete article's comments
-    boolean deleted = commentService.deleteArticleComments(articleId);
-
-    if (deleted) {
-      return Result.success(articleToDelete.getId());
-    }
-
-    return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
-        ErrorCode.SYSTEM_ERROR.getMsg());
   }
 
   @Override

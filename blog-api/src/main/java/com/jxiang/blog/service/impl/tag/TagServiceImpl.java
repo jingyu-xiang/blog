@@ -1,6 +1,7 @@
 package com.jxiang.blog.service.impl.tag;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.jxiang.blog.aop.admin.AdminOnly;
 import com.jxiang.blog.aop.cache.MySpringCache;
 import com.jxiang.blog.dao.mapper.TagMapper;
 import com.jxiang.blog.service.TagService;
@@ -66,6 +67,7 @@ public class TagServiceImpl implements TagService {
 
   @Override
   @Transactional
+  @AdminOnly
   public Result createTag(String tagName, MultipartFile file) {
     // check repeat
     LambdaQueryWrapper<Tag> queryWrapper = new LambdaQueryWrapper<>();
@@ -111,6 +113,7 @@ public class TagServiceImpl implements TagService {
   }
 
   @Override
+  @AdminOnly
   public Result deleteTagById(String id) {
     Long tagId = Long.parseLong(id);
     Tag tag = tagMapper.selectById(tagId);
@@ -123,8 +126,6 @@ public class TagServiceImpl implements TagService {
           : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
               ErrorCode.SYSTEM_ERROR.getMsg());
     }
-
-    System.out.println("hello");
 
     return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
   }

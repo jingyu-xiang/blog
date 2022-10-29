@@ -5,7 +5,7 @@ public enum ErrorCode {
   ACCOUNT_EXISTS(400, "This account has already registered"),
   PARAMS_ERROR(400, "Invalid parameters"),
   ACCOUNT_PWD_NOT_EXIST(404, "Username or password does not exist"),
-  NO_PERMISSION(404, "No permission"),
+  NO_PERMISSION(403, "No permission"),
   SESSION_TIME_OUT(408, "Request time out"),
   NO_LOGIN(401, "Require log in"),
   TOKEN_INVALID(401, "Invalid jwt token "),
