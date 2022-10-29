@@ -5,14 +5,12 @@ SpringBoot Blog System
 ## Techstack
 
 * Spring Boot
-* Spring Security
 * Redis
 * MySQL (MyBatis, MyBatisPlus)
 
 ## Frontend (planned)
 
-* React.js
-* Redux
+* React
 
 ## Tech highlights:
 
@@ -78,7 +76,7 @@ SpringBoot Blog System
 
 ### Admin features:
 
-1. Manage users' statuses as normal users or admins.
-2. Delete posts.
-3. Add/ Edit/ Delete posts categories and tags.
+1. Manage posts.
+2. Add/ Edit/ Delete posts categories and tags.
+3. Manage Users
 
