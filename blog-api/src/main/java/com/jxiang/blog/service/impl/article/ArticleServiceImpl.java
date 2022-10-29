@@ -240,10 +240,10 @@ public class ArticleServiceImpl implements ArticleService {
 
       return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
           ErrorCode.SYSTEM_ERROR.getMsg());
-    } else {
-      return Result.failure(ErrorCode.NO_PERMISSION.getCode(),
-          ErrorCode.NO_PERMISSION.getMsg());
     }
+
+    return Result.failure(ErrorCode.NO_PERMISSION.getCode(),
+        ErrorCode.NO_PERMISSION.getMsg());
   }
 
   @Override
