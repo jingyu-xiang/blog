@@ -1,6 +1,6 @@
 HELP.md
-blog-api/src/main/resources/application.properties
 target/
+resources/application.properties
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
