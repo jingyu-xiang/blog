@@ -25,15 +25,13 @@ spring:
     activate:
       on-profile: prod
   datasource:
-    url: jdbc:mysql://b3f1a7bf22356c:46fb7f2d@us-cdbr-east-06.cleardb.net/heroku_5394fe30746e87d?reconnect=true
-    username: b3f1a7bf22356c
-    password: 46fb7f2d
+    url: ${MYSQL_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
     # https://console.upstash.com/
-    host: us1-vocal-eagle-38923.upstash.io
-    password: 07ed9920ad544c7c9cbc2d674ebce27a
-    port: 38923
+    host: ${REDIS_HOST}
+    password: ${REDIS_PASSWORD}
+    port: ${REDIS_PORT}
 server:
   port: 8000
 credentials:
