@@ -30,8 +30,10 @@ spring:
     password: 46fb7f2d
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
-    host: localhost
-    port: 6379
+    # https://console.upstash.com/
+    host: us1-vocal-eagle-38923.upstash.io
+    password: 07ed9920ad544c7c9cbc2d674ebce27a
+    port: 38923
 server:
   port: 8000
 credentials:
