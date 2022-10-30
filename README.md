@@ -63,12 +63,12 @@ SpringBoot Blog System
     * Authentication & authorization: used JWT for user authentication. Stored
       the JWT token as redis key to store user auth information.
 
-5. Code organization:
+5. Code quality & organization:
     * Seperated the codebase into 3 Maven modules: blog-admin for the admin-side
       services, blog-api for the user-side services, and blog-common for
       commonly used entities such as the POJOs (server-database connection)  and
       VOs (server-client connection).
-    * Widely utilized custom annotations and Spring AOP to reduce repeated code
+    * Widely utilized custom annotations and Spring AOP to organize common code
       and improve readability.
 
 ## App features:
