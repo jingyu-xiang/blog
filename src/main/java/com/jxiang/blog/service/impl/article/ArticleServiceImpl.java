@@ -192,16 +192,16 @@ public class ArticleServiceImpl implements ArticleService {
     article.setCreateDate(System.currentTimeMillis());
 
     // article category
-    article.setCategoryId(Long.valueOf(articleParam.getCategory().getId()));
+    article.setCategoryId(Long.valueOf(articleParam.getCategoryId()));
 
     articleMapper.insert(article);
 
     // article tags
-    List<TagVo> tagVos = articleParam.getTags();
-    if (tagVos != null) {
-      for (TagVo tagVo : tagVos) {
+    List<String> tagIds = articleParam.getTagIds();
+    if (tagIds != null && tagIds.size() > 0) {
+      for (String tagId : tagIds) {
         ArticleTag articleTag = new ArticleTag();
-        articleTag.setTagId(Long.valueOf(tagVo.getId()));
+        articleTag.setTagId(Long.valueOf(tagId));
         articleTag.setArticleId(article.getId());
         articleTagMapper.insert(articleTag);
       }

@@ -10,11 +10,11 @@ public class ArticleParam {
 
   private ArticleBodyParam body;
 
-  private CategoryVo category;
+  private String categoryId;
 
   private String summary;
 
-  private List<TagVo> tags;
+  private List<String> tagIds;
 
   private String title;
 
