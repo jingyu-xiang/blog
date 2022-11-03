@@ -43,7 +43,7 @@ public class ArticleServiceUtils {
     for (Article record : records) {
       // author and tags are required
       articleVoList.add(
-          copy(record, isTagsRequired, isAuthorRequired, false, false)
+          copy(record, isTagsRequired, isAuthorRequired, false, true)
       );
     }
     return articleVoList;
