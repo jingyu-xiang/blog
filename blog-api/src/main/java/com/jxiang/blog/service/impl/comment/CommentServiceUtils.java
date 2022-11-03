@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.dao.mapper.CommentMapper;
 import com.jxiang.blog.service.SysUserService;
 import com.jxiang.common.pojo.Comment;
+import com.jxiang.common.vo.AuthorVo;
 import com.jxiang.common.vo.CommentVo;
-import com.jxiang.common.vo.SysUserVo;
 import java.util.ArrayList;
 import java.util.List;
 import org.joda.time.DateTime;
@@ -44,8 +44,8 @@ public class CommentServiceUtils {
 
     // author info
     Long authorId = comment.getAuthorId();
-    SysUserVo sysUserVo = sysUserService.getSysUserVoById(authorId);
-    commentVo.setAuthor(sysUserVo);
+    AuthorVo authorVo = sysUserService.findAuthorVoById(authorId);
+    commentVo.setAuthor(authorVo);
     commentVo.setCreateDate(
         new DateTime(comment.getCreateDate()).toString("yyyy-MM-dd HH:mm"));
 
@@ -60,7 +60,7 @@ public class CommentServiceUtils {
     // level 2 comments do not have child comments， but have a to-sysUser id to indicate who created parent comment
     if (level == 2) {
       Long toUid = comment.getToUid();
-      SysUserVo toSysUserVo = sysUserService.getSysUserVoById(toUid);
+      AuthorVo toSysUserVo = sysUserService.findAuthorVoById(toUid);
       commentVo.setToUser(toSysUserVo);
     }
 

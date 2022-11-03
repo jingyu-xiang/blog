@@ -11,8 +11,6 @@ public class RegisterParam {
 
   private String nickname;
 
-  private String email;
-
-  private String avatar;
+  private String github;
 
 }

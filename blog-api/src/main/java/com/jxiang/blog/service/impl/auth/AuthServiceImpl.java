@@ -118,13 +118,12 @@ public class AuthServiceImpl implements AuthService {
     String account = registerParam.getAccount();
     String password = registerParam.getPassword();
     String nickname = registerParam.getNickname();
-    String email = registerParam.getEmail();
-    String avatarUrl = registerParam.getAvatar();
+    String github = registerParam.getGithub();
 
     if (StringUtils.isBlank(account)
         || StringUtils.isBlank(password)
         || StringUtils.isBlank(nickname)
-        || StringUtils.isBlank(email)
+        || StringUtils.isBlank(github)
     ) {
       return Result.failure(ErrorCode.PARAMS_ERROR.getCode(),
           ErrorCode.PARAMS_ERROR.getMsg());
@@ -142,10 +141,9 @@ public class AuthServiceImpl implements AuthService {
     sysUser.setAccount(account);
     sysUser.setPassword(DigestUtils.md5Hex(
         password + environment.getProperty("credentials.salt")));
-    sysUser.setEmail(email);
+    sysUser.setGithub(github);
     sysUser.setCreateDate(System.currentTimeMillis());
     sysUser.setLastLogin(System.currentTimeMillis());
-    sysUser.setAvatar(avatarUrl);
     sysUser.setAdmin(0); // not admin
     sysUser.setDeleted(0); // not deleted
     sysUserService.save(sysUser);

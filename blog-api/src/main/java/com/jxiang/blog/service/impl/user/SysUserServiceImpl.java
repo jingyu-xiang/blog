@@ -6,6 +6,7 @@ import com.jxiang.blog.service.AuthService;
 import com.jxiang.blog.service.SysUserService;
 import com.jxiang.blog.service.thread.ThreadService;
 import com.jxiang.common.pojo.SysUser;
+import com.jxiang.common.vo.AuthorVo;
 import com.jxiang.common.vo.SysUserVo;
 import com.jxiang.common.vo.result.ErrorCode;
 import com.jxiang.common.vo.result.Result;
@@ -36,33 +37,13 @@ public class SysUserServiceImpl implements SysUserService {
   }
 
   @Override
-  public SysUser findUserById(Long id) {
+  public AuthorVo findAuthorVoById(Long id) {
     SysUser sysUser = sysUserMapper.selectById(id);
     if (sysUser == null) {
       sysUser = new SysUser();
       sysUser.setNickname("unknown");
     }
-    return sysUser;
-  }
-
-  @Override
-  public SysUserVo getSysUserVoById(Long sysUserId) {
-    SysUser sysUser = sysUserMapper.selectById(sysUserId);
-    if (sysUser == null) {
-      // generate a template for all anonymous users
-      sysUser = new SysUser();
-      sysUser.setAccount("anonymous user");
-      sysUser.setAvatar("unknown.png");
-      sysUser.setNickname("unknown");
-    }
-
-    SysUserVo sysUserVo = new SysUserVo();
-    sysUserVo.setId(String.valueOf(sysUserId));
-    // copy field values of sysUser to sysUserVo if match
-    BeanUtils.copyProperties(sysUser, sysUserVo);
-    System.out.println(sysUserVo);
-
-    return sysUserVo;
+    return sysUserServiceUtils.copyAuthor(sysUser);
   }
 
   @Override

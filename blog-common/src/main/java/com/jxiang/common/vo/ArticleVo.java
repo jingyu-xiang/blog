@@ -20,7 +20,7 @@ public class ArticleVo {
 
   private String createDate;
 
-  private String author; // nickname of author
+  private AuthorVo author; // nickname of author
 
   private List<TagVo> tags; // list of user-tags
 

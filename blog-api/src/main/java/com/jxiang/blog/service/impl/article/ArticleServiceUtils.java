@@ -82,7 +82,7 @@ public class ArticleServiceUtils {
 
     if (isAuthorRequired) {
       Long authorId = article.getAuthorId();
-      articleVo.setAuthor(sysUserService.findUserById(authorId).getNickname());
+      articleVo.setAuthor(sysUserService.findAuthorVoById(authorId));
     }
 
     return articleVo;

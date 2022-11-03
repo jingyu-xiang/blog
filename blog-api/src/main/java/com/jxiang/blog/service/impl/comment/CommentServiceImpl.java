@@ -114,30 +114,37 @@ public class CommentServiceImpl implements CommentService {
           ErrorCode.NO_LOGIN.getMsg());
     }
 
-    commentMapper.deleteById(comment);
+    int success = commentMapper.deleteById(comment);
 
-    if (comment.getLevel() == 2) {
-      return Result.success("Success");
-    }
-
-    if (comment.getLevel() == 1) {
-      LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
-      List<Comment> childComments = commentMapper.selectList(
-          queryWrapper.eq(Comment::getParentId, commentId));
-
-      // logically delete all child comments
-      List<Long> commentIds = new ArrayList<>();
-      childComments.forEach(child -> {
-        child.setDeleted(true);
-        commentIds.add(child.getId());
-      });
-
-      // only delete child comments if they exist
-      if (commentIds.size() > 0) {
-        commentMapper.deleteChildComments(commentIds);
+    if (success == 1) {
+      if (comment.getLevel() == 2) {
+        threadService.updateCommentCount(articleMapper, comment.getArticleId(), false, 1);
+        return Result.success("Success");
       }
 
-      return Result.success("Success");
+      if (comment.getLevel() == 1) {
+        LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
+        List<Comment> childComments = commentMapper.selectList(
+            queryWrapper.eq(Comment::getParentId, commentId));
+
+        // logically delete all child comments
+        List<Long> commentIds = new ArrayList<>();
+        int count = 0;
+
+        for (Comment child : childComments) {
+          count += 1;
+          child.setDeleted(true);
+          commentIds.add(child.getId());
+        }
+
+        // only delete child comments if they exist
+        if (commentIds.size() > 0) {
+          threadService.updateCommentCount(articleMapper, comment.getArticleId(), false, count);
+          commentMapper.deleteChildComments(commentIds);
+        }
+
+        return Result.success("Success");
+      }
     }
 
     return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
@@ -148,7 +155,6 @@ public class CommentServiceImpl implements CommentService {
   public Boolean deleteArticleComments(Long articleId) {
     try {
       commentMapper.deleteArticleComments(articleId);
-      threadService.updateCommentCount(articleMapper, articleId, false);
     } catch (Exception e) {
       return false;
     }

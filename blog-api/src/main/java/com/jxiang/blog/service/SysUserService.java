@@ -1,6 +1,7 @@
 package com.jxiang.blog.service;
 
 import com.jxiang.common.pojo.SysUser;
+import com.jxiang.common.vo.AuthorVo;
 import com.jxiang.common.vo.SysUserVo;
 import com.jxiang.common.vo.result.Result;
 import org.springframework.stereotype.Service;
@@ -9,12 +10,12 @@ import org.springframework.stereotype.Service;
 public interface SysUserService {
 
   /**
-   * retrieve a user by a given id
+   * retrieve an author vo by a given id
    *
    * @param id sysUser's id
    * @return single sysUser
    */
-  SysUser findUserById(Long id);
+  AuthorVo findAuthorVoById(Long id);
 
   /**
    * retrieve a user based on its username and password, and reset last login time to current
@@ -47,13 +48,5 @@ public interface SysUserService {
    * @param sysUser new created sysUser object
    */
   void save(SysUser sysUser);
-
-  /**
-   * given author id, generate a corresponding sysUserVo
-   *
-   * @param sysUserId sysUserId
-   * @return Result sysUserVo object
-   */
-  SysUserVo getSysUserVoById(Long sysUserId);
 
 }

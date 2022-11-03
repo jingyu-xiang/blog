@@ -13,7 +13,7 @@ public interface ArticleService {
    * list all the articles, each article contains its tags and author nickname, and all other
    * information of an article
    *
-   * @param pageParam object of page and pageSize
+   * @param pageParam {page, pageSize. categoryId, tagId, userId}
    * @return list of articles
    */
   Result listArticles(PageParam pageParam);
@@ -90,4 +90,5 @@ public interface ArticleService {
    * @return Result
    */
   Result listSearchedArticles(String queryString, PageParam pageParam);
+
 }

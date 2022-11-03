@@ -8,7 +8,7 @@ public class CommentVo {
 
   private String id;
 
-  private SysUserVo author;
+  private AuthorVo author;
 
   private String content;
 
@@ -18,6 +18,6 @@ public class CommentVo {
 
   private Integer level;
 
-  private SysUserVo toUser;
+  private AuthorVo toUser;
 
 }

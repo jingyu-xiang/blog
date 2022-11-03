@@ -55,7 +55,12 @@ public class ThreadService {
 
   // method overload
   @Async(THREAD_POOL_ID)
-  public void updateCommentCount(ArticleMapper articleMapper, Long articleId, boolean add) {
+  public void updateCommentCount(
+      ArticleMapper articleMapper,
+      Long articleId,
+      boolean add,
+      int count
+  ) {
     Article article = articleMapper.selectById(articleId);
 
     int commentCount = article.getCommentCounts();
@@ -64,7 +69,7 @@ public class ThreadService {
     if (add) {
       toUpdate.setCommentCounts(commentCount + 1);
     } else {
-      toUpdate.setCommentCounts(commentCount - 1);
+      toUpdate.setCommentCounts(Math.max(commentCount - count, 0));
     }
 
     LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();

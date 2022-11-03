@@ -20,13 +20,11 @@ public class SysUser {
 
   private Integer admin;
 
-  private String avatar;
-
   private Long createDate;
 
   private Integer deleted;
 
-  private String email;
+  private String github;
 
   private Long lastLogin;
 

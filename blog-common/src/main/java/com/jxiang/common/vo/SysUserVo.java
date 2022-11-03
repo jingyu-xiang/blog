@@ -11,10 +11,8 @@ public class SysUserVo {
 
   private String nickname;
 
-  private String avatar;
-
   private String lastLogin;
 
-  private String email;
+  private String github;
 
 }

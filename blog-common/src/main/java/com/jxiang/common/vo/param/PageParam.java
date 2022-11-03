@@ -13,4 +13,6 @@ public class PageParam {
 
   private String tagId;
 
+  private String userId;
+
 }
