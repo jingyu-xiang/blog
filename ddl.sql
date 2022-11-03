@@ -9,95 +9,87 @@
 
 DROP TABLE IF EXISTS `ms_article`;
 CREATE TABLE `ms_article` (
-                              `id` bigint NOT NULL AUTO_INCREMENT,
-                              `comment_counts` int DEFAULT NULL COMMENT '评论数量',
-                              `create_date` bigint DEFAULT NULL COMMENT '创建时间',
-                              `summary` varchar(255) DEFAULT NULL COMMENT '简介',
-                              `title` varchar(64) DEFAULT NULL COMMENT '标题',
-                              `view_counts` int DEFAULT NULL COMMENT '浏览数量',
-                              `author_id` bigint DEFAULT NULL COMMENT '作者id',
-                              `body_id` bigint DEFAULT NULL COMMENT '内容id',
-                              `category_id` bigint DEFAULT NULL COMMENT '类别id',
-                              `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT 'logical delete',
+                              `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                              `comment_counts` int(11) DEFAULT NULL,
+                              `create_date` bigint(20) DEFAULT NULL,
+                              `summary` varchar(255) DEFAULT NULL,
+                              `title` varchar(64) DEFAULT NULL,
+                              `view_counts` int(11) DEFAULT NULL,
+                              `author_id` bigint(20) DEFAULT NULL,
+                              `body_id` bigint(20) DEFAULT NULL,
+                              `category_id` bigint(20) DEFAULT NULL,
+                              `deleted` tinyint(1) NOT NULL DEFAULT '0',
                               PRIMARY KEY (`id`),
                               FULLTEXT KEY `idx_title_summary` (`title`,`summary`)
-) ENGINE=InnoDB AUTO_INCREMENT=1583832213484265474 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=1588010514855600130 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `ms_article_body`;
 CREATE TABLE `ms_article_body` (
-                                   `id` bigint NOT NULL AUTO_INCREMENT,
+                                   `id` bigint(20) NOT NULL AUTO_INCREMENT,
                                    `content` longtext,
                                    `content_html` longtext,
-                                   `article_id` bigint NOT NULL,
+                                   `article_id` bigint(20) NOT NULL,
                                    PRIMARY KEY (`id`),
                                    KEY `article_id` (`article_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1583832213685592066 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=1588010515077898243 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `ms_article_tag`;
 CREATE TABLE `ms_article_tag` (
-                                  `id` bigint NOT NULL AUTO_INCREMENT,
-                                  `article_id` bigint NOT NULL,
-                                  `tag_id` bigint NOT NULL,
+                                  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                                  `article_id` bigint(20) NOT NULL,
+                                  `tag_id` bigint(20) NOT NULL,
                                   PRIMARY KEY (`id`),
                                   KEY `article_id` (`article_id`),
                                   KEY `tag_id` (`tag_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1583831359620440068 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `ms_category`;
 CREATE TABLE `ms_category` (
-                               `id` bigint NOT NULL AUTO_INCREMENT,
+                               `id` bigint(20) NOT NULL AUTO_INCREMENT,
                                `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
                                `category_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
                                `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-                               `deleted` bit(1) NOT NULL DEFAULT b'0',
+                               `deleted` tinyint(1) NOT NULL DEFAULT '0',
                                PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1586426897343754242 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=1588009326122631171 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `ms_comment`;
 CREATE TABLE `ms_comment` (
-                              `id` bigint NOT NULL AUTO_INCREMENT,
+                              `id` bigint(20) NOT NULL AUTO_INCREMENT,
                               `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-                              `create_date` bigint NOT NULL,
-                              `article_id` bigint NOT NULL,
-                              `author_id` bigint NOT NULL,
-                              `parent_id` bigint DEFAULT NULL,
-                              `to_uid` bigint NOT NULL,
-                              `level` int NOT NULL,
-                              `deleted` bit(1) NOT NULL DEFAULT b'0' COMMENT 'logical delete',
+                              `create_date` bigint(20) NOT NULL,
+                              `article_id` bigint(20) NOT NULL,
+                              `author_id` bigint(20) NOT NULL,
+                              `parent_id` bigint(20) DEFAULT NULL,
+                              `to_uid` bigint(20) NOT NULL,
+                              `level` int(11) NOT NULL,
+                              `deleted` tinyint(1) NOT NULL DEFAULT '0',
                               PRIMARY KEY (`id`),
                               KEY `article_id` (`article_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1583837204194361346 DEFAULT CHARSET=utf8mb3;
-
-DROP TABLE IF EXISTS `ms_confirmation`;
-CREATE TABLE `ms_confirmation` (
-                                   `id` bigint NOT NULL,
-                                   `user_id` bigint NOT NULL,
-                                   `confirmed` tinyint(1) NOT NULL DEFAULT '0',
-                                   `code` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `ms_sys_user`;
 CREATE TABLE `ms_sys_user` (
-                               `id` bigint NOT NULL AUTO_INCREMENT,
-                               `account` varchar(64) DEFAULT NULL COMMENT '账号',
-                               `admin` bit(1) DEFAULT NULL COMMENT '是否管理员',
-                               `create_date` bigint DEFAULT NULL COMMENT '注册时间',
-                               `deleted` bit(1) DEFAULT NULL COMMENT '是否删除',
-                               `github` varchar(128) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL COMMENT '邮箱',
-                               `last_login` bigint DEFAULT NULL COMMENT '最后登录时间',
-                               `nickname` varchar(255) DEFAULT NULL COMMENT '昵称',
-                               `password` varchar(64) DEFAULT NULL COMMENT '密码',
+                               `id` bigint(20) NOT NULL AUTO_INCREMENT,
+                               `account` varchar(64) DEFAULT NULL,
+                               `admin` bit(1) DEFAULT NULL,
+                               `create_date` bigint(20) DEFAULT NULL,
+                               `deleted` bit(1) DEFAULT NULL,
+                               `github` varchar(128) DEFAULT NULL,
+                               `last_login` bigint(20) DEFAULT NULL,
+                               `nickname` varchar(255) DEFAULT NULL,
+                               `password` varchar(64) DEFAULT NULL,
                                PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1587268349938491395 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=1587990725382746115 DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `ms_tag`;
 CREATE TABLE `ms_tag` (
-                          `id` bigint NOT NULL AUTO_INCREMENT,
+                          `id` bigint(20) NOT NULL AUTO_INCREMENT,
                           `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
                           `tag_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-                          `deleted` bit(1) NOT NULL DEFAULT b'0',
+                          `deleted` tinyint(1) NOT NULL DEFAULT '0',
                           PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1586425824122023938 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
