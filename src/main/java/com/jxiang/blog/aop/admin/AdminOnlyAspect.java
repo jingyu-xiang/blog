@@ -1,7 +1,7 @@
 package com.jxiang.blog.aop.admin;
 
-import com.jxiang.blog.util.statics.SysUserThreadLocal;
 import com.jxiang.blog.pojo.SysUser;
+import com.jxiang.blog.util.statics.SysUserThreadLocal;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
 import org.aspectj.lang.ProceedingJoinPoint;

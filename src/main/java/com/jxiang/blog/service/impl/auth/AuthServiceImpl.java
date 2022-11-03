@@ -1,10 +1,10 @@
 package com.jxiang.blog.service.impl.auth;
 
 import com.alibaba.fastjson.JSON;
+import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.service.AuthService;
 import com.jxiang.blog.service.SysUserService;
 import com.jxiang.blog.util.beans.JwtUtils;
-import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.vo.param.LoginParam;
 import com.jxiang.blog.vo.param.RegisterParam;
 import com.jxiang.blog.vo.result.ErrorCode;

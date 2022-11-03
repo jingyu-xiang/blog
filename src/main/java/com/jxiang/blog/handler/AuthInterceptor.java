@@ -1,10 +1,10 @@
 package com.jxiang.blog.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.service.AuthService;
 import com.jxiang.blog.util.beans.JwtUtils;
 import com.jxiang.blog.util.statics.SysUserThreadLocal;
-import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +33,7 @@ public class AuthInterceptor implements HandlerInterceptor {
       Object handler
   ) throws Exception {
     // before RestController methods, check if the request has a valid token
-    if (!(handler instanceof HandlerMethod)) { // if handler is RestController (e.g. ResourceController), pass
+    if (!(handler instanceof HandlerMethod)) { // if handler is not RestController (e.g. ResourceController)
       return true;
     }
 
@@ -65,8 +65,8 @@ public class AuthInterceptor implements HandlerInterceptor {
       return false;
     }
 
-    SysUserThreadLocal.put(
-        sysUser); // keep user info in thread local in the whole controller's execution scope
+    // keep user info in thread local in the whole controller's execution scope
+    SysUserThreadLocal.put(sysUser);
 
     return true;
   }
@@ -77,7 +77,7 @@ public class AuthInterceptor implements HandlerInterceptor {
       HttpServletResponse response,
       Object handler, Exception ex
   ) throws Exception {
-    // avoid memory leak after completing controller
+    // avoid memory leak after finish executing controller methods
     SysUserThreadLocal.remove();
   }
 

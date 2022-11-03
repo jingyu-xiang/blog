@@ -2,10 +2,10 @@ package com.jxiang.blog.service.impl.user;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.dao.mapper.SysUserMapper;
+import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.service.AuthService;
 import com.jxiang.blog.service.SysUserService;
 import com.jxiang.blog.service.thread.ThreadService;
-import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.vo.AuthorVo;
 import com.jxiang.blog.vo.SysUserVo;
 import com.jxiang.blog.vo.result.ErrorCode;

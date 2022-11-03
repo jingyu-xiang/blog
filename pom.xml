@@ -167,7 +167,7 @@
             <artifactId>qiniu-java-sdk</artifactId>
             <groupId>com.qiniu</groupId>
         </dependency>
-        
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

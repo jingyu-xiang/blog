@@ -1,7 +1,5 @@
 package com.jxiang.blog.vo.param;
 
-import com.jxiang.blog.vo.CategoryVo;
-import com.jxiang.blog.vo.TagVo;
 import java.util.List;
 import lombok.Data;
 
