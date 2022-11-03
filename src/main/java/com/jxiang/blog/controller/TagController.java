@@ -2,6 +2,7 @@ package com.jxiang.blog.controller;
 
 import com.jxiang.blog.service.TagService;
 import com.jxiang.blog.vo.param.LimitParam;
+import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,6 +25,10 @@ public class TagController {
   @PostMapping("create")
   public Result createTag(@RequestPart String tagName,
       @RequestPart MultipartFile file) {
+    if (file.isEmpty()) {
+      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
+    }
+
     return tagService.createTag(tagName, file);
   }
 

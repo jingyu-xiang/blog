@@ -86,6 +86,8 @@ public class CategoryServiceImpl implements CategoryService {
     Long categoryId = category.getId();
 
     String originalFilename = file.getOriginalFilename();
+
+    System.out.println(originalFilename);
     String fileNameToUpload =
         "categories/" + categoryId.toString() + "/" + originalFilename;
     category.setAvatar(fileNameToUpload);

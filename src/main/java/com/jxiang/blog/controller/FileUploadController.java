@@ -23,6 +23,12 @@ public class FileUploadController {
 
   @PostMapping
   public Result uploadArticleImage(@RequestBody MultipartFile file) {
+
+    if (file.isEmpty()) {
+      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(),
+          ErrorCode.PARAMS_ERROR.getMsg());
+    }
+
     SysUser sysUser = SysUserThreadLocal.get();
     Long userId = sysUser.getId();
 
