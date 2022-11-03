@@ -8,13 +8,6 @@
     <name>blog</name>
     <modelVersion>4.0.0</modelVersion>
 
-    <modules>
-        <module>blog-api</module>
-        <module>blog-common</module>
-    </modules>
-
-    <packaging>pom</packaging>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -30,22 +23,24 @@
     </properties>
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <groupId>org.springframework.boot</groupId>
-                    <version>2.6.10</version>
-                </plugin>
+        <plugins>
+            <plugin>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.springframework.boot</groupId>
+                <version>2.6.10</version>
+            </plugin>
 
-                <!--allow application.yml to read pom.xml-->
-                <plugin>
-                    <artifactId>maven-resources-plugin</artifactId>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <version>3.2.0</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
+            <!--allow application.yml to read pom.xml-->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <version>3.2.0</version>
+                <configuration>
+                    <encoding>UTF-8</encoding>
+                    <useDefaultDelimiters>true</useDefaultDelimiters>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <dependencyManagement>
@@ -103,8 +98,81 @@
                 <groupId>commons-codec</groupId>
                 <version>1.11</version>
             </dependency>
+
+            <dependency>
+                <artifactId>lombok</artifactId>
+                <groupId>org.projectlombok</groupId>
+                <version>1.18.24</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <groupId>org.springframework.boot</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>spring-boot-starter-aop</artifactId>
+            <groupId>org.springframework.boot</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <groupId>org.springframework.boot</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>mysql-connector-java</artifactId>
+            <groupId>mysql</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>commons-lang3</artifactId>
+            <groupId>org.apache.commons</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>commons-collections</artifactId>
+            <groupId>commons-collections</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <groupId>com.baomidou</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>fastjson</artifactId>
+            <groupId>com.alibaba</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>joda-time</artifactId>
+            <groupId>joda-time</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>jjwt</artifactId>
+            <groupId>io.jsonwebtoken</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>commons-codec</artifactId>
+            <groupId>commons-codec</groupId>
+        </dependency>
+
+        <dependency>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <groupId>com.qiniu</groupId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+    </dependencies>
 
     <profiles>
         <!--dev env-->
