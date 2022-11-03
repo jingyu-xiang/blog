@@ -79,19 +79,21 @@ public class CommentServiceImpl implements CommentService {
     comment.setContent(commentParam.getContent());
     comment.setCreateDate(System.currentTimeMillis());
 
-    Long parentId = Long.valueOf(commentParam.getParent());
-    Long toUserId = Long.valueOf(commentParam.getToUserId());
+    long parentId =
+        commentParam.getParent() == null ? -1L : Long.parseLong(commentParam.getParent());
+    long toUserId =
+        commentParam.getToUserId() == null ? -1L : Long.parseLong(commentParam.getToUserId());
+
     if (parentId == -1L) {
       // level1
       comment.setLevel(1);
-      comment.setParentId(-1L);
-      comment.setToUid(-1L);
     } else {
       // level2
       comment.setLevel(2);
-      comment.setParentId(parentId);
-      comment.setToUid(toUserId);
     }
+
+    comment.setParentId(parentId);
+    comment.setToUid(toUserId);
 
     commentMapper.insert(comment);
 
