@@ -44,7 +44,8 @@ public class CategoryServiceImpl implements CategoryService {
       category = new Category();
       category.setId(-1L);
       category.setAvatar(
-          "https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg");
+          "https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg"
+      );
       category.setCategoryName("NOT FOUND");
       category.setDescription("Category might be deleted or never exist");
     }
