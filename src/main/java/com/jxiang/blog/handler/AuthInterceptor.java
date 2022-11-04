@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -28,9 +29,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 
   @Override
   public boolean preHandle(
-      HttpServletRequest request,
-      HttpServletResponse response,
-      Object handler
+      @NotNull HttpServletRequest request,
+      @NotNull HttpServletResponse response,
+      @NotNull Object handler
   ) throws Exception {
     // before RestController methods, check if the request has a valid token
     if (!(handler instanceof HandlerMethod)) { // if handler is not RestController (e.g. ResourceController)
@@ -73,9 +74,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 
   @Override
   public void afterCompletion(
-      HttpServletRequest request,
-      HttpServletResponse response,
-      Object handler, Exception ex
+      @NotNull HttpServletRequest request,
+      @NotNull HttpServletResponse response,
+      @NotNull Object handler, Exception ex
   ) throws Exception {
     // avoid memory leak after finish executing controller methods
     SysUserThreadLocal.remove();
