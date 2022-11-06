@@ -42,6 +42,7 @@ public class SysUserServiceImpl implements SysUserService {
     if (sysUser == null) {
       sysUser = new SysUser();
       sysUser.setNickname("unknown");
+      sysUser.setGithub("unknown");
     }
     return sysUserServiceUtils.copyAuthor(sysUser);
   }

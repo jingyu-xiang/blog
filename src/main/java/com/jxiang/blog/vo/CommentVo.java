@@ -20,4 +20,6 @@ public class CommentVo {
 
   private AuthorVo toUser;
 
+  private CommentVo toComment;
+
 }

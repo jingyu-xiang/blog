@@ -60,8 +60,24 @@ public class CommentServiceUtils {
     // level 2 comments do not have child comments， but have a to-sysUser id to indicate who created parent comment
     if (level == 2) {
       Long toUid = comment.getToUid();
-      AuthorVo toSysUserVo = sysUserService.findAuthorVoById(toUid);
-      commentVo.setToUser(toSysUserVo);
+      Long toCommentId = comment.getToCommentId();
+
+      if (toUid != -1L) {
+        AuthorVo toAuthorVo = sysUserService.findAuthorVoById(toUid);
+        if (toAuthorVo != null) {
+          commentVo.setToUser(toAuthorVo);
+        } else {
+          toAuthorVo = new AuthorVo();
+          toAuthorVo.setNickname("unknown");
+          toAuthorVo.setGithub("unknown");
+          commentVo.setToUser(toAuthorVo);
+        }
+      }
+
+      if (toCommentId != -1L) {
+        CommentVo toCommentVo = copy(commentMapper.selectById(toCommentId));
+        commentVo.setToComment(toCommentVo);
+      }
     }
 
     return commentVo;

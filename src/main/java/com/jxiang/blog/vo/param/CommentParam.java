@@ -13,4 +13,6 @@ public class CommentParam {
 
   private String toUserId;
 
+  private String toCommentId;
+
 }

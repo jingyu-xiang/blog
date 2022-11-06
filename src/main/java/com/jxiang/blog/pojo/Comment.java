@@ -18,6 +18,8 @@ public class Comment {
 
   private Long createDate;
 
+  private Integer level;
+
   private Long articleId;
 
   private Long authorId;
@@ -26,8 +28,8 @@ public class Comment {
 
   private Long toUid;
 
-  private Integer level;
-
+  private Long toCommentId;
+  
   @TableLogic
   private Boolean deleted;
 

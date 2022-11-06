@@ -83,6 +83,8 @@ public class CommentServiceImpl implements CommentService {
         commentParam.getParent() == null ? -1L : Long.parseLong(commentParam.getParent());
     long toUserId =
         commentParam.getToUserId() == null ? -1L : Long.parseLong(commentParam.getToUserId());
+    long toCommentId =
+        commentParam.getToCommentId() == null ? -1L : Long.parseLong(commentParam.getToCommentId());
 
     if (parentId == -1L) {
       // level1
@@ -92,6 +94,7 @@ public class CommentServiceImpl implements CommentService {
       comment.setLevel(2);
     }
 
+    comment.setToCommentId(toCommentId);
     comment.setParentId(parentId);
     comment.setToUid(toUserId);
 
