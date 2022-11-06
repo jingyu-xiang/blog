@@ -157,9 +157,18 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
+  @Transactional
   public Boolean deleteArticleComments(Long articleId) {
     try {
-      commentMapper.deleteArticleComments(articleId);
+      // delete comment counts
+      int count = commentMapper
+          .selectList(new LambdaQueryWrapper<Comment>().eq(Comment::getArticleId, articleId))
+          .size();
+
+      if (count > 0) {
+        commentMapper.deleteArticleComments(articleId);
+        threadService.updateCommentCount(articleMapper, articleId, false, count);
+      }
     } catch (Exception e) {
       return false;
     }
