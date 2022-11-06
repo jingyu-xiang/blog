@@ -29,7 +29,7 @@ public class CommentController {
   }
 
   @DeleteMapping("comments/delete/{id}")
-  public Result deleteComment(@PathVariable("id") Long commentId) {
+  public Result deleteComment(@PathVariable("id") String commentId) {
     return commentService.deleteCommentById(commentId);
   }
 

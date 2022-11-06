@@ -106,7 +106,8 @@ public class CommentServiceImpl implements CommentService {
 
   @Override
   @Transactional
-  public Result deleteCommentById(Long commentId) {
+  public Result deleteCommentById(String id) {
+    long commentId = Long.parseLong(id);
     Comment comment = commentMapper.selectById(commentId);
 
     if (comment == null) {

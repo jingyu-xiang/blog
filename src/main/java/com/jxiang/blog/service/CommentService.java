@@ -30,10 +30,10 @@ public interface CommentService {
    * by set deleted to true if the comment is level 1, delete it's level 2 comments as well by set
    * deleted to true
    *
-   * @param commentId comment id
+   * @param id comment id
    * @return Result
    */
-  Result deleteCommentById(Long commentId);
+  Result deleteCommentById(String id);
 
   /**
    * delete an article's all comments
