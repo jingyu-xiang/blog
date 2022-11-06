@@ -135,7 +135,7 @@ public class CommentServiceImpl implements CommentService {
 
         // logically delete all child comments
         List<Long> commentIds = new ArrayList<>();
-        int count = 0;
+        int count = 1;
 
         for (Comment child : childComments) {
           count += 1;
