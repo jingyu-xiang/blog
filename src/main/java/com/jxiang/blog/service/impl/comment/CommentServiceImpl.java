@@ -134,20 +134,21 @@ public class CommentServiceImpl implements CommentService {
             queryWrapper.eq(Comment::getParentId, commentId));
 
         // logically delete all child comments
-        List<Long> commentIds = new ArrayList<>();
+        List<Long> childIds = new ArrayList<>();
         int count = 1;
 
         for (Comment child : childComments) {
           count += 1;
           child.setDeleted(true);
-          commentIds.add(child.getId());
+          childIds.add(child.getId());
         }
 
         // only delete child comments if they exist
-        if (commentIds.size() > 0) {
-          threadService.updateCommentCount(articleMapper, comment.getArticleId(), false, count);
-          commentMapper.deleteChildComments(commentIds);
+        if (childIds.size() > 0) {
+          commentMapper.deleteChildComments(childIds);
         }
+
+        threadService.updateCommentCount(articleMapper, comment.getArticleId(), false, count);
 
         return Result.success("Success");
       }
