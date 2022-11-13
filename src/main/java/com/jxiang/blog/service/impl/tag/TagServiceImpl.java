@@ -49,7 +49,7 @@ public class TagServiceImpl implements TagService {
 
     final List<Tag> tagList = tagMapper.selectBatchIds(tagIdList);
 
-    return Result.success(tagList);
+    return Result.success(tagServiceUtils.copyList(tagList));
   }
 
   @Override
