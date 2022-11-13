@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jxiang.blog.dao.mapper.ArticleMapper">
-
     <select id="queryFullText" resultType="com.jxiang.blog.pojo.Article">
         select *
         from ms_article
@@ -19,5 +18,4 @@
         from ms_article
         group by year, month;
     </select>
-
 </mapper>
