@@ -4,8 +4,10 @@ package com.jxiang.blog.aop.cache;
 import com.alibaba.fastjson.JSON;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
+
 import java.lang.reflect.Method;
 import java.time.Duration;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -57,7 +59,7 @@ public class MySpringCacheAspect {
       }
 
       // get annotation info
-      Class<?> pjpClass = pjp.getSignature().getDeclaringType();
+      Class<?> pjpClass = signature.getDeclaringType();
       Method method = pjpClass.getMethod(methodName, argTypes);
       MySpringCache annotation = method.getAnnotation(MySpringCache.class);
       long annotatedExpire = annotation.expire();
