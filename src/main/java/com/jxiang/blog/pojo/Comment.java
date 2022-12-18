@@ -29,7 +29,7 @@ public class Comment {
   private Long toUid;
 
   private Long toCommentId;
-  
+
   @TableLogic
   private Boolean deleted;
 

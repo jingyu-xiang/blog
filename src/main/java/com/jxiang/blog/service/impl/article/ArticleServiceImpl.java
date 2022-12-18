@@ -15,21 +15,18 @@ import com.jxiang.blog.service.CommentService;
 import com.jxiang.blog.service.thread.ThreadService;
 import com.jxiang.blog.util.statics.SysUserThreadLocal;
 import com.jxiang.blog.vo.ArticleVo;
-import com.jxiang.blog.vo.param.ArticleBodyParam;
-import com.jxiang.blog.vo.param.ArticleParam;
-import com.jxiang.blog.vo.param.ArticleUpdateParam;
-import com.jxiang.blog.vo.param.LimitParam;
-import com.jxiang.blog.vo.param.PageParam;
+import com.jxiang.blog.vo.param.*;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -253,7 +250,7 @@ public class ArticleServiceImpl implements ArticleService {
   @Override
   @Transactional
   public Result updateArticleBodyById(Long articleId,
-      ArticleBodyParam articleBody) {
+                                      ArticleBodyParam articleBody) {
     LambdaQueryWrapper<ArticleBody> queryWrapper = new LambdaQueryWrapper<>();
     queryWrapper.eq(ArticleBody::getArticleId, articleId).last("LIMIT " + 1);
     ArticleBody articleBodyToUpdate = articleBodyMapper.selectOne(queryWrapper);
@@ -293,13 +290,13 @@ public class ArticleServiceImpl implements ArticleService {
     return success == 1
         ? Result.success("Success")
         : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
-            ErrorCode.SYSTEM_ERROR.getMsg());
+        ErrorCode.SYSTEM_ERROR.getMsg());
   }
 
   @Override
   @Transactional
   public Result updateArticleById(Long articleId,
-      ArticleUpdateParam articleUpdateParam) {
+                                  ArticleUpdateParam articleUpdateParam) {
     Article articleToUpdate = articleMapper.selectById(articleId);
 
     if (articleToUpdate == null) {
@@ -349,7 +346,7 @@ public class ArticleServiceImpl implements ArticleService {
     return success == 1
         ? Result.success(res)
         : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
-            ErrorCode.SYSTEM_ERROR.getMsg());
+        ErrorCode.SYSTEM_ERROR.getMsg());
   }
 
   @Override

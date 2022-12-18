@@ -6,11 +6,12 @@ import com.jxiang.blog.dao.mapper.ArticleMapper;
 import com.jxiang.blog.dao.mapper.SysUserMapper;
 import com.jxiang.blog.pojo.Article;
 import com.jxiang.blog.pojo.SysUser;
-import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class ThreadService {
@@ -82,7 +83,7 @@ public class ThreadService {
 
   @Async(THREAD_POOL_ID)
   public void updateLastLogin(SysUser sysUser, String token,
-      SysUserMapper sysUserMapper) {
+                              SysUserMapper sysUserMapper) {
     sysUser.setLastLogin(System.currentTimeMillis());
     sysUserMapper.updateById(sysUser);
 

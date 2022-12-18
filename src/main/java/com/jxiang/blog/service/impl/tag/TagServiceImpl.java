@@ -11,14 +11,15 @@ import com.jxiang.blog.vo.TagVo;
 import com.jxiang.blog.vo.param.LimitParam;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class TagServiceImpl implements TagService {
@@ -124,7 +125,7 @@ public class TagServiceImpl implements TagService {
       return success == 1
           ? Result.success(id)
           : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
-              ErrorCode.SYSTEM_ERROR.getMsg());
+          ErrorCode.SYSTEM_ERROR.getMsg());
     }
 
     return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());

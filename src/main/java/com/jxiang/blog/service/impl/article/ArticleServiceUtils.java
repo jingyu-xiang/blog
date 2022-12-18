@@ -8,12 +8,13 @@ import com.jxiang.blog.service.SysUserService;
 import com.jxiang.blog.service.TagService;
 import com.jxiang.blog.vo.ArticleBodyVo;
 import com.jxiang.blog.vo.ArticleVo;
-import java.util.ArrayList;
-import java.util.List;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ArticleServiceUtils {
@@ -37,8 +38,8 @@ public class ArticleServiceUtils {
   }
 
   List<ArticleVo> copyList(List<Article> records,
-      boolean isTagsRequired,
-      boolean isAuthorRequired) {
+                           boolean isTagsRequired,
+                           boolean isAuthorRequired) {
     List<ArticleVo> articleVoList = new ArrayList<>();
     for (Article record : records) {
       // author and tags are required

@@ -4,10 +4,6 @@ package com.jxiang.blog.aop.cache;
 import com.alibaba.fastjson.JSON;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
-
-import java.lang.reflect.Method;
-import java.time.Duration;
-
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -19,6 +15,9 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+
+import java.lang.reflect.Method;
+import java.time.Duration;
 
 // aop 定义一个切面， 切面定义切点和通知的关系
 @Aspect

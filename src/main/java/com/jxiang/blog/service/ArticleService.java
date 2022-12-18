@@ -1,10 +1,6 @@
 package com.jxiang.blog.service;
 
-import com.jxiang.blog.vo.param.ArticleBodyParam;
-import com.jxiang.blog.vo.param.ArticleParam;
-import com.jxiang.blog.vo.param.ArticleUpdateParam;
-import com.jxiang.blog.vo.param.LimitParam;
-import com.jxiang.blog.vo.param.PageParam;
+import com.jxiang.blog.vo.param.*;
 import com.jxiang.blog.vo.result.Result;
 
 public interface ArticleService {
@@ -81,7 +77,7 @@ public interface ArticleService {
    * @return Result
    */
   Result updateArticleById(Long articleId,
-      ArticleUpdateParam articleUpdateParam);
+                           ArticleUpdateParam articleUpdateParam);
 
   /**
    * list articles, filtered by a piece of text on title and summary

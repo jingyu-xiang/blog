@@ -11,12 +11,13 @@ import com.jxiang.blog.vo.CategoryVo;
 import com.jxiang.blog.vo.param.CategoryParam;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
-import java.util.List;
-import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -65,7 +66,7 @@ public class CategoryServiceImpl implements CategoryService {
   @Transactional
   @AdminOnly
   public Result createCategory(CategoryParam categoryParam,
-      MultipartFile file) {
+                               MultipartFile file) {
     String categoryName = categoryParam.getCategoryName();
     String description = categoryParam.getDescription();
 
@@ -127,7 +128,7 @@ public class CategoryServiceImpl implements CategoryService {
       return success == 1
           ? Result.success(id)
           : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
-              ErrorCode.SYSTEM_ERROR.getMsg());
+          ErrorCode.SYSTEM_ERROR.getMsg());
     }
 
     return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());

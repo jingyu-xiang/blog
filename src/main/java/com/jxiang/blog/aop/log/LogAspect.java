@@ -2,8 +2,6 @@ package com.jxiang.blog.aop.log;
 
 import com.alibaba.fastjson.JSON;
 import com.jxiang.blog.util.statics.NetworkUtils;
-import java.lang.reflect.Method;
-import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -11,6 +9,9 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
 
 // aop 定义一个切面， 切面定义切点和通知的关系
 @Aspect
