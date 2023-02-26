@@ -20,8 +20,7 @@ public class ThreadPoolConfig {
     executor.setQueueCapacity(Integer.MAX_VALUE);
     executor.setKeepAliveSeconds(60);
     executor.setThreadNamePrefix("blog-api");
-    executor.setWaitForTasksToCompleteOnShutdown(
-        true); // close thread pool after task done
+    executor.setWaitForTasksToCompleteOnShutdown(true); // close thread pool after task done
 
     return executor;
   }

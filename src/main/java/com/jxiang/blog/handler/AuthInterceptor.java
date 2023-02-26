@@ -22,11 +22,14 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 public class AuthInterceptor implements HandlerInterceptor {
 
-  @Autowired
-  private AuthService authService;
+  final private AuthService authService;
+  final private JwtUtils jwtUtils;
 
   @Autowired
-  private JwtUtils jwtUtils;
+  public AuthInterceptor(AuthService authService, JwtUtils jwtUtils) {
+    this.authService = authService;
+    this.jwtUtils = jwtUtils;
+  }
 
   @Override
   public boolean preHandle(

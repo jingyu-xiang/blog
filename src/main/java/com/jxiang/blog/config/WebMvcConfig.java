@@ -11,8 +11,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
+
+  final private AuthInterceptor authInterceptor;
+
   @Autowired
-  AuthInterceptor authInterceptor;
+  public  WebMvcConfig(AuthInterceptor authInterceptor) {
+    this.authInterceptor = authInterceptor;
+  }
 
   @Override
   public void addCorsMappings(CorsRegistry registry) {

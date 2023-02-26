@@ -82,8 +82,7 @@ public class ThreadService {
   }
 
   @Async(THREAD_POOL_ID)
-  public void updateLastLogin(SysUser sysUser, String token,
-                              SysUserMapper sysUserMapper) {
+  public void updateLastLogin(SysUser sysUser, String token, SysUserMapper sysUserMapper) {
     sysUser.setLastLogin(System.currentTimeMillis());
     sysUserMapper.updateById(sysUser);
 

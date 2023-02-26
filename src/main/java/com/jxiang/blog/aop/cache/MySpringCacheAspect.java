@@ -25,8 +25,12 @@ import java.time.Duration;
 @Slf4j
 public class MySpringCacheAspect {
 
+  final private RedisTemplate<String, String> redisTemplate;
+
   @Autowired
-  private RedisTemplate<String, String> redisTemplate;
+  public MySpringCacheAspect(RedisTemplate<String, String> redisTemplate) {
+    this.redisTemplate = redisTemplate;
+  }
 
   @Pointcut("@annotation(com.jxiang.blog.aop.cache.MySpringCache)") // 切点
   public void pt() {
