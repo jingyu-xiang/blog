@@ -50,12 +50,10 @@ public class SysUserServiceImpl implements SysUserService {
   @Override
   public SysUser findUserForLogin(String account, String password) {
     LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
-
     queryWrapper
         .eq(SysUser::getAccount, account)
         .eq(SysUser::getPassword, password)
         .last("LIMIT 1");
-
     return sysUserMapper.selectOne(queryWrapper);
   }
 

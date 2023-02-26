@@ -19,8 +19,12 @@ import java.util.Objects;
 @Component
 public class QiniuUtils {
 
+  final private Environment environment;
+
   @Autowired
-  Environment environment;
+  public QiniuUtils(Environment environment) {
+    this.environment =environment;
+  }
 
   public Map<String, Object> upload(MultipartFile file, String fileName) {
     Configuration cfg = new Configuration(Region.regionNa0());
@@ -39,7 +43,7 @@ public class QiniuUtils {
       String upToken = auth.uploadToken(bucket);
       Response response = uploadManager.put(uploadBytes, fileName, upToken);
 
-      DefaultPutRet putRet = JSON.parseObject(response.bodyString(), DefaultPutRet.class);
+      JSON.parseObject(response.bodyString(), DefaultPutRet.class);
       Map<String, Object> result = new HashMap<>();
       result.put("success", true);
       result.put("urn", environment.getProperty("credentials.qiniu.url"));

@@ -56,9 +56,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     // encode (password + salt)
-    password = DigestUtils.md5Hex(
-        password + environment.getProperty("credentials.salt"));
-
+    password = DigestUtils.md5Hex(password + environment.getProperty("credentials.salt"));
     SysUser sysUser = sysUserService.findUserForLogin(account, password);
 
     if (sysUser == null) {
@@ -74,7 +72,6 @@ public class AuthServiceImpl implements AuthService {
     redisTemplate
         .opsForValue()
         .set("TOKEN_" + token, JSON.toJSONString(sysUser), 1, TimeUnit.DAYS);
-
     return Result.success(token);
   }
 

@@ -1,11 +1,11 @@
 package com.jxiang.blog.util.beans;
 
-import io.jsonwebtoken.Jwt;
-import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
+import io.jsonwebtoken.security.Keys;
+import java.security.Key;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -15,8 +15,7 @@ import java.util.Map;
 @Component
 public class JwtUtils {
 
-  @Autowired
-  private Environment environment;
+  final Key KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
   /**
    * create a jwt based on SECRET_KEY and provided userId
@@ -28,16 +27,12 @@ public class JwtUtils {
     Map<String, Object> claims = new HashMap<>();
     claims.put("userId", userId);
 
-    JwtBuilder jwtBuilder = Jwts.builder()
-        .signWith(SignatureAlgorithm.HS256,
-            environment.getProperty("credentials.secret-key"))
+    return Jwts.builder()
+        .signWith(KEY)
         .setClaims(claims)
         .setIssuedAt(new Date())
-        .setExpiration(
-            new Date(System.currentTimeMillis()
-                + 24L * 60 * 60 * 1000)); // valid for 1 day
-
-    return jwtBuilder.compact();
+        .setExpiration(new Date(System.currentTimeMillis() + 24L * 60 * 60 * 1000))
+        .compact();
   }
 
   /**
@@ -48,9 +43,12 @@ public class JwtUtils {
    */
   public Map<String, Object> checkToken(String token) {
     try {
-      Jwt parse = Jwts.parser().setSigningKey(environment.getProperty("credentials.secret-key"))
-          .parse(token);
-      return (Map<String, Object>) parse.getBody();
+      final Jws<Claims> claimsJws = Jwts
+          .parserBuilder()
+          .setSigningKey(KEY)
+          .build()
+          .parseClaimsJws(token);
+      return claimsJws.getBody();
     } catch (Exception e) {
       e.printStackTrace();
     }
