@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: ${profile.active}
+    active: dev
   main:
     banner-mode: off
   servlet:

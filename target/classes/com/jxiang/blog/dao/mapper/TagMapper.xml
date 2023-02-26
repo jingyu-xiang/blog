@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jxiang.blog.dao.mapper.TagMapper">
+
+
+    <select id="findTagsByArticleId" resultType="com.jxiang.blog.pojo.Tag">
+        select id, avatar, tag_name as tagName
+        from ms_tag
+        where id in (select tag_id
+                     from ms_article_tag
+                     where article_id = #{articleId}
+                       and deleted = FALSE)
+    </select>
+
+    <select id="findHotTagIds" resultType="java.lang.Long">
+        select tag_id, COUNT(article_id) as article_count
+        from ms_article_tag
+        group by tag_id
+        order by article_count desc
+            limit #{limit}
+    </select>
+</mapper>
