@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class ArticleController {
 
   @Autowired
-  ArticleService articleService;
+  private ArticleService articleService;
 
   @Log(module = "article", operator = "get articles") // AOP log
   @PostMapping

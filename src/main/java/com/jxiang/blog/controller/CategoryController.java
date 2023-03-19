@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class CategoryController {
 
   @Autowired
-  CategoryService categoryService;
+  private CategoryService categoryService;
 
   @GetMapping
   public Result getCategories() {

@@ -32,10 +32,10 @@ import java.util.Map;
 public class ArticleServiceImpl implements ArticleService {
 
   private final ArticleMapper articleMapper;
-  private final ArticleBodyMapper articleBodyMapper;
   private final CommentService commentService;
   private final ThreadService threadService;
   private final ArticleTagMapper articleTagMapper;
+  private final ArticleBodyMapper articleBodyMapper;
   private final ArticleServiceUtils articleServiceUtils;
 
   @Autowired

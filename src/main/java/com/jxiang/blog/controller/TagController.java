@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class TagController {
 
   @Autowired
-  TagService tagService;
+  private TagService tagService;
 
   @PostMapping("create")
   public Result createTag(@RequestPart String tagName,

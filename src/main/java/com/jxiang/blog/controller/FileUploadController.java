@@ -20,7 +20,7 @@ import java.util.Map;
 public class FileUploadController {
 
   @Autowired
-  QiniuUtils qiniuUtils;
+  private QiniuUtils qiniuUtils;
 
   @PostMapping
   public Result uploadArticleImage(@RequestBody MultipartFile file) {

@@ -38,7 +38,8 @@ public class AuthInterceptor implements HandlerInterceptor {
       @NotNull Object handler
   ) throws Exception {
     // before RestController methods, check if the request has a valid token
-    if (!(handler instanceof HandlerMethod)) { // if handler is not RestController (e.g. ResourceController)
+    // if handler is not RestController (e.g. ResourceController)
+    if (!(handler instanceof HandlerMethod)) {
       return true;
     }
 
@@ -63,8 +64,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     SysUser sysUser = authService.checkToken(token);
 
     if (StringUtils.isBlank(token) || sysUser == null) {
-      Result result = Result.failure(ErrorCode.NO_LOGIN.getCode(),
-          ErrorCode.NO_LOGIN.getMsg());
+      Result result = Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
       response.setContentType("application/json;charset=utf-8");
       response.getWriter().print(JSON.toJSONString(result));
       return false;
@@ -81,7 +81,7 @@ public class AuthInterceptor implements HandlerInterceptor {
       @NotNull HttpServletRequest request,
       @NotNull HttpServletResponse response,
       @NotNull Object handler, Exception ex
-  ) throws Exception {
+  ) {
     // avoid memory leak after finish executing controller methods
     SysUserThreadLocal.remove();
   }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class CommentController {
 
   @Autowired
-  CommentService commentService;
+  private CommentService commentService;
 
   @PostMapping("articles/{id}/comments")
   public Result getArticleComments(@PathVariable String id) {
