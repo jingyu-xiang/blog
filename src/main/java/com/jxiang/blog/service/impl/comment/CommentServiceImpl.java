@@ -8,12 +8,11 @@ import com.jxiang.blog.pojo.Comment;
 import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.service.CommentService;
 import com.jxiang.blog.service.thread.ThreadService;
-import com.jxiang.blog.util.statics.SysUserThreadLocal;
+import com.jxiang.blog.util.SysUserThreadLocal;
 import com.jxiang.blog.vo.CommentVo;
 import com.jxiang.blog.vo.param.CommentParam;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,17 +23,18 @@ import java.util.List;
 public class CommentServiceImpl implements CommentService {
 
   private final CommentMapper commentMapper;
+
   private final ArticleMapper articleMapper;
+
   private final ThreadService threadService;
+
   private final CommentServiceUtils commentServiceUtils;
 
-  @Autowired
   public CommentServiceImpl(
-      CommentMapper commentMapper,
-      ArticleMapper articleMapper,
-      ThreadService threadService,
-      CommentServiceUtils commentServiceUtils
-  ) {
+      final CommentMapper commentMapper,
+      final ArticleMapper articleMapper,
+      final ThreadService threadService,
+      final CommentServiceUtils commentServiceUtils) {
     this.commentMapper = commentMapper;
     this.articleMapper = articleMapper;
     this.threadService = threadService;
@@ -42,25 +42,26 @@ public class CommentServiceImpl implements CommentService {
   }
 
   @Override
-  public Result getCommentsByArticleId(String id) {
-    LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
+  public Result getCommentsByArticleId(final String id) {
+    final LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
 
     queryWrapper // parent comments
         .eq(Comment::getArticleId, id)
         .eq(Comment::getLevel, 1);
 
-    List<Comment> comments = commentMapper.selectList(queryWrapper);
+    final List<Comment> comments = commentMapper.selectList(queryWrapper);
 
-    List<CommentVo> commentVoList = commentServiceUtils.copyList(comments);
+    final List<CommentVo> commentVoList = commentServiceUtils.copyList(comments);
 
     return Result.success(commentVoList);
   }
 
   @Override
-  public Result createComment(CommentParam commentParam) {
+  public Result createComment(final CommentParam commentParam) {
 
     if (commentParam.getArticleId() == null) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+      return Result.failure(
+          ErrorCode.NOT_FOUND.getCode(),
           ErrorCode.NOT_FOUND.getMsg());
     }
 
@@ -68,24 +69,23 @@ public class CommentServiceImpl implements CommentService {
 
     try {
       article = articleMapper.selectById(commentParam.getArticleId());
-    } catch (Exception e) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+    } catch (final Exception e) {
+      return Result.failure(
+          ErrorCode.NOT_FOUND.getCode(),
           ErrorCode.NOT_FOUND.getMsg());
     }
 
-    SysUser author = SysUserThreadLocal.get();
-    Comment comment = new Comment();
+    final SysUser author = SysUserThreadLocal.get();
+    final Comment comment = new Comment();
     comment.setArticleId(Long.valueOf(commentParam.getArticleId()));
     comment.setAuthorId(author.getId());
     comment.setContent(commentParam.getContent());
     comment.setCreateDate(System.currentTimeMillis());
 
-    long parentId =
-        commentParam.getParent() == null ? -1L : Long.parseLong(commentParam.getParent());
-    long toUserId =
-        commentParam.getToUserId() == null ? -1L : Long.parseLong(commentParam.getToUserId());
-    long toCommentId =
-        commentParam.getToCommentId() == null ? -1L : Long.parseLong(commentParam.getToCommentId());
+    final long parentId = commentParam.getParent() == null ? -1L : Long.parseLong(commentParam.getParent());
+    final long toUserId = commentParam.getToUserId() == null ? -1L : Long.parseLong(commentParam.getToUserId());
+    final long toCommentId = commentParam.getToCommentId() == null ? -1L
+        : Long.parseLong(commentParam.getToCommentId());
 
     if (parentId == -1L) {
       // level1
@@ -107,21 +107,23 @@ public class CommentServiceImpl implements CommentService {
 
   @Override
   @Transactional
-  public Result deleteCommentById(String id) {
-    long commentId = Long.parseLong(id);
-    Comment comment = commentMapper.selectById(commentId);
+  public Result deleteCommentById(final String id) {
+    final long commentId = Long.parseLong(id);
+    final Comment comment = commentMapper.selectById(commentId);
 
     if (comment == null) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+      return Result.failure(
+          ErrorCode.NOT_FOUND.getCode(),
           ErrorCode.NOT_FOUND.getMsg());
     }
 
     if (!comment.getAuthorId().equals(SysUserThreadLocal.get().getId())) {
-      return Result.failure(ErrorCode.NO_LOGIN.getCode(),
+      return Result.failure(
+          ErrorCode.NO_LOGIN.getCode(),
           ErrorCode.NO_LOGIN.getMsg());
     }
 
-    int success = commentMapper.deleteById(comment);
+    final int success = commentMapper.deleteById(comment);
 
     if (success == 1) {
       if (comment.getLevel() == 2) {
@@ -130,15 +132,15 @@ public class CommentServiceImpl implements CommentService {
       }
 
       if (comment.getLevel() == 1) {
-        LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
-        List<Comment> childComments = commentMapper.selectList(
+        final LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
+        final List<Comment> childComments = commentMapper.selectList(
             queryWrapper.eq(Comment::getParentId, commentId));
 
         // logically delete all child comments
-        List<Long> childIds = new ArrayList<>();
+        final List<Long> childIds = new ArrayList<>();
         int count = 1;
 
-        for (Comment child : childComments) {
+        for (final Comment child : childComments) {
           count += 1;
           child.setDeleted(true);
           childIds.add(child.getId());
@@ -155,16 +157,17 @@ public class CommentServiceImpl implements CommentService {
       }
     }
 
-    return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
+    return Result.failure(
+        ErrorCode.SYSTEM_ERROR.getCode(),
         ErrorCode.SYSTEM_ERROR.getMsg());
   }
 
   @Override
   @Transactional
-  public Boolean deleteArticleComments(Long articleId) {
+  public Boolean deleteArticleComments(final Long articleId) {
     try {
       // delete comment counts
-      int count = commentMapper
+      final int count = commentMapper
           .selectList(new LambdaQueryWrapper<Comment>().eq(Comment::getArticleId, articleId))
           .size();
 
@@ -172,7 +175,7 @@ public class CommentServiceImpl implements CommentService {
         commentMapper.deleteArticleComments(articleId);
         threadService.updateCommentCount(articleMapper, articleId, false, count);
       }
-    } catch (Exception e) {
+    } catch (final Exception e) {
       return false;
     }
     return true;

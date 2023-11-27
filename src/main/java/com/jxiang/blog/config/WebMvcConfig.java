@@ -2,7 +2,6 @@ package com.jxiang.blog.config;
 
 import com.jxiang.blog.handler.AuthInterceptor;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -11,21 +10,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-
   final private AuthInterceptor authInterceptor;
 
-  @Autowired
-  public  WebMvcConfig(AuthInterceptor authInterceptor) {
+  public WebMvcConfig(final AuthInterceptor authInterceptor) {
     this.authInterceptor = authInterceptor;
   }
 
   @Override
-  public void addCorsMappings(CorsRegistry registry) {
+  public void addCorsMappings(final CorsRegistry registry) {
     registry.addMapping("/**").allowedOrigins("http://localhost:3000");
   }
 
   @Override
-  public void addInterceptors(@NotNull InterceptorRegistry registry) {
+  public void addInterceptors(@NotNull final InterceptorRegistry registry) {
     WebMvcConfigurer.super.addInterceptors(registry);
     registry
         // users

@@ -34,4 +34,3 @@ public class Comment {
   private Boolean deleted;
 
 }
-

@@ -12,7 +12,7 @@ public class MyBatisPlusConfig {
 
   @Bean
   public MybatisPlusInterceptor mybatisPlusInterceptor() {
-    MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+    final MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
     interceptor.addInnerInterceptor(new PaginationInnerInterceptor()); // pagination unit
     return interceptor;
   }

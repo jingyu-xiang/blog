@@ -1,9 +1,10 @@
 package com.jxiang.blog.aop.cache;
 
-
 import com.alibaba.fastjson.JSON;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
+import java.lang.reflect.Method;
+import java.time.Duration;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -12,12 +13,8 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-
-import java.lang.reflect.Method;
-import java.time.Duration;
 
 // aop 定义一个切面， 切面定义切点和通知的关系
 @Aspect
@@ -27,8 +24,7 @@ public class MySpringCacheAspect {
 
   final private RedisTemplate<String, String> redisTemplate;
 
-  @Autowired
-  public MySpringCacheAspect(RedisTemplate<String, String> redisTemplate) {
+  public MySpringCacheAspect(final RedisTemplate<String, String> redisTemplate) {
     this.redisTemplate = redisTemplate;
   }
 
@@ -37,14 +33,14 @@ public class MySpringCacheAspect {
   }
 
   @Around("pt()") // 通知（环绕）
-  public Object around(ProceedingJoinPoint pjp) {
+  public Object around(final ProceedingJoinPoint pjp) {
     try {
-      Signature signature = pjp.getSignature();
-      String methodName = signature.getName();
-      String className = pjp.getTarget().getClass().getSimpleName();
+      final Signature signature = pjp.getSignature();
+      final String methodName = signature.getName();
+      final String className = pjp.getTarget().getClass().getSimpleName();
 
-      Class<?>[] argTypes = new Class[pjp.getArgs().length];
-      Object[] args = pjp.getArgs();
+      final Class<?>[] argTypes = new Class[pjp.getArgs().length];
+      final Object[] args = pjp.getArgs();
 
       // generate a string of arguments
       StringBuilder argsString = new StringBuilder();
@@ -62,30 +58,31 @@ public class MySpringCacheAspect {
       }
 
       // get annotation info
-      Class<?> pjpClass = signature.getDeclaringType();
-      Method method = pjpClass.getMethod(methodName, argTypes);
-      MySpringCache annotation = method.getAnnotation(MySpringCache.class);
-      long annotatedExpire = annotation.expire();
-      String annotatedName = annotation.name();
+      final Class<?> pjpClass = signature.getDeclaringType();
+      final Method method = pjpClass.getMethod(methodName, argTypes);
+      final MySpringCache annotation = method.getAnnotation(MySpringCache.class);
+      final long annotatedExpire = annotation.expire();
+      final String annotatedName = annotation.name();
 
-      String redisKey = annotatedName + "::" + className + "::" + methodName + "::" + argsString;
-      String redisValue = redisTemplate.opsForValue().get(redisKey);
+      final String redisKey = annotatedName + "::" + className + "::" + methodName + "::" + argsString;
+      final String redisValue = redisTemplate.opsForValue().get(redisKey);
 
       if (StringUtils.isNotEmpty(redisValue)) {
-        log.info("hit cache: {}, {}", className, methodName);
+        MySpringCacheAspect.log.info("hit cache: {}, {}", className, methodName);
         return JSON.parseObject(redisValue, Result.class);
       }
 
-      Object result = pjp.proceed();
+      final Object result = pjp.proceed();
 
       redisTemplate.opsForValue()
           .set(redisKey, JSON.toJSONString(result), Duration.ofMillis(annotatedExpire));
-      log.info("caching... {}, {}", className, methodName);
+      MySpringCacheAspect.log.info("caching... {}, {}", className, methodName);
 
       return result;
-    } catch (Throwable e) {
+    } catch (final Throwable e) {
       e.printStackTrace();
       return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMsg());
     }
   }
+
 }

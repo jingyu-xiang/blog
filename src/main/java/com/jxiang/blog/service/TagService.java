@@ -3,9 +3,8 @@ package com.jxiang.blog.service;
 import com.jxiang.blog.vo.TagVo;
 import com.jxiang.blog.vo.param.LimitParam;
 import com.jxiang.blog.vo.result.Result;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface TagService {
 
@@ -57,4 +56,5 @@ public interface TagService {
    * @return Result
    */
   Result deleteTagById(String id);
+
 }

@@ -1,7 +1,7 @@
 package com.jxiang.blog.aop.log;
 
 import com.alibaba.fastjson.JSON;
-import com.jxiang.blog.util.statics.NetworkUtils;
+import com.jxiang.blog.util.NetworkUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -24,42 +24,43 @@ public class LogAspect {
   }
 
   @Around("pt()") // 通知（环绕）
-  public Object logInfo(ProceedingJoinPoint joinPoint) throws Throwable {
-    long beginTime = System.currentTimeMillis();
+  public Object logInfo(final ProceedingJoinPoint joinPoint) throws Throwable {
+    final long beginTime = System.currentTimeMillis();
 
-    Object result = joinPoint.proceed();
+    final Object result = joinPoint.proceed();
 
-    Long time = System.currentTimeMillis() - beginTime;
+    final Long time = System.currentTimeMillis() - beginTime;
 
     recordLog(joinPoint, time);
     return result;
   }
 
-  private void recordLog(ProceedingJoinPoint joinPoint, Long time) {
+  private void recordLog(final ProceedingJoinPoint joinPoint, final Long time) {
     // retrieve the invoked method properties (annotation in this case)
-    MethodSignature signature = (MethodSignature) joinPoint.getSignature();
-    Method method = signature.getMethod();
-    Log log = method.getAnnotation(Log.class);
+    final MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+    final Method method = signature.getMethod();
+    final Log log = method.getAnnotation(Log.class);
 
     LogAspect.log.info("=====================log start================================");
     LogAspect.log.info("module:{}", log.module());
     LogAspect.log.info("operation:{}", log.operator());
 
     // method name
-    String className = joinPoint.getTarget().getClass().getName();
-    String methodName = signature.getName();
+    final String className = joinPoint.getTarget().getClass().getName();
+    final String methodName = signature.getName();
     LogAspect.log.info("request method:{}", className + "." + methodName + "()");
 
     // parameters
-    Object[] args = joinPoint.getArgs();
-    String params = JSON.toJSONString(args[0]);
+    final Object[] args = joinPoint.getArgs();
+    final String params = JSON.toJSONString(args[0]);
     LogAspect.log.info("params:{}", params);
 
-    //retrieve request info such as ip address
-    HttpServletRequest request = NetworkUtils.getHttpServletRequest();
+    // retrieve request info such as ip address
+    final HttpServletRequest request = NetworkUtils.getHttpServletRequest();
     LogAspect.log.info("ip:{}", NetworkUtils.getIpAddress(request));
 
     LogAspect.log.info("execute time : {} ms", time);
     LogAspect.log.info("=====================log end================================");
   }
+
 }

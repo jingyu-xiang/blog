@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysUserServiceUtils {
 
-  AuthorVo copyAuthor(SysUser sysUser) {
-    AuthorVo authorVo = new AuthorVo();
+  AuthorVo copyAuthor(final SysUser sysUser) {
+    final AuthorVo authorVo = new AuthorVo();
     authorVo.setId(String.valueOf(sysUser.getId()));
     // copy properties of sysUser to sysUserVo
     BeanUtils.copyProperties(sysUser, authorVo);
     return authorVo;
   }
+
 }

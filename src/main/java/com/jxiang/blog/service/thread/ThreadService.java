@@ -6,12 +6,10 @@ import com.jxiang.blog.dao.mapper.ArticleMapper;
 import com.jxiang.blog.dao.mapper.SysUserMapper;
 import com.jxiang.blog.pojo.Article;
 import com.jxiang.blog.pojo.SysUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.concurrent.TimeUnit;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-
-import java.util.concurrent.TimeUnit;
 
 @Component
 public class ThreadService {
@@ -20,20 +18,21 @@ public class ThreadService {
 
   private final RedisTemplate<String, String> redisTemplate;
 
-  @Autowired
-  public ThreadService(RedisTemplate<String, String> redisTemplate) {
+  public ThreadService(final RedisTemplate<String, String> redisTemplate) {
     this.redisTemplate = redisTemplate;
   }
 
   @Async(THREAD_POOL_ID)
-  // put the following task in a configured thread pool, without affecting main thread
-  public void updateArticleViewCount(ArticleMapper articleMapper, Article article) {
-    int viewCount = article.getViewCounts();
-    Article toUpdate = new Article();
+  // put the following task in a configured thread pool, without affecting main
+  // thread
+  public void updateArticleViewCount(final ArticleMapper articleMapper, final Article article) {
+    final int viewCount = article.getViewCounts();
+    final Article toUpdate = new Article();
     toUpdate.setViewCounts(viewCount + 1);
 
-    LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
-    updateWrapper // update article set view_count=100 where view_count={viewCount} and id={article.getId()}
+    final LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
+    updateWrapper // update article set view_count=100 where view_count={viewCount} and
+        // id={article.getId()}
         .eq(Article::getId, article.getId())
         .eq(Article::getViewCounts, viewCount); // optimistic lock
 
@@ -41,12 +40,12 @@ public class ThreadService {
   }
 
   @Async(THREAD_POOL_ID)
-  public void updateCommentCount(ArticleMapper articleMapper, Article article) {
-    int commentCount = article.getCommentCounts();
-    Article toUpdate = new Article();
+  public void updateCommentCount(final ArticleMapper articleMapper, final Article article) {
+    final int commentCount = article.getCommentCounts();
+    final Article toUpdate = new Article();
     toUpdate.setCommentCounts(commentCount + 1);
 
-    LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
+    final LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
     updateWrapper
         .eq(Article::getId, article.getId())
         .eq(Article::getCommentCounts, commentCount); // optimistic lock
@@ -57,15 +56,14 @@ public class ThreadService {
   // method overload
   @Async(THREAD_POOL_ID)
   public void updateCommentCount(
-      ArticleMapper articleMapper,
-      Long articleId,
-      boolean add,
-      int count
-  ) {
-    Article article = articleMapper.selectById(articleId);
+      final ArticleMapper articleMapper,
+      final Long articleId,
+      final boolean add,
+      final int count) {
+    final Article article = articleMapper.selectById(articleId);
 
-    int commentCount = article.getCommentCounts();
-    Article toUpdate = new Article();
+    final int commentCount = article.getCommentCounts();
+    final Article toUpdate = new Article();
 
     if (add) {
       toUpdate.setCommentCounts(commentCount + 1);
@@ -73,7 +71,7 @@ public class ThreadService {
       toUpdate.setCommentCounts(Math.max(commentCount - count, 0));
     }
 
-    LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
+    final LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
     updateWrapper
         .eq(Article::getId, article.getId())
         .eq(Article::getCommentCounts, commentCount); // optimistic lock
@@ -82,7 +80,7 @@ public class ThreadService {
   }
 
   @Async(THREAD_POOL_ID)
-  public void updateLastLogin(SysUser sysUser, String token, SysUserMapper sysUserMapper) {
+  public void updateLastLogin(final SysUser sysUser, final String token, final SysUserMapper sysUserMapper) {
     sysUser.setLastLogin(System.currentTimeMillis());
     sysUserMapper.updateById(sysUser);
 

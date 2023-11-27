@@ -1,8 +1,8 @@
 package com.jxiang.blog.controller;
 
 import com.jxiang.blog.pojo.SysUser;
-import com.jxiang.blog.util.beans.QiniuUtils;
-import com.jxiang.blog.util.statics.SysUserThreadLocal;
+import com.jxiang.blog.util.QiniuUtils;
+import com.jxiang.blog.util.SysUserThreadLocal;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
-
 @RestController
 @RequestMapping("api/upload")
 public class FileUploadController {
@@ -23,26 +22,28 @@ public class FileUploadController {
   private QiniuUtils qiniuUtils;
 
   @PostMapping
-  public Result uploadArticleImage(@RequestBody MultipartFile file) {
+  public Result uploadArticleImage(@RequestBody final MultipartFile file) {
 
     if (file.isEmpty()) {
-      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(),
+      return Result.failure(
+          ErrorCode.PARAMS_ERROR.getCode(),
           ErrorCode.PARAMS_ERROR.getMsg());
     }
 
-    SysUser sysUser = SysUserThreadLocal.get();
-    Long userId = sysUser.getId();
+    final SysUser sysUser = SysUserThreadLocal.get();
+    final Long userId = sysUser.getId();
 
-    String originalFilename = file.getOriginalFilename();
-    String fileNameToUpload = "users/" + userId + "/" + originalFilename;
+    final String originalFilename = file.getOriginalFilename();
+    final String fileNameToUpload = "users/" + userId + "/" + originalFilename;
 
-    Map<String, Object> result = qiniuUtils.upload(file, fileNameToUpload);
-    Boolean success = (Boolean) result.get("success");
+    final Map<String, Object> result = qiniuUtils.upload(file, fileNameToUpload);
+    final Boolean success = (Boolean) result.get("success");
 
     if (success) {
       return Result.success(result.get("urn") + "/" + fileNameToUpload);
     }
-    return Result.failure(ErrorCode.FILE_UPLOAD_FAILURE.getCode(),
+    return Result.failure(
+        ErrorCode.FILE_UPLOAD_FAILURE.getCode(),
         ErrorCode.FILE_UPLOAD_FAILURE.getMsg());
   }
 

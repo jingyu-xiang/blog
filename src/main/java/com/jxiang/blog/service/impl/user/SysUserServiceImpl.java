@@ -12,7 +12,6 @@ import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,13 +22,11 @@ public class SysUserServiceImpl implements SysUserService {
   private final ThreadService threadService;
   private final SysUserServiceUtils sysUserServiceUtils;
 
-  @Autowired
   public SysUserServiceImpl(
-      SysUserMapper sysUserMapper,
-      AuthService authService,
-      ThreadService threadService,
-      SysUserServiceUtils sysUserServiceUtils
-  ) {
+      final SysUserMapper sysUserMapper,
+      final AuthService authService,
+      final ThreadService threadService,
+      final SysUserServiceUtils sysUserServiceUtils) {
     this.sysUserMapper = sysUserMapper;
     this.authService = authService;
     this.threadService = threadService;
@@ -37,7 +34,7 @@ public class SysUserServiceImpl implements SysUserService {
   }
 
   @Override
-  public AuthorVo findAuthorVoById(Long id) {
+  public AuthorVo findAuthorVoById(final Long id) {
     SysUser sysUser = sysUserMapper.selectById(id);
     if (sysUser == null) {
       sysUser = new SysUser();
@@ -48,8 +45,8 @@ public class SysUserServiceImpl implements SysUserService {
   }
 
   @Override
-  public SysUser findUserForLogin(String account, String password) {
-    LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+  public SysUser findUserForLogin(final String account, final String password) {
+    final LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
     queryWrapper
         .eq(SysUser::getAccount, account)
         .eq(SysUser::getPassword, password)
@@ -58,18 +55,19 @@ public class SysUserServiceImpl implements SysUserService {
   }
 
   @Override
-  public Result findCurrentLoginUserVoByToken(String token) {
-    SysUser sysUser = authService.checkToken(token);
+  public Result findCurrentLoginUserVoByToken(final String token) {
+    final SysUser sysUser = authService.checkToken(token);
 
     if (sysUser == null) {
-      return Result.failure(ErrorCode.TOKEN_INVALID.getCode(),
+      return Result.failure(
+          ErrorCode.TOKEN_INVALID.getCode(),
           ErrorCode.TOKEN_INVALID.getMsg());
     }
 
     // use thread pool to change lastLogin, isolated from the main program thread
     threadService.updateLastLogin(sysUser, token, sysUserMapper);
 
-    SysUserVo sysUserVo = new SysUserVo();
+    final SysUserVo sysUserVo = new SysUserVo();
     sysUserVo.setId(String.valueOf(sysUser.getId()));
     BeanUtils.copyProperties(sysUser, sysUserVo);
     sysUserVo.setLastLogin(
@@ -79,8 +77,8 @@ public class SysUserServiceImpl implements SysUserService {
   }
 
   @Override
-  public SysUser findUserByAccount(String account) {
-    LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+  public SysUser findUserByAccount(final String account) {
+    final LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
 
     queryWrapper.eq(SysUser::getAccount, account).last("LIMIT 1");
 
@@ -88,7 +86,7 @@ public class SysUserServiceImpl implements SysUserService {
   }
 
   @Override
-  public void save(SysUser sysUser) {
+  public void save(final SysUser sysUser) {
     // id is auto-generated with snowflakes
     sysUserMapper.insert(sysUser);
   }

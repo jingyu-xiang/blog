@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.jxiang.blog.dao.mapper.CommentMapper">
-    <update id="deleteArticleComments">
-        update ms_comment c
-        set c.deleted= true
-        where c.article_id = #{articleId}
-    </update>
+  <update id="deleteArticleComments">
+    update ms_comment c
+    set c.deleted= true
+    where c.article_id = #{articleId}
+  </update>
 
-    <update id="deleteChildComments">
-        update ms_comment c set c.deleted = true where c.id in
-        <foreach
-                item='commentIds'
-                index='index' collection='list'
-                open='('
-                separator=','
-                close=')'
-        >
-            #{commentIds}
-        </foreach>
-    </update>
+  <update id="deleteChildComments">
+    update ms_comment c set c.deleted = true where c.id in
+    <foreach
+      close=')'
+      collection='list' index='index'
+      item='commentIds'
+      open='('
+      separator=','
+    >
+      #{commentIds}
+    </foreach>
+  </update>
 </mapper>

@@ -1,12 +1,17 @@
 package com.jxiang.blog.service;
 
-import com.jxiang.blog.vo.param.*;
+import com.jxiang.blog.vo.param.ArticleBodyParam;
+import com.jxiang.blog.vo.param.ArticleParam;
+import com.jxiang.blog.vo.param.ArticleUpdateParam;
+import com.jxiang.blog.vo.param.LimitParam;
+import com.jxiang.blog.vo.param.PageParam;
 import com.jxiang.blog.vo.result.Result;
 
 public interface ArticleService {
 
   /**
-   * list all the articles, each article contains its tags and author nickname, and all other
+   * list all the articles, each article contains its tags and author nickname,
+   * and all other
    * information of an article
    *
    * @param pageParam {page, pageSize. categoryId, tagId, userId}
@@ -31,7 +36,8 @@ public interface ArticleService {
   Result listNewArticles(LimitParam limitParam);
 
   /**
-   * article archives list monthly archive of articles and show the count during each month
+   * article archives list monthly archive of articles and show the count during
+   * each month
    *
    * @return list of articles
    */
@@ -41,7 +47,7 @@ public interface ArticleService {
    * get single article by its id
    *
    * @return Result
-   * @Param articleId  id
+   * @Param articleId id
    */
   Result findArticleById(Long articleId);
 
@@ -76,8 +82,9 @@ public interface ArticleService {
    * @param articleUpdateParam {title, summary}
    * @return Result
    */
-  Result updateArticleById(Long articleId,
-                           ArticleUpdateParam articleUpdateParam);
+  Result updateArticleById(
+      Long articleId,
+      ArticleUpdateParam articleUpdateParam);
 
   /**
    * list articles, filtered by a piece of text on title and summary

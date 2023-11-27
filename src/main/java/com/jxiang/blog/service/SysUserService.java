@@ -17,7 +17,8 @@ public interface SysUserService {
   AuthorVo findAuthorVoById(Long id);
 
   /**
-   * retrieve a user based on its username and password, and reset last login time to current
+   * retrieve a user based on its username and password, and reset last login time
+   * to current
    *
    * @param account  user account
    * @param password user password

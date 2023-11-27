@@ -6,12 +6,11 @@ import com.jxiang.blog.aop.cache.MySpringCache;
 import com.jxiang.blog.dao.mapper.TagMapper;
 import com.jxiang.blog.pojo.Tag;
 import com.jxiang.blog.service.TagService;
-import com.jxiang.blog.util.beans.QiniuUtils;
+import com.jxiang.blog.util.QiniuUtils;
 import com.jxiang.blog.vo.TagVo;
 import com.jxiang.blog.vo.param.LimitParam;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -25,15 +24,15 @@ import java.util.Map;
 public class TagServiceImpl implements TagService {
 
   private final TagMapper tagMapper;
+
   private final QiniuUtils qiniuUtils;
+
   private final TagServiceUtils tagServiceUtils;
 
-  @Autowired
   public TagServiceImpl(
-      TagMapper tagMapper,
-      QiniuUtils qiniuUtils,
-      TagServiceUtils tagServiceUtils
-  ) {
+      final TagMapper tagMapper,
+      final QiniuUtils qiniuUtils,
+      final TagServiceUtils tagServiceUtils) {
     this.tagMapper = tagMapper;
     this.qiniuUtils = qiniuUtils;
     this.tagServiceUtils = tagServiceUtils;
@@ -41,8 +40,8 @@ public class TagServiceImpl implements TagService {
 
   @Override
   @MySpringCache(name = "listHotTags")
-  public Result listHotTags(LimitParam limitParam) {
-    List<Long> tagIdList = tagMapper.findHotTagIds(limitParam.getLimit());
+  public Result listHotTags(final LimitParam limitParam) {
+    final List<Long> tagIdList = tagMapper.findHotTagIds(limitParam.getLimit());
 
     if (CollectionUtils.isEmpty(tagIdList)) {
       return Result.success(Collections.emptyList());
@@ -54,43 +53,43 @@ public class TagServiceImpl implements TagService {
   }
 
   @Override
-  public List<TagVo> findTagsByArticleId(Long articleId) {
-    List<Tag> tags = tagMapper.findTagsByArticleId(articleId);
-    return tagServiceUtils.copyList(tags);
+  @MySpringCache(name = "getAllTags")
+  public Result getAllTags() {
+    final List<Tag> tags = tagMapper.selectList(new LambdaQueryWrapper<>());
+    return Result.success(tagServiceUtils.copyList(tags));
   }
 
   @Override
-  @MySpringCache(name = "getAllTags")
-  public Result getAllTags() {
-    List<Tag> tags = tagMapper.selectList(new LambdaQueryWrapper<>());
-    return Result.success(tagServiceUtils.copyList(tags));
+  public List<TagVo> findTagsByArticleId(final Long articleId) {
+    final List<Tag> tags = tagMapper.findTagsByArticleId(articleId);
+    return tagServiceUtils.copyList(tags);
   }
 
   @Override
   @Transactional
   @AdminOnly
-  public Result createTag(String tagName, MultipartFile file) {
+  public Result createTag(final String tagName, final MultipartFile file) {
     // check repeat
-    LambdaQueryWrapper<Tag> queryWrapper = new LambdaQueryWrapper<>();
+    final LambdaQueryWrapper<Tag> queryWrapper = new LambdaQueryWrapper<>();
     queryWrapper.eq(Tag::getTagName, tagName).last("LIMIT 1");
-    List<Tag> tags = tagMapper.selectList(queryWrapper);
+    final List<Tag> tags = tagMapper.selectList(queryWrapper);
     if (tags.size() >= 1) {
-      return Result.failure(ErrorCode.ITEM_ALREADY_EXISTS.getCode(),
+      return Result.failure(
+          ErrorCode.ITEM_ALREADY_EXISTS.getCode(),
           ErrorCode.ITEM_ALREADY_EXISTS.getMsg());
     }
 
-    Tag tag = new Tag();
+    final Tag tag = new Tag();
     tag.setTagName(tagName);
     tagMapper.insert(tag);
 
-    Long tagId = tag.getId();
+    final Long tagId = tag.getId();
 
-    String originalFilename = file.getOriginalFilename();
-    String fileNameToUpload =
-        "tags/" + tagId.toString() + "/" + originalFilename;
+    final String originalFilename = file.getOriginalFilename();
+    final String fileNameToUpload = "tags/" + tagId.toString() + "/" + originalFilename;
     tag.setAvatar(fileNameToUpload);
 
-    Map<String, Object> uploaded = qiniuUtils.upload(file, fileNameToUpload);
+    final Map<String, Object> uploaded = qiniuUtils.upload(file, fileNameToUpload);
 
     if ((boolean) uploaded.get("success")) {
       tag.setAvatar(uploaded.get("urn") + "/" + fileNameToUpload);
@@ -98,36 +97,40 @@ public class TagServiceImpl implements TagService {
       return Result.success(tagServiceUtils.copy(tag));
     }
 
-    return Result.failure(ErrorCode.FILE_UPLOAD_FAILURE.getCode(),
+    return Result.failure(
+        ErrorCode.FILE_UPLOAD_FAILURE.getCode(),
         ErrorCode.FILE_UPLOAD_FAILURE.getMsg());
   }
 
   @Override
-  public Result findTagVoById(Long id) {
+  public Result findTagVoById(final Long id) {
     try {
-      Tag tag = tagMapper.selectById(id);
+      final Tag tag = tagMapper.selectById(id);
       return Result.success(tag);
-    } catch (Exception e) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+    } catch (final Exception e) {
+      return Result.failure(
+          ErrorCode.NOT_FOUND.getCode(),
           ErrorCode.NOT_FOUND.getMsg());
     }
   }
 
   @Override
   @AdminOnly
-  public Result deleteTagById(String id) {
-    Long tagId = Long.parseLong(id);
-    Tag tag = tagMapper.selectById(tagId);
+  public Result deleteTagById(final String id) {
+    final Long tagId = Long.parseLong(id);
+    final Tag tag = tagMapper.selectById(tagId);
 
     if (tag != null) {
-      int success = tagMapper.deleteById(tagId);
+      final int success = tagMapper.deleteById(tagId);
 
       return success == 1
           ? Result.success(id)
-          : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
-          ErrorCode.SYSTEM_ERROR.getMsg());
+          : Result.failure(
+              ErrorCode.SYSTEM_ERROR.getCode(),
+              ErrorCode.SYSTEM_ERROR.getMsg());
     }
 
     return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
   }
+
 }

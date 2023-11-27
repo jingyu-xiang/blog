@@ -13,13 +13,12 @@ import com.jxiang.blog.pojo.SysUser;
 import com.jxiang.blog.service.ArticleService;
 import com.jxiang.blog.service.CommentService;
 import com.jxiang.blog.service.thread.ThreadService;
-import com.jxiang.blog.util.statics.SysUserThreadLocal;
+import com.jxiang.blog.util.SysUserThreadLocal;
 import com.jxiang.blog.vo.ArticleVo;
 import com.jxiang.blog.vo.param.*;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,21 +31,24 @@ import java.util.Map;
 public class ArticleServiceImpl implements ArticleService {
 
   private final ArticleMapper articleMapper;
+
   private final CommentService commentService;
+
   private final ThreadService threadService;
+
   private final ArticleTagMapper articleTagMapper;
+
   private final ArticleBodyMapper articleBodyMapper;
+
   private final ArticleServiceUtils articleServiceUtils;
 
-  @Autowired
   public ArticleServiceImpl(
-      ArticleMapper articleMapper,
-      ArticleBodyMapper articleBodyMapper,
-      CommentService commentService,
-      ThreadService threadService,
-      ArticleTagMapper articleTagMapper,
-      ArticleServiceUtils articleServiceUtils
-  ) {
+      final ArticleMapper articleMapper,
+      final ArticleBodyMapper articleBodyMapper,
+      final CommentService commentService,
+      final ThreadService threadService,
+      final ArticleTagMapper articleTagMapper,
+      final ArticleServiceUtils articleServiceUtils) {
     this.articleMapper = articleMapper;
     this.articleBodyMapper = articleBodyMapper;
     this.commentService = commentService;
@@ -57,33 +59,32 @@ public class ArticleServiceImpl implements ArticleService {
 
   @Override
   @MySpringCache(name = "listArticles")
-  public Result listArticles(PageParam pageParam) {
-    Page<Article> page = new Page<>(pageParam.getPage(), pageParam.getPageSize());
-    LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+  public Result listArticles(final PageParam pageParam) {
+    final Page<Article> page = new Page<>(pageParam.getPage(), pageParam.getPageSize());
+    final LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
 
     if (pageParam.getUserId() != null) {
-      Long userId = Long.valueOf(pageParam.getUserId());
+      final Long userId = Long.valueOf(pageParam.getUserId());
       queryWrapper.eq(Article::getAuthorId, userId);
     }
 
     if (pageParam.getCategoryId() != null) {
-      Long categoryId = Long.valueOf(pageParam.getCategoryId());
+      final Long categoryId = Long.valueOf(pageParam.getCategoryId());
       queryWrapper.eq(Article::getCategoryId, categoryId);
     }
 
     if (pageParam.getTagId() != null) {
-      Long tagId = Long.valueOf(pageParam.getTagId());
+      final Long tagId = Long.valueOf(pageParam.getTagId());
 
       // article_id 1 -- * tag_id
-      LambdaQueryWrapper<ArticleTag> articleTagLambdaQueryWrapper = new LambdaQueryWrapper<>();
+      final LambdaQueryWrapper<ArticleTag> articleTagLambdaQueryWrapper = new LambdaQueryWrapper<>();
       articleTagLambdaQueryWrapper.eq(ArticleTag::getTagId, tagId);
-      List<ArticleTag> articleTagList = articleTagMapper.selectList(
+      final List<ArticleTag> articleTagList = articleTagMapper.selectList(
           articleTagLambdaQueryWrapper);
 
-      List<Long> articleIdList = new ArrayList<>();
+      final List<Long> articleIdList = new ArrayList<>();
       articleTagList.forEach(
-          articleTag -> articleIdList.add(articleTag.getArticleId())
-      );
+          articleTag -> articleIdList.add(articleTag.getArticleId()));
 
       if (articleIdList.size() > 0) {
         queryWrapper.in(Article::getId, articleIdList);
@@ -93,14 +94,14 @@ public class ArticleServiceImpl implements ArticleService {
     queryWrapper // order by create_date DESC & weight DESC
         .orderByDesc(Article::getCreateDate);
 
-    final Page<Article> articlePage = articleMapper.selectPage(page,
+    final Page<Article> articlePage = articleMapper.selectPage(
+        page,
         queryWrapper);
 
     final List<ArticleVo> articleVoList = articleServiceUtils.copyList(
         articlePage.getRecords(),
         true,
-        true
-    );
+        true);
 
     return articleVoList.size() != 0
         ? Result.success(articleVoList)
@@ -109,10 +110,11 @@ public class ArticleServiceImpl implements ArticleService {
 
   @Override
   @MySpringCache(name = "listHotArticles")
-  public Result listHotArticles(LimitParam limitParam) {
-    LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+  public Result listHotArticles(final LimitParam limitParam) {
+    final LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
 
-    queryWrapper // select id, title, view_counts from ms_article order by view_counts desc limit {limit}
+    queryWrapper // select id, title, view_counts from ms_article order by view_counts desc limit
+        // {limit}
         .orderByDesc(Article::getViewCounts)
         .select(Article::getId, Article::getTitle, Article::getViewCounts)
         .last("LIMIT " + limitParam.getLimit());
@@ -120,8 +122,7 @@ public class ArticleServiceImpl implements ArticleService {
     final List<Article> articles = articleMapper.selectList(queryWrapper);
 
     final List<ArticleVo> articleVoList = articleServiceUtils.copyList(
-        articles, false, false
-    );
+        articles, false, false);
 
     return articleVoList.size() != 0
         ? Result.success(articleVoList)
@@ -130,10 +131,11 @@ public class ArticleServiceImpl implements ArticleService {
 
   @Override
   @MySpringCache(name = "listNewArticles")
-  public Result listNewArticles(LimitParam limitParam) {
-    LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+  public Result listNewArticles(final LimitParam limitParam) {
+    final LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
 
-    queryWrapper // select id, title, createDate from ms_article order by create_date desc limit {limit}
+    queryWrapper // select id, title, createDate from ms_article order by create_date desc limit
+        // {limit}
         .orderByDesc(Article::getCreateDate)
         .select(Article::getId, Article::getTitle, Article::getCreateDate)
         .last("LIMIT " + limitParam.getLimit());
@@ -141,8 +143,7 @@ public class ArticleServiceImpl implements ArticleService {
     final List<Article> articles = articleMapper.selectList(queryWrapper);
 
     final List<ArticleVo> articleVoList = articleServiceUtils.copyList(
-        articles, false, false
-    );
+        articles, false, false);
 
     return articleVoList.size() != 0
         ? Result.success(articleVoList)
@@ -156,30 +157,32 @@ public class ArticleServiceImpl implements ArticleService {
   }
 
   @Override
-  public Result findArticleById(Long articleId) {
-    Article article = articleMapper.selectById(articleId);
+  public Result findArticleById(final Long articleId) {
+    final Article article = articleMapper.selectById(articleId);
 
     if (article == null) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+      return Result.failure(
+          ErrorCode.NOT_FOUND.getCode(),
           ErrorCode.NOT_FOUND.getMsg());
     }
 
-    ArticleVo articleVo = articleServiceUtils.copy(
-        article, true, true, true, true
-    );
+    final ArticleVo articleVo = articleServiceUtils.copy(
+        article, true, true, true, true);
 
-    // use thread pool to process the add review count operation, isolated from the main program thread
+    // use thread pool to process the add review count operation, isolated from the
+    // main program
+    // thread
     threadService.updateArticleViewCount(articleMapper, article);
 
     return Result.success(articleVo);
   }
 
   @Override
-  public Result createArticle(ArticleParam articleParam) {
-    SysUser sysUser = SysUserThreadLocal.get();
+  public Result createArticle(final ArticleParam articleParam) {
+    final SysUser sysUser = SysUserThreadLocal.get();
 
     // article basic fields
-    Article article = new Article();
+    final Article article = new Article();
     article.setAuthorId(sysUser.getId());
     article.setViewCounts(0);
     article.setTitle(articleParam.getTitle());
@@ -193,10 +196,10 @@ public class ArticleServiceImpl implements ArticleService {
     articleMapper.insert(article);
 
     // article tags
-    List<String> tagIds = articleParam.getTagIds();
+    final List<String> tagIds = articleParam.getTagIds();
     if (tagIds != null && tagIds.size() > 0) {
-      for (String tagId : tagIds) {
-        ArticleTag articleTag = new ArticleTag();
+      for (final String tagId : tagIds) {
+        final ArticleTag articleTag = new ArticleTag();
         articleTag.setTagId(Long.valueOf(tagId));
         articleTag.setArticleId(article.getId());
         articleTagMapper.insert(articleTag);
@@ -204,7 +207,7 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     // article body
-    ArticleBody articleBody = new ArticleBody();
+    final ArticleBody articleBody = new ArticleBody();
     articleBody.setArticleId(article.getId());
     articleBody.setContent(articleParam.getBody().getContent());
     articleBody.setContentHtml(articleParam.getBody().getContentHtml());
@@ -219,102 +222,113 @@ public class ArticleServiceImpl implements ArticleService {
 
   @Override
   @Transactional
-  public Result deleteArticleById(Long articleId) {
-    Article articleToDelete = articleMapper.selectById(articleId);
+  public Result deleteArticleById(final Long articleId) {
+    final Article articleToDelete = articleMapper.selectById(articleId);
 
     if (articleToDelete == null) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+      return Result.failure(
+          ErrorCode.NOT_FOUND.getCode(),
           ErrorCode.NOT_FOUND.getMsg());
     }
 
-    SysUser requestUser = SysUserThreadLocal.get();
+    final SysUser requestUser = SysUserThreadLocal.get();
 
     if (requestUser.getAdmin() == 1 || articleToDelete.getAuthorId().equals(requestUser.getId())) {
       articleMapper.deleteById(articleToDelete);
 
       // delete article's comments
-      boolean deleted = commentService.deleteArticleComments(articleId);
+      final boolean deleted = commentService.deleteArticleComments(articleId);
 
       if (deleted) {
         return Result.success(articleToDelete.getId());
       }
 
-      return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
+      return Result.failure(
+          ErrorCode.SYSTEM_ERROR.getCode(),
           ErrorCode.SYSTEM_ERROR.getMsg());
     }
 
-    return Result.failure(ErrorCode.NO_PERMISSION.getCode(),
+    return Result.failure(
+        ErrorCode.NO_PERMISSION.getCode(),
         ErrorCode.NO_PERMISSION.getMsg());
   }
 
   @Override
   @Transactional
-  public Result updateArticleBodyById(Long articleId,
-                                      ArticleBodyParam articleBody) {
-    LambdaQueryWrapper<ArticleBody> queryWrapper = new LambdaQueryWrapper<>();
+  public Result updateArticleBodyById(final Long articleId, final ArticleBodyParam articleBody) {
+    final LambdaQueryWrapper<ArticleBody> queryWrapper = new LambdaQueryWrapper<>();
     queryWrapper.eq(ArticleBody::getArticleId, articleId).last("LIMIT " + 1);
-    ArticleBody articleBodyToUpdate = articleBodyMapper.selectOne(queryWrapper);
-    Article articleToUpdate = articleMapper.selectById(articleId);
+    final ArticleBody articleBodyToUpdate = articleBodyMapper.selectOne(queryWrapper);
+    final Article articleToUpdate = articleMapper.selectById(articleId);
 
     if (articleToUpdate == null) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+      return Result.failure(
+          ErrorCode.NOT_FOUND.getCode(),
           ErrorCode.NOT_FOUND.getMsg());
     }
 
     if (!articleToUpdate.getAuthorId()
         .equals(SysUserThreadLocal.get().getId())) {
-      return Result.failure(ErrorCode.NO_LOGIN.getCode(),
+      return Result.failure(
+          ErrorCode.NO_LOGIN.getCode(),
           ErrorCode.NO_LOGIN.getMsg());
     }
 
     if (articleBodyToUpdate == null) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+      return Result.failure(
+          ErrorCode.NOT_FOUND.getCode(),
           ErrorCode.NOT_FOUND.getMsg());
     }
 
-    String content = articleBody.getContent();
-    String contentHtml = articleBody.getContentHtml();
+    final String content = articleBody.getContent();
+    final String contentHtml = articleBody.getContentHtml();
 
     // not update if the content has not changed
     if (content.equals(articleBodyToUpdate.getContent()) &&
         contentHtml.equals(articleBodyToUpdate.getContentHtml())) {
-      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(),
+      return Result.failure(
+          ErrorCode.PARAMS_ERROR.getCode(),
           ErrorCode.PARAMS_ERROR.getMsg());
     }
 
     articleBodyToUpdate.setContent(content);
     articleBodyToUpdate.setContentHtml(contentHtml);
 
-    int success = articleBodyMapper.updateById(articleBodyToUpdate);
+    final int success = articleBodyMapper.updateById(articleBodyToUpdate);
 
     return success == 1
         ? Result.success("Success")
-        : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
-        ErrorCode.SYSTEM_ERROR.getMsg());
+        : Result.failure(
+            ErrorCode.SYSTEM_ERROR.getCode(),
+            ErrorCode.SYSTEM_ERROR.getMsg());
   }
 
   @Override
   @Transactional
-  public Result updateArticleById(Long articleId,
-                                  ArticleUpdateParam articleUpdateParam) {
-    Article articleToUpdate = articleMapper.selectById(articleId);
+  public Result updateArticleById(
+      final Long articleId,
+      final ArticleUpdateParam articleUpdateParam) {
+    final Article articleToUpdate = articleMapper.selectById(articleId);
 
     if (articleToUpdate == null) {
-      return Result.failure(ErrorCode.NOT_FOUND.getCode(),
+      return Result.failure(
+          ErrorCode.NOT_FOUND.getCode(),
           ErrorCode.NOT_FOUND.getMsg());
     }
 
     if (!articleToUpdate.getAuthorId()
         .equals(SysUserThreadLocal.get().getId())) {
-      return Result.failure(ErrorCode.NO_LOGIN.getCode(),
+      return Result.failure(
+          ErrorCode.NO_LOGIN.getCode(),
           ErrorCode.NO_LOGIN.getMsg());
     }
 
-    String title = articleUpdateParam.getTitle();
-    String summary = articleUpdateParam.getSummary();
+    final String title = articleUpdateParam.getTitle();
+    final String summary = articleUpdateParam.getSummary();
 
     if (title == null && summary == null) {
-      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(),
+      return Result.failure(
+          ErrorCode.PARAMS_ERROR.getCode(),
           ErrorCode.PARAMS_ERROR.getMsg());
     }
 
@@ -322,7 +336,8 @@ public class ArticleServiceImpl implements ArticleService {
       if (!title.equals("") && !title.equals(articleToUpdate.getTitle())) {
         articleToUpdate.setTitle(title);
       } else {
-        return Result.failure(ErrorCode.PARAMS_ERROR.getCode(),
+        return Result.failure(
+            ErrorCode.PARAMS_ERROR.getCode(),
             ErrorCode.PARAMS_ERROR.getMsg());
       }
     }
@@ -332,26 +347,28 @@ public class ArticleServiceImpl implements ArticleService {
           articleToUpdate.getSummary())) {
         articleToUpdate.setSummary(summary);
       } else {
-        return Result.failure(ErrorCode.PARAMS_ERROR.getCode(),
+        return Result.failure(
+            ErrorCode.PARAMS_ERROR.getCode(),
             ErrorCode.PARAMS_ERROR.getMsg());
       }
     }
 
-    int success = articleMapper.updateById(articleToUpdate);
+    final int success = articleMapper.updateById(articleToUpdate);
 
-    Map<String, String> res = new HashMap<>();
+    final Map<String, String> res = new HashMap<>();
     res.put("title", articleToUpdate.getTitle());
     res.put("summary", articleToUpdate.getSummary());
 
     return success == 1
         ? Result.success(res)
-        : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
-        ErrorCode.SYSTEM_ERROR.getMsg());
+        : Result.failure(
+            ErrorCode.SYSTEM_ERROR.getCode(),
+            ErrorCode.SYSTEM_ERROR.getMsg());
   }
 
   @Override
   @MySpringCache(name = "listSearchedArticles")
-  public Result listSearchedArticles(String queryString, PageParam pageParam) {
+  public Result listSearchedArticles(final String queryString, final PageParam pageParam) {
     if (StringUtils.isEmpty(queryString)) {
       return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
     }
@@ -361,8 +378,7 @@ public class ArticleServiceImpl implements ArticleService {
     final List<ArticleVo> articleVoList = articleServiceUtils.copyList(
         articlePage.getRecords(),
         true,
-        true
-    );
+        true);
 
     return articleVoList.size() != 0
         ? Result.success(articleVoList)

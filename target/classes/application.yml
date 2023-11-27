@@ -19,7 +19,6 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 ---
-
 spring:
   config:
     activate:
@@ -44,7 +43,6 @@ credentials:
     accessSecretKey: P9KBmg0CwKwiquMI4dSgADNBPO9AC-Jic6K4dzDv
 
 ---
-
 spring:
   config:
     activate:
@@ -71,3 +69,4 @@ credentials:
     accessSecretKey: P9KBmg0CwKwiquMI4dSgADNBPO9AC-Jic6K4dzDv
 
 ---
+

@@ -1,7 +1,7 @@
 package com.jxiang.blog.aop.admin;
 
 import com.jxiang.blog.pojo.SysUser;
-import com.jxiang.blog.util.statics.SysUserThreadLocal;
+import com.jxiang.blog.util.SysUserThreadLocal;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -19,17 +19,18 @@ public class AdminOnlyAspect {
   }
 
   @Around("pt()")
-  public Object around(ProceedingJoinPoint pjp) {
+  public Object around(final ProceedingJoinPoint pjp) {
     try {
-      SysUser requestUser = SysUserThreadLocal.get();
+      final SysUser requestUser = SysUserThreadLocal.get();
       if (requestUser.getAdmin() != 1) {
         return Result.failure(ErrorCode.NO_PERMISSION.getCode(), ErrorCode.NO_PERMISSION.getMsg());
       }
       return pjp.proceed();
-    } catch (Throwable e) {
+    } catch (final Throwable e) {
       e.printStackTrace();
       return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMsg());
     }
 
   }
+
 }

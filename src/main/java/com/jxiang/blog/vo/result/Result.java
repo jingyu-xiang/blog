@@ -15,11 +15,11 @@ public class Result {
 
   private Object data;
 
-  public static Result success(Object data) {
+  public static Result success(final Object data) {
     return new Result(true, 200, "success", data);
   }
 
-  public static Result failure(int code, String msg) {
+  public static Result failure(final int code, final String msg) {
     return new Result(false, code, msg, null);
   }
 

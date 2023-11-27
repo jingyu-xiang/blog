@@ -12,9 +12,10 @@ public class GeneralExceptionHandler {
   @ExceptionHandler(Exception.class)
   // handle all exceptions occurred during controller methods' execution
   @ResponseBody // return JSON response
-  public Result handleException(Exception ex) {
+  public Result handleException(final Exception ex) {
     ex.printStackTrace();
-    return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(),
+    return Result.failure(
+        ErrorCode.SYSTEM_ERROR.getCode(),
         ErrorCode.SYSTEM_ERROR.getMsg());
   }
 

@@ -22,9 +22,8 @@ public class CategoryController {
 
   @PostMapping("create")
   public Result createCategory(
-      @RequestPart CategoryParam categoryParam,
-      @RequestPart MultipartFile file
-  ) {
+      @RequestPart final CategoryParam categoryParam,
+      @RequestPart final MultipartFile file) {
     if (file.isEmpty()) {
       return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
     }
@@ -33,12 +32,12 @@ public class CategoryController {
   }
 
   @GetMapping("{id}")
-  public Result getCategoryDetailById(@PathVariable Long id) {
+  public Result getCategoryDetailById(@PathVariable final Long id) {
     return categoryService.getCategoryDetailById(id);
   }
 
   @DeleteMapping("/delete/{id}")
-  public Result deleteCategoryById(@PathVariable String id) {
+  public Result deleteCategoryById(@PathVariable final String id) {
     return categoryService.deleteCategoryById(id);
   }
 

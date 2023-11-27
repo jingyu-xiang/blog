@@ -1,8 +1,7 @@
 package com.jxiang.blog.vo;
 
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class ArticleVo {

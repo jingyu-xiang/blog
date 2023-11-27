@@ -8,7 +8,8 @@ import com.jxiang.blog.vo.result.Result;
 public interface AuthService {
 
   /**
-   * Login feature take an object of account and password, return token and store it in redis {user:
+   * Login feature take an object of account and password, return token and store
+   * it in redis {user:
    * token} test passwords: {password}
    *
    * @param loginParam account & password
