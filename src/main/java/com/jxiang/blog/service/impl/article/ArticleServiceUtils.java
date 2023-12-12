@@ -1,5 +1,12 @@
 package com.jxiang.blog.service.impl.article;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.joda.time.DateTime;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
 import com.jxiang.blog.dao.mapper.ArticleBodyMapper;
 import com.jxiang.blog.pojo.Article;
 import com.jxiang.blog.pojo.ArticleBody;
@@ -8,30 +15,17 @@ import com.jxiang.blog.service.SysUserService;
 import com.jxiang.blog.service.TagService;
 import com.jxiang.blog.vo.ArticleBodyVo;
 import com.jxiang.blog.vo.ArticleVo;
-import java.util.ArrayList;
-import java.util.List;
-import org.joda.time.DateTime;
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ArticleServiceUtils {
 
   private final CategoryService categoryService;
   private final TagService tagService;
   private final SysUserService sysUserService;
   private final ArticleBodyMapper articleBodyMapper;
-
-  public ArticleServiceUtils(
-      final CategoryService categoryService,
-      final TagService tagService,
-      final SysUserService sysUserService,
-      final ArticleBodyMapper articleBodyMapper) {
-    this.categoryService = categoryService;
-    this.tagService = tagService;
-    this.sysUserService = sysUserService;
-    this.articleBodyMapper = articleBodyMapper;
-  }
 
   List<ArticleVo> copyList(
       final List<Article> records,

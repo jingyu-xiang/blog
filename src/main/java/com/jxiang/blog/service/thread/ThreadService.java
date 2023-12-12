@@ -1,26 +1,27 @@
 package com.jxiang.blog.service.thread;
 
+import java.util.concurrent.TimeUnit;
+
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
+
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.jxiang.blog.dao.mapper.ArticleMapper;
 import com.jxiang.blog.dao.mapper.SysUserMapper;
 import com.jxiang.blog.pojo.Article;
 import com.jxiang.blog.pojo.SysUser;
-import java.util.concurrent.TimeUnit;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
+
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class ThreadService {
 
   final private String THREAD_POOL_ID = "taskExecutor";
 
   private final RedisTemplate<String, String> redisTemplate;
-
-  public ThreadService(final RedisTemplate<String, String> redisTemplate) {
-    this.redisTemplate = redisTemplate;
-  }
 
   @Async(THREAD_POOL_ID)
   // put the following task in a configured thread pool, without affecting main
@@ -53,7 +54,6 @@ public class ThreadService {
     articleMapper.update(toUpdate, updateWrapper);
   }
 
-  // method overload
   @Async(THREAD_POOL_ID)
   public void updateCommentCount(
       final ArticleMapper articleMapper,

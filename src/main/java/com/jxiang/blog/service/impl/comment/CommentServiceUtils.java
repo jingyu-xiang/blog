@@ -1,27 +1,27 @@
 package com.jxiang.blog.service.impl.comment;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.joda.time.DateTime;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.dao.mapper.CommentMapper;
 import com.jxiang.blog.pojo.Comment;
 import com.jxiang.blog.service.SysUserService;
 import com.jxiang.blog.vo.AuthorVo;
 import com.jxiang.blog.vo.CommentVo;
-import java.util.ArrayList;
-import java.util.List;
-import org.joda.time.DateTime;
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class CommentServiceUtils {
 
   private final SysUserService sysUserService;
   private final CommentMapper commentMapper;
-
-  public CommentServiceUtils(final SysUserService sysUserService, final CommentMapper commentMapper) {
-    this.sysUserService = sysUserService;
-    this.commentMapper = commentMapper;
-  }
 
   List<CommentVo> copyList(final List<Comment> comments) {
     final List<CommentVo> commentVoList = new ArrayList<>();

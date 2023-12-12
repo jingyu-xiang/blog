@@ -1,14 +1,5 @@
 package com.jxiang.blog.controller;
 
-import com.jxiang.blog.aop.log.Log;
-import com.jxiang.blog.service.ArticleService;
-import com.jxiang.blog.vo.param.ArticleBodyParam;
-import com.jxiang.blog.vo.param.ArticleParam;
-import com.jxiang.blog.vo.param.ArticleUpdateParam;
-import com.jxiang.blog.vo.param.LimitParam;
-import com.jxiang.blog.vo.param.PageParam;
-import com.jxiang.blog.vo.result.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,11 +8,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jxiang.blog.aop.log.Log;
+import com.jxiang.blog.service.ArticleService;
+import com.jxiang.blog.vo.param.ArticleBodyParam;
+import com.jxiang.blog.vo.param.ArticleParam;
+import com.jxiang.blog.vo.param.ArticleUpdateParam;
+import com.jxiang.blog.vo.param.LimitParam;
+import com.jxiang.blog.vo.param.PageParam;
+import com.jxiang.blog.vo.result.Result;
+
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("api/articles")
+@RequiredArgsConstructor
 public class ArticleController {
 
-  @Autowired
   private ArticleService articleService;
 
   @Log(module = "article", operator = "get articles") // AOP log

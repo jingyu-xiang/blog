@@ -1,9 +1,5 @@
 package com.jxiang.blog.controller;
 
-import com.jxiang.blog.service.CommentService;
-import com.jxiang.blog.vo.param.CommentParam;
-import com.jxiang.blog.vo.result.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,11 +7,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.jxiang.blog.service.CommentService;
+import com.jxiang.blog.vo.param.CommentParam;
+import com.jxiang.blog.vo.result.Result;
+
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("api")
+@RequiredArgsConstructor
 public class CommentController {
 
-  @Autowired
   private CommentService commentService;
 
   @PostMapping("articles/{id}/comments")

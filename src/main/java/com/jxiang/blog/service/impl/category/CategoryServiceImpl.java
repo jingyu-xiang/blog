@@ -6,35 +6,26 @@ import com.jxiang.blog.aop.cache.MySpringCache;
 import com.jxiang.blog.dao.mapper.CategoryMapper;
 import com.jxiang.blog.pojo.Category;
 import com.jxiang.blog.service.CategoryService;
-import com.jxiang.blog.util.QiniuUtils;
 import com.jxiang.blog.vo.CategoryVo;
 import com.jxiang.blog.vo.param.CategoryParam;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
+
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
 
   private final CategoryMapper categoryMapper;
 
-  private final QiniuUtils qiniuUtils;
-
   private final CategoryServiceUtils categoryServiceUtils;
-
-  public CategoryServiceImpl(
-      final CategoryMapper categoryMapper,
-      final QiniuUtils qiniuUtils,
-      final CategoryServiceUtils categoryServiceUtils) {
-    this.categoryMapper = categoryMapper;
-    this.qiniuUtils = qiniuUtils;
-    this.categoryServiceUtils = categoryServiceUtils;
-  }
 
   @Override
   public CategoryVo findCategoryById(final Long categoryId) {
@@ -94,17 +85,9 @@ public class CategoryServiceImpl implements CategoryService {
     final String fileNameToUpload = "categories/" + categoryId.toString() + "/" + originalFilename;
     category.setAvatar(fileNameToUpload);
 
-    final Map<String, Object> uploaded = qiniuUtils.upload(file, fileNameToUpload);
-
-    if ((boolean) uploaded.get("success")) {
-      category.setAvatar(uploaded.get("urn") + "/" + fileNameToUpload);
-      categoryMapper.updateById(category);
-      return Result.success(categoryServiceUtils.copy(category));
-    }
-
-    return Result.failure(
-        ErrorCode.FILE_UPLOAD_FAILURE.getCode(),
-        ErrorCode.FILE_UPLOAD_FAILURE.getMsg());
+    category.setAvatar("unkown");
+    categoryMapper.updateById(category);
+    return Result.success(categoryServiceUtils.copy(category));
   }
 
   @Override

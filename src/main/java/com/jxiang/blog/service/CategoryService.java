@@ -1,9 +1,10 @@
 package com.jxiang.blog.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.jxiang.blog.vo.CategoryVo;
 import com.jxiang.blog.vo.param.CategoryParam;
 import com.jxiang.blog.vo.result.Result;
-import org.springframework.web.multipart.MultipartFile;
 
 public interface CategoryService {
 

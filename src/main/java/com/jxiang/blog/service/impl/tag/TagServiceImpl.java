@@ -1,42 +1,33 @@
 package com.jxiang.blog.service.impl.tag;
 
+import java.util.Collections;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.aop.admin.AdminOnly;
 import com.jxiang.blog.aop.cache.MySpringCache;
 import com.jxiang.blog.dao.mapper.TagMapper;
 import com.jxiang.blog.pojo.Tag;
 import com.jxiang.blog.service.TagService;
-import com.jxiang.blog.util.QiniuUtils;
 import com.jxiang.blog.vo.TagVo;
 import com.jxiang.blog.vo.param.LimitParam;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class TagServiceImpl implements TagService {
 
   private final TagMapper tagMapper;
 
-  private final QiniuUtils qiniuUtils;
-
   private final TagServiceUtils tagServiceUtils;
-
-  public TagServiceImpl(
-      final TagMapper tagMapper,
-      final QiniuUtils qiniuUtils,
-      final TagServiceUtils tagServiceUtils) {
-    this.tagMapper = tagMapper;
-    this.qiniuUtils = qiniuUtils;
-    this.tagServiceUtils = tagServiceUtils;
-  }
 
   @Override
   @MySpringCache(name = "listHotTags")
@@ -66,8 +57,8 @@ public class TagServiceImpl implements TagService {
   }
 
   @Override
-  @Transactional
   @AdminOnly
+  @Transactional
   public Result createTag(final String tagName, final MultipartFile file) {
     // check repeat
     final LambdaQueryWrapper<Tag> queryWrapper = new LambdaQueryWrapper<>();
@@ -89,17 +80,9 @@ public class TagServiceImpl implements TagService {
     final String fileNameToUpload = "tags/" + tagId.toString() + "/" + originalFilename;
     tag.setAvatar(fileNameToUpload);
 
-    final Map<String, Object> uploaded = qiniuUtils.upload(file, fileNameToUpload);
-
-    if ((boolean) uploaded.get("success")) {
-      tag.setAvatar(uploaded.get("urn") + "/" + fileNameToUpload);
-      tagMapper.updateById(tag);
-      return Result.success(tagServiceUtils.copy(tag));
-    }
-
-    return Result.failure(
-        ErrorCode.FILE_UPLOAD_FAILURE.getCode(),
-        ErrorCode.FILE_UPLOAD_FAILURE.getMsg());
+    tag.setAvatar("unkown");
+    tagMapper.updateById(tag);
+    return Result.success(tagServiceUtils.copy(tag));
   }
 
   @Override

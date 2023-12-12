@@ -1,14 +1,8 @@
 package com.jxiang.blog.service.impl.auth;
 
-import com.alibaba.fastjson.JSON;
-import com.jxiang.blog.pojo.SysUser;
-import com.jxiang.blog.service.AuthService;
-import com.jxiang.blog.service.SysUserService;
-import com.jxiang.blog.util.JwtUtils;
-import com.jxiang.blog.vo.param.LoginParam;
-import com.jxiang.blog.vo.param.RegisterParam;
-import com.jxiang.blog.vo.result.ErrorCode;
-import com.jxiang.blog.vo.result.Result;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -18,8 +12,15 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import com.alibaba.fastjson.JSON;
+import com.jxiang.blog.pojo.SysUser;
+import com.jxiang.blog.service.AuthService;
+import com.jxiang.blog.service.SysUserService;
+import com.jxiang.blog.util.JwtUtils;
+import com.jxiang.blog.vo.param.LoginParam;
+import com.jxiang.blog.vo.param.RegisterParam;
+import com.jxiang.blog.vo.result.ErrorCode;
+import com.jxiang.blog.vo.result.Result;
 
 @Service
 @EnableConfigurationProperties

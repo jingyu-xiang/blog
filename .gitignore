@@ -9,34 +9,12 @@ ivy-cache
 argfile*
 activemq-data/
 classes/
+/target/
 
 # Log files
 jxl.log
 jmx.log
 derby.log
-
-# Gradle artifacts
-.gradle
-.gradletasknamecache
-/build
-buildSrc/build
-/spring-*/build
-/framework-*/build
-/integration-tests/build
-/src/asciidoc/build
-spring-test/test-output/
-
-# Maven artifacts
-pom.xml
-/target/
-
-# Eclipse artifacts, including WTP generated manifests
-bin
-.classpath
-.project
-.settings
-.springBeans
-spring-*/src/main/java/META-INF/MANIFEST.MF
 
 # IDEA artifacts and output dirs
 *.iml

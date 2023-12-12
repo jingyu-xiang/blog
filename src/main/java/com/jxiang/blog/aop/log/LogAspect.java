@@ -1,8 +1,7 @@
 package com.jxiang.blog.aop.log;
 
-import com.alibaba.fastjson.JSON;
-import com.jxiang.blog.util.NetworkUtils;
-import lombok.extern.slf4j.Slf4j;
+import java.lang.reflect.Method;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -10,8 +9,10 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
+import com.alibaba.fastjson.JSON;
+import com.jxiang.blog.util.NetworkUtils;
+
+import lombok.extern.slf4j.Slf4j;
 
 // aop 定义一个切面， 切面定义切点和通知的关系
 @Aspect
@@ -56,8 +57,7 @@ public class LogAspect {
     LogAspect.log.info("params:{}", params);
 
     // retrieve request info such as ip address
-    final HttpServletRequest request = NetworkUtils.getHttpServletRequest();
-    LogAspect.log.info("ip:{}", NetworkUtils.getIpAddress(request));
+    LogAspect.log.info("ip:{}", NetworkUtils.getIpAddress(NetworkUtils.getHttpServletRequest()));
 
     LogAspect.log.info("execute time : {} ms", time);
     LogAspect.log.info("=====================log end================================");

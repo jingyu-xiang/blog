@@ -1,11 +1,8 @@
 package com.jxiang.blog.aop.cache;
 
-import com.alibaba.fastjson.JSON;
-import com.jxiang.blog.vo.result.ErrorCode;
-import com.jxiang.blog.vo.result.Result;
 import java.lang.reflect.Method;
 import java.time.Duration;
-import lombok.extern.slf4j.Slf4j;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -16,17 +13,21 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import com.alibaba.fastjson.JSON;
+import com.jxiang.blog.vo.result.ErrorCode;
+import com.jxiang.blog.vo.result.Result;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 // aop 定义一个切面， 切面定义切点和通知的关系
 @Aspect
 @Component
+@RequiredArgsConstructor
 @Slf4j
 public class MySpringCacheAspect {
 
   final private RedisTemplate<String, String> redisTemplate;
-
-  public MySpringCacheAspect(final RedisTemplate<String, String> redisTemplate) {
-    this.redisTemplate = redisTemplate;
-  }
 
   @Pointcut("@annotation(com.jxiang.blog.aop.cache.MySpringCache)") // 切点
   public void pt() {

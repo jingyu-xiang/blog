@@ -1,10 +1,5 @@
 package com.jxiang.blog.controller;
 
-import com.jxiang.blog.service.TagService;
-import com.jxiang.blog.vo.param.LimitParam;
-import com.jxiang.blog.vo.result.ErrorCode;
-import com.jxiang.blog.vo.result.Result;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,11 +10,18 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.jxiang.blog.service.TagService;
+import com.jxiang.blog.vo.param.LimitParam;
+import com.jxiang.blog.vo.result.ErrorCode;
+import com.jxiang.blog.vo.result.Result;
+
+import lombok.RequiredArgsConstructor;
+
 @RestController
 @RequestMapping("api/tags")
+@RequiredArgsConstructor
 public class TagController {
 
-  @Autowired
   private TagService tagService;
 
   @PostMapping("create")

@@ -1,15 +1,18 @@
 package com.jxiang.blog.service;
 
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.jxiang.blog.vo.TagVo;
 import com.jxiang.blog.vo.param.LimitParam;
 import com.jxiang.blog.vo.result.Result;
-import java.util.List;
-import org.springframework.web.multipart.MultipartFile;
 
 public interface TagService {
 
   /**
-   * query ms_article_tag, group by tag_id, find the tag_id with most article_ids return the first
+   * query ms_article_tag, group by tag_id, find the tag_id with most article_ids
+   * return the first
    * {limit} records, and order by the number of article_ids
    *
    * @param limitParam object of page and pageSize

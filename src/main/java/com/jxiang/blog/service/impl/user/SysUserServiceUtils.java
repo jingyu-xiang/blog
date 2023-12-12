@@ -1,9 +1,10 @@
 package com.jxiang.blog.service.impl.user;
 
-import com.jxiang.blog.pojo.SysUser;
-import com.jxiang.blog.vo.AuthorVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+
+import com.jxiang.blog.pojo.SysUser;
+import com.jxiang.blog.vo.AuthorVo;
 
 @Service
 public class SysUserServiceUtils {

@@ -1,5 +1,11 @@
 package com.jxiang.blog.service.impl.comment;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.dao.mapper.ArticleMapper;
 import com.jxiang.blog.dao.mapper.CommentMapper;
@@ -13,13 +19,11 @@ import com.jxiang.blog.vo.CommentVo;
 import com.jxiang.blog.vo.param.CommentParam;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
   private final CommentMapper commentMapper;
@@ -29,17 +33,6 @@ public class CommentServiceImpl implements CommentService {
   private final ThreadService threadService;
 
   private final CommentServiceUtils commentServiceUtils;
-
-  public CommentServiceImpl(
-      final CommentMapper commentMapper,
-      final ArticleMapper articleMapper,
-      final ThreadService threadService,
-      final CommentServiceUtils commentServiceUtils) {
-    this.commentMapper = commentMapper;
-    this.articleMapper = articleMapper;
-    this.threadService = threadService;
-    this.commentServiceUtils = commentServiceUtils;
-  }
 
   @Override
   public Result getCommentsByArticleId(final String id) {

@@ -1,5 +1,14 @@
 package com.jxiang.blog.service.impl.article;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.jxiang.blog.aop.cache.MySpringCache;
@@ -15,19 +24,18 @@ import com.jxiang.blog.service.CommentService;
 import com.jxiang.blog.service.thread.ThreadService;
 import com.jxiang.blog.util.SysUserThreadLocal;
 import com.jxiang.blog.vo.ArticleVo;
-import com.jxiang.blog.vo.param.*;
+import com.jxiang.blog.vo.param.ArticleBodyParam;
+import com.jxiang.blog.vo.param.ArticleParam;
+import com.jxiang.blog.vo.param.ArticleUpdateParam;
+import com.jxiang.blog.vo.param.LimitParam;
+import com.jxiang.blog.vo.param.PageParam;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class ArticleServiceImpl implements ArticleService {
 
   private final ArticleMapper articleMapper;
@@ -41,21 +49,6 @@ public class ArticleServiceImpl implements ArticleService {
   private final ArticleBodyMapper articleBodyMapper;
 
   private final ArticleServiceUtils articleServiceUtils;
-
-  public ArticleServiceImpl(
-      final ArticleMapper articleMapper,
-      final ArticleBodyMapper articleBodyMapper,
-      final CommentService commentService,
-      final ThreadService threadService,
-      final ArticleTagMapper articleTagMapper,
-      final ArticleServiceUtils articleServiceUtils) {
-    this.articleMapper = articleMapper;
-    this.articleBodyMapper = articleBodyMapper;
-    this.commentService = commentService;
-    this.threadService = threadService;
-    this.articleTagMapper = articleTagMapper;
-    this.articleServiceUtils = articleServiceUtils;
-  }
 
   @Override
   @MySpringCache(name = "listArticles")

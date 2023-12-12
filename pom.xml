@@ -6,7 +6,7 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <groupId>org.springframework.boot</groupId>
     <relativePath/>
-    <version>2.7.18</version> <!-- lookup parent from repository -->
+    <version>3.1.6</version> <!-- lookup parent from repository -->
   </parent>
 
   <name>blog</name>
@@ -44,28 +44,11 @@
 
   <dependencyManagement>
     <dependencies>
+      <!-- database -->
       <dependency>
-        <artifactId>commons-collections</artifactId>
-        <groupId>commons-collections</groupId>
-        <version>3.2.1</version>
-      </dependency>
-
-      <dependency>
-        <artifactId>commons-lang3</artifactId>
-        <groupId>org.apache.commons</groupId>
-        <version>3.12.0</version>
-      </dependency>
-
-      <dependency>
-        <artifactId>fastjson</artifactId>
-        <groupId>com.alibaba</groupId>
-        <version>1.2.76</version>
-      </dependency>
-
-      <dependency>
-        <artifactId>mybatis-plus-boot-starter</artifactId>
         <groupId>com.baomidou</groupId>
-        <version>3.5.2</version>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>3.5.4</version>
       </dependency>
       <dependency>
         <artifactId>mysql-connector-j</artifactId>
@@ -73,12 +56,7 @@
         <version>8.0.31</version>
       </dependency>
 
-      <dependency>
-        <artifactId>joda-time</artifactId>
-        <groupId>joda-time</groupId>
-        <version>2.10.10</version>
-      </dependency>
-
+      <!-- jwt -->
       <dependency>
         <artifactId>jjwt-api</artifactId>
         <groupId>io.jsonwebtoken</groupId>
@@ -96,23 +74,37 @@
         <scope>runtime</scope>
         <version>0.11.5</version>
       </dependency>
-
-      <dependency>
-        <artifactId>qiniu-java-sdk</artifactId>
-        <groupId>com.qiniu</groupId>
-        <version>[7.7.0, 7.10.99]</version>
-      </dependency>
-
+      
+      <!-- utilities -->
       <dependency>
         <artifactId>commons-codec</artifactId>
         <groupId>commons-codec</groupId>
         <version>1.15</version>
       </dependency>
-
       <dependency>
         <artifactId>lombok</artifactId>
         <groupId>org.projectlombok</groupId>
         <version>1.18.24</version>
+      </dependency>
+      <dependency>
+        <artifactId>commons-collections</artifactId>
+        <groupId>commons-collections</groupId>
+        <version>3.2.1</version>
+      </dependency>
+      <dependency>
+        <artifactId>commons-lang3</artifactId>
+        <groupId>org.apache.commons</groupId>
+        <version>3.12.0</version>
+      </dependency>
+      <dependency>
+        <artifactId>fastjson</artifactId>
+        <groupId>com.alibaba</groupId>
+        <version>1.2.76</version>
+      </dependency>
+       <dependency>
+        <artifactId>joda-time</artifactId>
+        <groupId>joda-time</groupId>
+        <version>2.10.10</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -179,11 +171,6 @@
     <dependency>
       <artifactId>commons-codec</artifactId>
       <groupId>commons-codec</groupId>
-    </dependency>
-
-    <dependency>
-      <artifactId>qiniu-java-sdk</artifactId>
-      <groupId>com.qiniu</groupId>
     </dependency>
 
     <dependency>

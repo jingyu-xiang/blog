@@ -1,10 +1,11 @@
 package com.jxiang.blog.handler;
 
-import com.jxiang.blog.vo.result.ErrorCode;
-import com.jxiang.blog.vo.result.Result;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.jxiang.blog.vo.result.ErrorCode;
+import com.jxiang.blog.vo.result.Result;
 
 @ControllerAdvice // AOP for all controller methods
 public class GeneralExceptionHandler {

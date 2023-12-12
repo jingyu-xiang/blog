@@ -1,5 +1,9 @@
 package com.jxiang.blog.service.impl.user;
 
+import org.joda.time.DateTime;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.jxiang.blog.dao.mapper.SysUserMapper;
 import com.jxiang.blog.pojo.SysUser;
@@ -10,28 +14,17 @@ import com.jxiang.blog.vo.AuthorVo;
 import com.jxiang.blog.vo.SysUserVo;
 import com.jxiang.blog.vo.result.ErrorCode;
 import com.jxiang.blog.vo.result.Result;
-import org.joda.time.DateTime;
-import org.springframework.beans.BeanUtils;
-import org.springframework.stereotype.Service;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class SysUserServiceImpl implements SysUserService {
 
   private final SysUserMapper sysUserMapper;
   private final AuthService authService;
   private final ThreadService threadService;
   private final SysUserServiceUtils sysUserServiceUtils;
-
-  public SysUserServiceImpl(
-      final SysUserMapper sysUserMapper,
-      final AuthService authService,
-      final ThreadService threadService,
-      final SysUserServiceUtils sysUserServiceUtils) {
-    this.sysUserMapper = sysUserMapper;
-    this.authService = authService;
-    this.threadService = threadService;
-    this.sysUserServiceUtils = sysUserServiceUtils;
-  }
 
   @Override
   public AuthorVo findAuthorVoById(final Long id) {

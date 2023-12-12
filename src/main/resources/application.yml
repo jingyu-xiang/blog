@@ -12,12 +12,12 @@ spring:
 mybatis-plus:
   global-config:
     banner: false
-    logic-delete-field: flag
-    logic-delete-value: true
-    logic-not-delete-value: false
+    db-config:
+      logic-delete-field: flag
+      logic-delete-value: true
+      logic-not-delete-value: false
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
 ---
 spring:
   config:
@@ -26,22 +26,14 @@ spring:
   datasource:
     url: ${MYSQL_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
-  redis:
-    # https://console.upstash.com/
-    host: ${REDIS_HOST}
-    password: ${REDIS_PASSWORD}
-    port: ${REDIS_PORT}
+  data:
+    redis:
+      url: ${REDIS_URL} # https://console.upstash.com/
 server:
   port: 8000
 credentials:
-  secret-key: u8dh39hd9312
-  salt: 89j3@129%
-  qiniu:
-    url: rhlzi0l5u.bkt.gdipper.com
-    bucket: sbblog-images
-    accessKey: Kp_Y3bYqBHHqi4FPE56lKz-JI1J1yxBzO0GHpY17
-    accessSecretKey: P9KBmg0CwKwiquMI4dSgADNBPO9AC-Jic6K4dzDv
-
+  secret-key: ${SECRET_KEY}
+  salt: ${SALT}
 ---
 spring:
   config:
@@ -52,21 +44,13 @@ spring:
     username: root
     password: password
     driver-class-name: com.mysql.cj.jdbc.Driver
-  redis:
-    # https://console.upstash.com/
-    host: ${REDIS_HOST}
-    password: ${REDIS_PASSWORD}
-    port: ${REDIS_PORT}
+  data:
+    redis:
+      url: ${REDIS_URL} # https://console.upstash.com/
 server:
   port: 8080
 credentials:
-  secret-key: u8dh39hd9312
-  salt: 89j3@129%
-  qiniu:
-    url: rhlzi0l5u.bkt.gdipper.com
-    bucket: sbblog-images
-    accessKey: Kp_Y3bYqBHHqi4FPE56lKz-JI1J1yxBzO0GHpY17
-    accessSecretKey: P9KBmg0CwKwiquMI4dSgADNBPO9AC-Jic6K4dzDv
-
+  secret-key: ${SECRET_KEY}
+  salt: ${SALT}
 ---
 
