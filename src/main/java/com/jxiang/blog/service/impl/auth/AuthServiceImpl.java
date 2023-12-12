@@ -4,7 +4,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.core.env.Environment;
@@ -50,7 +49,7 @@ public class AuthServiceImpl implements AuthService {
     final String account = loginParam.getAccount();
     String password = loginParam.getPassword();
 
-    if (StringUtils.isBlank(account) || StringUtils.isBlank(password)) {
+    if (account.isBlank() || password.isBlank()) {
       return Result.failure(
           ErrorCode.PARAMS_ERROR.getCode(),
           ErrorCode.PARAMS_ERROR.getMsg());
@@ -77,7 +76,7 @@ public class AuthServiceImpl implements AuthService {
 
   @Override
   public SysUser checkToken(final String token) {
-    if (StringUtils.isBlank(token)) {
+    if (token.isBlank()) {
       return null;
     }
 
@@ -88,7 +87,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     final String userJson = redisTemplate.opsForValue().get("TOKEN_" + token);
-    if (StringUtils.isBlank(userJson)) {
+    if (userJson.isBlank()) {
       return null;
     }
 
@@ -102,7 +101,7 @@ public class AuthServiceImpl implements AuthService {
 
     redisTemplate.delete("TOKEN_" + token);
 
-    if (!StringUtils.isBlank(userJson)) {
+    if (!userJson.isBlank()) {
       return Result.success(JSON.parseObject(userJson, SysUser.class).getId());
     }
 
@@ -119,10 +118,7 @@ public class AuthServiceImpl implements AuthService {
     final String nickname = registerParam.getNickname();
     final String github = registerParam.getGithub();
 
-    if (StringUtils.isBlank(account)
-        || StringUtils.isBlank(password)
-        || StringUtils.isBlank(nickname)
-        || StringUtils.isBlank(github)) {
+    if (account.isBlank() || password.isBlank() || nickname.isBlank() || github.isBlank()) {
       return Result.failure(
           ErrorCode.PARAMS_ERROR.getCode(),
           ErrorCode.PARAMS_ERROR.getMsg());
@@ -139,8 +135,7 @@ public class AuthServiceImpl implements AuthService {
     sysUser = new SysUser();
     sysUser.setNickname(nickname);
     sysUser.setAccount(account);
-    sysUser.setPassword(DigestUtils.md5Hex(
-        password + environment.getProperty("credentials.salt")));
+    sysUser.setPassword(DigestUtils.md5Hex(password + environment.getProperty("credentials.salt")));
     sysUser.setGithub(github);
     sysUser.setCreateDate(System.currentTimeMillis());
     sysUser.setLastLogin(System.currentTimeMillis());

@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -362,7 +361,7 @@ public class ArticleServiceImpl implements ArticleService {
   @Override
   @MySpringCache(name = "listSearchedArticles")
   public Result listSearchedArticles(final String queryString, final PageParam pageParam) {
-    if (StringUtils.isEmpty(queryString)) {
+    if (queryString.isBlank()) {
       return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
     }
 

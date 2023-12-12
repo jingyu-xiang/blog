@@ -1,6 +1,5 @@
 package com.jxiang.blog.util;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -23,20 +22,19 @@ public class NetworkUtils {
     final int maxLength = 20;
     try {
       ip = request.getHeader("x-forwarded-for");
-      if (StringUtils.isEmpty(ip) || unknown.equalsIgnoreCase(ip)) {
+      if (ip.isEmpty() || unknown.equalsIgnoreCase(ip)) {
         ip = request.getHeader("Proxy-Client-IP");
       }
-      if (StringUtils.isEmpty(ip) || ip.length() == 0
-          || unknown.equalsIgnoreCase(ip)) {
+      if (ip.isEmpty() || ip.length() == 0 || unknown.equalsIgnoreCase(ip)) {
         ip = request.getHeader("WL-Proxy-Client-IP");
       }
-      if (StringUtils.isEmpty(ip) || unknown.equalsIgnoreCase(ip)) {
+      if (ip.isEmpty() || unknown.equalsIgnoreCase(ip)) {
         ip = request.getHeader("HTTP_CLIENT_IP");
       }
-      if (StringUtils.isEmpty(ip) || unknown.equalsIgnoreCase(ip)) {
+      if (ip.isEmpty() || unknown.equalsIgnoreCase(ip)) {
         ip = request.getHeader("HTTP_X_FORWARDED_FOR");
       }
-      if (StringUtils.isEmpty(ip) || unknown.equalsIgnoreCase(ip)) {
+      if (ip.isEmpty() || unknown.equalsIgnoreCase(ip)) {
         ip = request.getRemoteAddr();
       }
     } catch (final Exception e) {
@@ -44,7 +42,7 @@ public class NetworkUtils {
     }
 
     // 使用代理，则获取第一个IP地址
-    if (StringUtils.isEmpty(ip) && ip.length() > maxLength) {
+    if (ip.isEmpty() && ip.length() > maxLength) {
       final int idx = ip.indexOf(separator);
       if (idx > 0) {
         ip = ip.substring(0, idx);

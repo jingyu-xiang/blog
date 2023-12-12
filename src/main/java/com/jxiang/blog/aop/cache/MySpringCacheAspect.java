@@ -4,7 +4,6 @@ import java.lang.reflect.Method;
 import java.time.Duration;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
@@ -53,7 +52,7 @@ public class MySpringCacheAspect {
           argTypes[i] = null;
         }
       }
-      if (StringUtils.isNotEmpty(argsString.toString())) {
+      if (!argsString.toString().isEmpty()) {
         // encode argsString
         argsString = new StringBuilder(DigestUtils.md5Hex(argsString.toString()));
       }
@@ -68,7 +67,7 @@ public class MySpringCacheAspect {
       final String redisKey = annotatedName + "::" + className + "::" + methodName + "::" + argsString;
       final String redisValue = redisTemplate.opsForValue().get(redisKey);
 
-      if (StringUtils.isNotEmpty(redisValue)) {
+      if (!redisValue.isEmpty()) {
         MySpringCacheAspect.log.info("hit cache: {}, {}", className, methodName);
         return JSON.parseObject(redisValue, Result.class);
       }

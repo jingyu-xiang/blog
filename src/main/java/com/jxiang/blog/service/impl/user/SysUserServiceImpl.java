@@ -1,6 +1,9 @@
 package com.jxiang.blog.service.impl.user;
 
-import org.joda.time.DateTime;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -51,11 +54,8 @@ public class SysUserServiceImpl implements SysUserService {
   public Result findCurrentLoginUserVoByToken(final String token) {
     final SysUser sysUser = authService.checkToken(token);
 
-    if (sysUser == null) {
-      return Result.failure(
-          ErrorCode.TOKEN_INVALID.getCode(),
-          ErrorCode.TOKEN_INVALID.getMsg());
-    }
+    if (sysUser == null)
+      return Result.failure(ErrorCode.TOKEN_INVALID.getCode(), ErrorCode.TOKEN_INVALID.getMsg());
 
     // use thread pool to change lastLogin, isolated from the main program thread
     threadService.updateLastLogin(sysUser, token, sysUserMapper);
@@ -64,7 +64,7 @@ public class SysUserServiceImpl implements SysUserService {
     sysUserVo.setId(String.valueOf(sysUser.getId()));
     BeanUtils.copyProperties(sysUser, sysUserVo);
     sysUserVo.setLastLogin(
-        new DateTime(sysUser.getLastLogin()).toString("yyyy-MM-dd HH:mm"));
+        ZonedDateTime.ofInstant(Instant.ofEpochMilli(sysUser.getLastLogin()), ZoneId.systemDefault()).toString());
 
     return Result.success(sysUserVo);
   }
@@ -72,16 +72,13 @@ public class SysUserServiceImpl implements SysUserService {
   @Override
   public SysUser findUserByAccount(final String account) {
     final LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
-
     queryWrapper.eq(SysUser::getAccount, account).last("LIMIT 1");
-
     return sysUserMapper.selectOne(queryWrapper);
   }
 
   @Override
   public void save(final SysUser sysUser) {
-    // id is auto-generated with snowflakes
-    sysUserMapper.insert(sysUser);
+    sysUserMapper.insert(sysUser); // id is auto-generated with snowflakes
   }
 
 }

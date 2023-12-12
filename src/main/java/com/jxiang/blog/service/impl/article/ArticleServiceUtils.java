@@ -1,9 +1,11 @@
 package com.jxiang.blog.service.impl.article;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -55,7 +57,7 @@ public class ArticleServiceUtils {
     BeanUtils.copyProperties(article, articleVo);
 
     articleVo.setCreateDate(
-        new DateTime(article.getCreateDate()).toString("yyyy-MM-dd HH:mm"));
+        ZonedDateTime.ofInstant(Instant.ofEpochMilli(article.getCreateDate()), ZoneId.systemDefault()).toString());
 
     if (isBody) {
       final Long bodyId = article.getBodyId();

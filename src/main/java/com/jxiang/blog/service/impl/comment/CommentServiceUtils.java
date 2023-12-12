@@ -1,9 +1,11 @@
 package com.jxiang.blog.service.impl.comment;
 
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -45,9 +47,10 @@ public class CommentServiceUtils {
     final AuthorVo authorVo = sysUserService.findAuthorVoById(authorId);
     commentVo.setAuthor(authorVo);
     commentVo.setCreateDate(
-        new DateTime(comment.getCreateDate()).toString("yyyy-MM-dd HH:mm"));
+        ZonedDateTime.ofInstant(Instant.ofEpochMilli(comment.getCreateDate()), ZoneId.systemDefault()).toString());
 
     final Integer level = comment.getLevel();
+
     // leve 1 comments have child comments
     if (level == 1) {
       final List<CommentVo> commentVoList = findChildCommentVosByParentId(

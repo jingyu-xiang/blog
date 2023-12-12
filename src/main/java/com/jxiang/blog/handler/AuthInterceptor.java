@@ -1,6 +1,5 @@
 package com.jxiang.blog.handler;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -59,7 +58,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
     final SysUser sysUser = authService.checkToken(token);
 
-    if (StringUtils.isBlank(token) || sysUser == null) {
+    if (token.isEmpty() || sysUser == null) {
       final Result result = Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
       response.setContentType("application/json;charset=utf-8");
       response.getWriter().print(JSON.toJSONString(result));

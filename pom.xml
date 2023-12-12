@@ -53,7 +53,7 @@
       <dependency>
         <artifactId>mysql-connector-j</artifactId>
         <groupId>com.mysql</groupId>
-        <version>8.0.31</version>
+        <version>8.1.0</version>
       </dependency>
 
       <!-- jwt -->
@@ -84,27 +84,12 @@
       <dependency>
         <artifactId>lombok</artifactId>
         <groupId>org.projectlombok</groupId>
-        <version>1.18.24</version>
-      </dependency>
-      <dependency>
-        <artifactId>commons-collections</artifactId>
-        <groupId>commons-collections</groupId>
-        <version>3.2.1</version>
-      </dependency>
-      <dependency>
-        <artifactId>commons-lang3</artifactId>
-        <groupId>org.apache.commons</groupId>
-        <version>3.12.0</version>
+        <version>1.18.30</version>
       </dependency>
       <dependency>
         <artifactId>fastjson</artifactId>
         <groupId>com.alibaba</groupId>
-        <version>1.2.76</version>
-      </dependency>
-       <dependency>
-        <artifactId>joda-time</artifactId>
-        <groupId>joda-time</groupId>
-        <version>2.10.10</version>
+        <version>2.0.40</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -114,12 +99,10 @@
       <artifactId>spring-boot-starter-web</artifactId>
       <groupId>org.springframework.boot</groupId>
     </dependency>
-
     <dependency>
       <artifactId>spring-boot-starter-aop</artifactId>
       <groupId>org.springframework.boot</groupId>
     </dependency>
-
     <dependency>
       <artifactId>spring-boot-starter-data-redis</artifactId>
       <groupId>org.springframework.boot</groupId>
@@ -129,32 +112,11 @@
       <artifactId>mybatis-plus-boot-starter</artifactId>
       <groupId>com.baomidou</groupId>
     </dependency>
-
     <dependency>
       <artifactId>mysql-connector-j</artifactId>
       <groupId>com.mysql</groupId>
     </dependency>
-
-    <dependency>
-      <artifactId>commons-lang3</artifactId>
-      <groupId>org.apache.commons</groupId>
-    </dependency>
-
-    <dependency>
-      <artifactId>commons-collections</artifactId>
-      <groupId>commons-collections</groupId>
-    </dependency>
-
-    <dependency>
-      <artifactId>fastjson</artifactId>
-      <groupId>com.alibaba</groupId>
-    </dependency>
-
-    <dependency>
-      <artifactId>joda-time</artifactId>
-      <groupId>joda-time</groupId>
-    </dependency>
-
+   
     <dependency>
       <artifactId>jjwt-api</artifactId>
       <groupId>io.jsonwebtoken</groupId>
@@ -168,11 +130,14 @@
       <groupId>io.jsonwebtoken</groupId> <!-- or jjwt-gson if Gson is preferred -->
     </dependency>
 
+     <dependency>
+      <artifactId>fastjson</artifactId>
+      <groupId>com.alibaba</groupId>
+    </dependency>
     <dependency>
       <artifactId>commons-codec</artifactId>
       <groupId>commons-codec</groupId>
     </dependency>
-
     <dependency>
       <artifactId>lombok</artifactId>
       <groupId>org.projectlombok</groupId>
