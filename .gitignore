@@ -1,31 +1,27 @@
-# Miscellaneous
-*.java.hsp
-*.sonarj
-*.sw*
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!/src/main//target/
+!/src/test//target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
 .DS_Store
-build.sh
-integration-repo
-ivy-cache
-argfile*
-activemq-data/
-classes/
-/target/
+.m2
 
-# Log files
-jxl.log
-jmx.log
-derby.log
-
-# IDEA artifacts and output dirs
+### IntelliJ IDEA ### 
+.idea
+*.iws
 *.iml
 *.ipr
-*.iws
-.idea
-out
-test-output
-atlassian-ide-plugin.xml
 
-# VS Code
-.vscode/
-
-cached-antora-playbook.yml
+### VSCode ### 
+.vscode
+ 
+### Env ###
+src/main/resources/application.properties
