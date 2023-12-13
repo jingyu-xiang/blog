@@ -32,13 +32,12 @@ public class CategoryServiceImpl implements CategoryService {
     Category category = categoryMapper.selectById(categoryId);
 
     if (category == null) {
-      category = new Category();
-      category.setId(-1L);
-      category.setAvatar(
-          "https://www.publicdomainpictures"
-              + ".net/pictures/280000/velka/not-found-image-15383864787lu.jpg");
-      category.setCategoryName("NOT FOUND");
-      category.setDescription("Category might be deleted or never exist");
+      category = Category.builder()
+          .id(-1L)
+          .avatar("https://www.publicdomainpictures.net/pictures/280000/velka/not-found-image-15383864787lu.jpg")
+          .categoryName("NOT FOUND")
+          .description("Category might be deleted or never exist")
+          .build();
     }
 
     return categoryServiceUtils.copy(category);
@@ -72,9 +71,11 @@ public class CategoryServiceImpl implements CategoryService {
           ErrorCode.ITEM_ALREADY_EXISTS.getMsg());
     }
 
-    final Category category = new Category();
-    category.setCategoryName(categoryName);
-    category.setDescription(description);
+    final Category category = Category.builder()
+        .categoryName(categoryName)
+        .description(description)
+        .build();
+
     categoryMapper.insert(category);
 
     final Long categoryId = category.getId();

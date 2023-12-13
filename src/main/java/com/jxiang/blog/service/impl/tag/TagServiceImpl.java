@@ -65,23 +65,16 @@ public class TagServiceImpl implements TagService {
     queryWrapper.eq(Tag::getTagName, tagName).last("LIMIT 1");
     final List<Tag> tags = tagMapper.selectList(queryWrapper);
     if (tags.size() >= 1) {
-      return Result.failure(
-          ErrorCode.ITEM_ALREADY_EXISTS.getCode(),
-          ErrorCode.ITEM_ALREADY_EXISTS.getMsg());
+      return Result.failure(ErrorCode.ITEM_ALREADY_EXISTS.getCode(), ErrorCode.ITEM_ALREADY_EXISTS.getMsg());
     }
 
-    final Tag tag = new Tag();
-    tag.setTagName(tagName);
+    final Tag tag = Tag.builder()
+        .tagName(tagName)
+        .avatar("unkown")
+        .build();
+
     tagMapper.insert(tag);
 
-    final Long tagId = tag.getId();
-
-    final String originalFilename = file.getOriginalFilename();
-    final String fileNameToUpload = "tags/" + tagId.toString() + "/" + originalFilename;
-    tag.setAvatar(fileNameToUpload);
-
-    tag.setAvatar("unkown");
-    tagMapper.updateById(tag);
     return Result.success(tagServiceUtils.copy(tag));
   }
 
@@ -91,9 +84,7 @@ public class TagServiceImpl implements TagService {
       final Tag tag = tagMapper.selectById(id);
       return Result.success(tag);
     } catch (final Exception e) {
-      return Result.failure(
-          ErrorCode.NOT_FOUND.getCode(),
-          ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
     }
   }
 

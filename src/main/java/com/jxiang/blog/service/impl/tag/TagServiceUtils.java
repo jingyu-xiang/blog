@@ -13,10 +13,10 @@ import com.jxiang.blog.vo.TagVo;
 public class TagServiceUtils {
 
   TagVo copy(final Tag tag) {
-    final TagVo tagVo = new TagVo();
-    tagVo.setId(String.valueOf(tag.getId()));
-    // copy properties of tag to tagVo, set field of tagVo to null if it is not in
-    // tag
+    final TagVo tagVo = TagVo.builder()
+        .id(String.valueOf(tag.getId()))
+        .build();
+    // copy properties of tag to tagVo, set field of tagVo to null if not in tag
     BeanUtils.copyProperties(tag, tagVo);
     return tagVo;
   }

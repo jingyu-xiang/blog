@@ -50,9 +50,7 @@ public class AuthServiceImpl implements AuthService {
     String password = loginParam.getPassword();
 
     if (account.isBlank() || password.isBlank()) {
-      return Result.failure(
-          ErrorCode.PARAMS_ERROR.getCode(),
-          ErrorCode.PARAMS_ERROR.getMsg());
+      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
     }
 
     // encode (password + salt)
@@ -60,9 +58,7 @@ public class AuthServiceImpl implements AuthService {
     final SysUser sysUser = sysUserService.findUserForLogin(account, password);
 
     if (sysUser == null) {
-      return Result.failure(
-          ErrorCode.ACCOUNT_PWD_NOT_EXIST.getCode(),
-          ErrorCode.ACCOUNT_PWD_NOT_EXIST.getMsg());
+      return Result.failure(ErrorCode.ACCOUNT_PWD_NOT_EXIST.getCode(), ErrorCode.ACCOUNT_PWD_NOT_EXIST.getMsg());
     }
 
     final String token = jwtUtils.createToken(sysUser.getId());
@@ -127,20 +123,20 @@ public class AuthServiceImpl implements AuthService {
     // check if sysUser already exists
     SysUser sysUser = sysUserService.findUserByAccount(account);
     if (sysUser != null) {
-      return Result.failure(
-          ErrorCode.ACCOUNT_EXISTS.getCode(),
-          ErrorCode.ACCOUNT_EXISTS.getMsg());
+      return Result.failure(ErrorCode.ACCOUNT_EXISTS.getCode(), ErrorCode.ACCOUNT_EXISTS.getMsg());
     }
 
-    sysUser = new SysUser();
-    sysUser.setNickname(nickname);
-    sysUser.setAccount(account);
-    sysUser.setPassword(DigestUtils.md5Hex(password + environment.getProperty("credentials.salt")));
-    sysUser.setGithub(github);
-    sysUser.setCreateDate(System.currentTimeMillis());
-    sysUser.setLastLogin(System.currentTimeMillis());
-    sysUser.setAdmin(0); // not admin
-    sysUser.setDeleted(0); // not deleted
+    sysUser = SysUser.builder()
+        .nickname(nickname)
+        .account(account)
+        .password(DigestUtils.md5Hex(password + environment.getProperty("credentials.salt")))
+        .github(github)
+        .createDate(System.currentTimeMillis())
+        .lastLogin(System.currentTimeMillis())
+        .admin(0) // not admin
+        .deleted(0) // not deleted
+        .build();
+
     sysUserService.save(sysUser);
 
     final String token = jwtUtils.createToken(sysUser.getId());

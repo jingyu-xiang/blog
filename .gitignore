@@ -13,6 +13,7 @@ target/
 .sts4-cache
 .DS_Store
 .m2
+*.pem
 
 ### IntelliJ IDEA ### 
 .idea

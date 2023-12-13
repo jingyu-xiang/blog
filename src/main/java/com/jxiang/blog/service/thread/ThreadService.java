@@ -24,16 +24,13 @@ public class ThreadService {
   private final RedisTemplate<String, String> redisTemplate;
 
   @Async(THREAD_POOL_ID)
-  // put the following task in a configured thread pool, without affecting main
-  // thread
   public void updateArticleViewCount(final ArticleMapper articleMapper, final Article article) {
     final int viewCount = article.getViewCounts();
-    final Article toUpdate = new Article();
+    final Article toUpdate = Article.builder().build();
     toUpdate.setViewCounts(viewCount + 1);
 
     final LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
-    updateWrapper // update article set view_count=100 where view_count={viewCount} and
-        // id={article.getId()}
+    updateWrapper
         .eq(Article::getId, article.getId())
         .eq(Article::getViewCounts, viewCount); // optimistic lock
 
@@ -43,7 +40,7 @@ public class ThreadService {
   @Async(THREAD_POOL_ID)
   public void updateCommentCount(final ArticleMapper articleMapper, final Article article) {
     final int commentCount = article.getCommentCounts();
-    final Article toUpdate = new Article();
+    final Article toUpdate = Article.builder().build();
     toUpdate.setCommentCounts(commentCount + 1);
 
     final LambdaUpdateWrapper<Article> updateWrapper = new LambdaUpdateWrapper<>();
@@ -61,9 +58,8 @@ public class ThreadService {
       final boolean add,
       final int count) {
     final Article article = articleMapper.selectById(articleId);
-
     final int commentCount = article.getCommentCounts();
-    final Article toUpdate = new Article();
+    final Article toUpdate = Article.builder().build();
 
     if (add) {
       toUpdate.setCommentCounts(commentCount + 1);

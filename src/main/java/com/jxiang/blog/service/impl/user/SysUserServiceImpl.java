@@ -33,9 +33,11 @@ public class SysUserServiceImpl implements SysUserService {
   public AuthorVo findAuthorVoById(final Long id) {
     SysUser sysUser = sysUserMapper.selectById(id);
     if (sysUser == null) {
-      sysUser = new SysUser();
-      sysUser.setNickname("unknown");
-      sysUser.setGithub("unknown");
+      sysUser = SysUser
+          .builder()
+          .nickname("unknown")
+          .github("unknown")
+          .build();
     }
     return sysUserServiceUtils.copyAuthor(sysUser);
   }
@@ -60,8 +62,9 @@ public class SysUserServiceImpl implements SysUserService {
     // use thread pool to change lastLogin, isolated from the main program thread
     threadService.updateLastLogin(sysUser, token, sysUserMapper);
 
-    final SysUserVo sysUserVo = new SysUserVo();
-    sysUserVo.setId(String.valueOf(sysUser.getId()));
+    final SysUserVo sysUserVo = SysUserVo.builder()
+        .id(String.valueOf(sysUser.getId()))
+        .build();
     BeanUtils.copyProperties(sysUser, sysUserVo);
     sysUserVo.setLastLogin(
         ZonedDateTime.ofInstant(Instant.ofEpochMilli(sysUser.getLastLogin()), ZoneId.systemDefault()).toString());

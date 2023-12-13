@@ -2,13 +2,11 @@ package com.jxiang.blog.pojo;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 @TableName(value = "ms_article_body")
 public class ArticleBody {
 

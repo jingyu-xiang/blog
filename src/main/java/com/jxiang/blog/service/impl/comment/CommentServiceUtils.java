@@ -36,26 +36,25 @@ public class CommentServiceUtils {
   }
 
   CommentVo copy(final Comment comment) {
-    final CommentVo commentVo = new CommentVo();
-    commentVo.setId(String.valueOf(comment.getId()));
+    final CommentVo.CommentVoBuilder commentVoBuilder = CommentVo.builder();
+    commentVoBuilder.id(String.valueOf(comment.getId()));
 
     // copy fields of comment to commentVo if match (id, content, level)
-    BeanUtils.copyProperties(comment, commentVo);
+    BeanUtils.copyProperties(comment, commentVoBuilder);
 
     // author info
     final Long authorId = comment.getAuthorId();
     final AuthorVo authorVo = sysUserService.findAuthorVoById(authorId);
-    commentVo.setAuthor(authorVo);
-    commentVo.setCreateDate(
+    commentVoBuilder.author(authorVo);
+    commentVoBuilder.createDate(
         ZonedDateTime.ofInstant(Instant.ofEpochMilli(comment.getCreateDate()), ZoneId.systemDefault()).toString());
 
     final Integer level = comment.getLevel();
 
     // leve 1 comments have child comments
     if (level == 1) {
-      final List<CommentVo> commentVoList = findChildCommentVosByParentId(
-          comment.getId());
-      commentVo.setChildren(commentVoList);
+      final List<CommentVo> commentVoList = findChildCommentVosByParentId(comment.getId());
+      commentVoBuilder.children(commentVoList);
     }
 
     // level 2 comments do not have child comments， but have a to-sysUser id to
@@ -68,22 +67,23 @@ public class CommentServiceUtils {
       if (toUid != -1L) {
         AuthorVo toAuthorVo = sysUserService.findAuthorVoById(toUid);
         if (toAuthorVo != null) {
-          commentVo.setToUser(toAuthorVo);
+          commentVoBuilder.toUser(toAuthorVo);
         } else {
-          toAuthorVo = new AuthorVo();
-          toAuthorVo.setNickname("unknown");
-          toAuthorVo.setGithub("unknown");
-          commentVo.setToUser(toAuthorVo);
+          toAuthorVo = AuthorVo.builder()
+              .nickname("unknown")
+              .github("unknown")
+              .build();
+          commentVoBuilder.toUser(toAuthorVo);
         }
       }
 
       if (toCommentId != -1L) {
         final CommentVo toCommentVo = copy(commentMapper.selectById(toCommentId));
-        commentVo.setToComment(toCommentVo);
+        commentVoBuilder.toComment(toCommentVo);
       }
     }
 
-    return commentVo;
+    return commentVoBuilder.build();
   }
 
   List<CommentVo> findChildCommentVosByParentId(final Long id) {

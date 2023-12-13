@@ -13,8 +13,9 @@ import com.jxiang.blog.vo.CategoryVo;
 public class CategoryServiceUtils {
 
   CategoryVo copy(final Category category) {
-    final CategoryVo categoryVo = new CategoryVo();
-    categoryVo.setId(String.valueOf(category.getId()));
+    final CategoryVo categoryVo = CategoryVo.builder()
+        .id(String.valueOf(category.getId()))
+        .build();
     BeanUtils.copyProperties(category, categoryVo);
     return categoryVo;
   }

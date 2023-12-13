@@ -53,9 +53,7 @@ public class CommentServiceImpl implements CommentService {
   public Result createComment(final CommentParam commentParam) {
 
     if (commentParam.getArticleId() == null) {
-      return Result.failure(
-          ErrorCode.NOT_FOUND.getCode(),
-          ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
     }
 
     Article article;
@@ -63,17 +61,16 @@ public class CommentServiceImpl implements CommentService {
     try {
       article = articleMapper.selectById(commentParam.getArticleId());
     } catch (final Exception e) {
-      return Result.failure(
-          ErrorCode.NOT_FOUND.getCode(),
-          ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
     }
 
     final SysUser author = SysUserThreadLocal.get();
-    final Comment comment = new Comment();
-    comment.setArticleId(Long.valueOf(commentParam.getArticleId()));
-    comment.setAuthorId(author.getId());
-    comment.setContent(commentParam.getContent());
-    comment.setCreateDate(System.currentTimeMillis());
+    final Comment comment = Comment.builder()
+        .articleId(Long.valueOf(commentParam.getArticleId()))
+        .authorId(author.getId())
+        .content(commentParam.getContent())
+        .createDate(System.currentTimeMillis())
+        .build();
 
     final long parentId = commentParam.getParent() == null ? -1L : Long.parseLong(commentParam.getParent());
     final long toUserId = commentParam.getToUserId() == null ? -1L : Long.parseLong(commentParam.getToUserId());
@@ -105,15 +102,11 @@ public class CommentServiceImpl implements CommentService {
     final Comment comment = commentMapper.selectById(commentId);
 
     if (comment == null) {
-      return Result.failure(
-          ErrorCode.NOT_FOUND.getCode(),
-          ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
     }
 
     if (!comment.getAuthorId().equals(SysUserThreadLocal.get().getId())) {
-      return Result.failure(
-          ErrorCode.NO_LOGIN.getCode(),
-          ErrorCode.NO_LOGIN.getMsg());
+      return Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
     }
 
     final int success = commentMapper.deleteById(comment);
@@ -150,9 +143,7 @@ public class CommentServiceImpl implements CommentService {
       }
     }
 
-    return Result.failure(
-        ErrorCode.SYSTEM_ERROR.getCode(),
-        ErrorCode.SYSTEM_ERROR.getMsg());
+    return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMsg());
   }
 
   @Override

@@ -174,13 +174,14 @@ public class ArticleServiceImpl implements ArticleService {
     final SysUser sysUser = SysUserThreadLocal.get();
 
     // article basic fields
-    final Article article = new Article();
-    article.setAuthorId(sysUser.getId());
-    article.setViewCounts(0);
-    article.setTitle(articleParam.getTitle());
-    article.setSummary(articleParam.getSummary());
-    article.setCommentCounts(0);
-    article.setCreateDate(System.currentTimeMillis());
+    final Article article = Article.builder()
+        .authorId(sysUser.getId())
+        .viewCounts(0)
+        .title(articleParam.getTitle())
+        .summary(articleParam.getSummary())
+        .commentCounts(0)
+        .createDate(System.currentTimeMillis())
+        .build();
 
     // article category
     article.setCategoryId(Long.valueOf(articleParam.getCategoryId()));
@@ -191,19 +192,24 @@ public class ArticleServiceImpl implements ArticleService {
     final List<String> tagIds = articleParam.getTagIds();
     if (tagIds != null && tagIds.size() > 0) {
       for (final String tagId : tagIds) {
-        final ArticleTag articleTag = new ArticleTag();
-        articleTag.setTagId(Long.valueOf(tagId));
-        articleTag.setArticleId(article.getId());
+        final ArticleTag articleTag = ArticleTag.builder()
+            .articleId(article.getId())
+            .tagId(Long.valueOf(tagId))
+            .build();
+
         articleTagMapper.insert(articleTag);
       }
     }
 
     // article body
-    final ArticleBody articleBody = new ArticleBody();
-    articleBody.setArticleId(article.getId());
-    articleBody.setContent(articleParam.getBody().getContent());
-    articleBody.setContentHtml(articleParam.getBody().getContentHtml());
+    final ArticleBody articleBody = ArticleBody.builder()
+        .articleId(article.getId())
+        .content(articleParam.getBody().getContent())
+        .contentHtml(articleParam.getBody().getContentHtml())
+        .build();
+
     articleBodyMapper.insert(articleBody);
+
     article.setBodyId(articleBody.getId());
 
     // update article
@@ -218,9 +224,7 @@ public class ArticleServiceImpl implements ArticleService {
     final Article articleToDelete = articleMapper.selectById(articleId);
 
     if (articleToDelete == null) {
-      return Result.failure(
-          ErrorCode.NOT_FOUND.getCode(),
-          ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
     }
 
     final SysUser requestUser = SysUserThreadLocal.get();
@@ -235,14 +239,10 @@ public class ArticleServiceImpl implements ArticleService {
         return Result.success(articleToDelete.getId());
       }
 
-      return Result.failure(
-          ErrorCode.SYSTEM_ERROR.getCode(),
-          ErrorCode.SYSTEM_ERROR.getMsg());
+      return Result.failure(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMsg());
     }
 
-    return Result.failure(
-        ErrorCode.NO_PERMISSION.getCode(),
-        ErrorCode.NO_PERMISSION.getMsg());
+    return Result.failure(ErrorCode.NO_PERMISSION.getCode(), ErrorCode.NO_PERMISSION.getMsg());
   }
 
   @Override
@@ -254,22 +254,16 @@ public class ArticleServiceImpl implements ArticleService {
     final Article articleToUpdate = articleMapper.selectById(articleId);
 
     if (articleToUpdate == null) {
-      return Result.failure(
-          ErrorCode.NOT_FOUND.getCode(),
-          ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
     }
 
     if (!articleToUpdate.getAuthorId()
         .equals(SysUserThreadLocal.get().getId())) {
-      return Result.failure(
-          ErrorCode.NO_LOGIN.getCode(),
-          ErrorCode.NO_LOGIN.getMsg());
+      return Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
     }
 
     if (articleBodyToUpdate == null) {
-      return Result.failure(
-          ErrorCode.NOT_FOUND.getCode(),
-          ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
     }
 
     final String content = articleBody.getContent();
@@ -278,9 +272,7 @@ public class ArticleServiceImpl implements ArticleService {
     // not update if the content has not changed
     if (content.equals(articleBodyToUpdate.getContent()) &&
         contentHtml.equals(articleBodyToUpdate.getContentHtml())) {
-      return Result.failure(
-          ErrorCode.PARAMS_ERROR.getCode(),
-          ErrorCode.PARAMS_ERROR.getMsg());
+      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
     }
 
     articleBodyToUpdate.setContent(content);
@@ -290,9 +282,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     return success == 1
         ? Result.success("Success")
-        : Result.failure(
-            ErrorCode.SYSTEM_ERROR.getCode(),
-            ErrorCode.SYSTEM_ERROR.getMsg());
+        : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMsg());
   }
 
   @Override
@@ -303,34 +293,26 @@ public class ArticleServiceImpl implements ArticleService {
     final Article articleToUpdate = articleMapper.selectById(articleId);
 
     if (articleToUpdate == null) {
-      return Result.failure(
-          ErrorCode.NOT_FOUND.getCode(),
-          ErrorCode.NOT_FOUND.getMsg());
+      return Result.failure(ErrorCode.NOT_FOUND.getCode(), ErrorCode.NOT_FOUND.getMsg());
     }
 
     if (!articleToUpdate.getAuthorId()
         .equals(SysUserThreadLocal.get().getId())) {
-      return Result.failure(
-          ErrorCode.NO_LOGIN.getCode(),
-          ErrorCode.NO_LOGIN.getMsg());
+      return Result.failure(ErrorCode.NO_LOGIN.getCode(), ErrorCode.NO_LOGIN.getMsg());
     }
 
     final String title = articleUpdateParam.getTitle();
     final String summary = articleUpdateParam.getSummary();
 
     if (title == null && summary == null) {
-      return Result.failure(
-          ErrorCode.PARAMS_ERROR.getCode(),
-          ErrorCode.PARAMS_ERROR.getMsg());
+      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
     }
 
     if (title != null) {
       if (!title.equals("") && !title.equals(articleToUpdate.getTitle())) {
         articleToUpdate.setTitle(title);
       } else {
-        return Result.failure(
-            ErrorCode.PARAMS_ERROR.getCode(),
-            ErrorCode.PARAMS_ERROR.getMsg());
+        return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
       }
     }
 
@@ -339,9 +321,7 @@ public class ArticleServiceImpl implements ArticleService {
           articleToUpdate.getSummary())) {
         articleToUpdate.setSummary(summary);
       } else {
-        return Result.failure(
-            ErrorCode.PARAMS_ERROR.getCode(),
-            ErrorCode.PARAMS_ERROR.getMsg());
+        return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
       }
     }
 
@@ -353,9 +333,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     return success == 1
         ? Result.success(res)
-        : Result.failure(
-            ErrorCode.SYSTEM_ERROR.getCode(),
-            ErrorCode.SYSTEM_ERROR.getMsg());
+        : Result.failure(ErrorCode.SYSTEM_ERROR.getCode(), ErrorCode.SYSTEM_ERROR.getMsg());
   }
 
   @Override

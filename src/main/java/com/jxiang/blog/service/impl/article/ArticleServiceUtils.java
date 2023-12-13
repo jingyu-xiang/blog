@@ -48,7 +48,7 @@ public class ArticleServiceUtils {
       final boolean isAuthorRequired,
       final boolean isBody,
       final boolean isCategory) {
-    final ArticleVo articleVo = new ArticleVo();
+    final ArticleVo articleVo = ArticleVo.builder().build();
     articleVo.setId(String.valueOf(article.getId()));
 
     // copy properties of article to articleVo, set field of articleVo to null if it
@@ -84,9 +84,7 @@ public class ArticleServiceUtils {
 
   private ArticleBodyVo findArticleBodyById(final Long bodyId) {
     final ArticleBody articleBody = articleBodyMapper.selectById(bodyId);
-    final ArticleBodyVo articleBodyVo = new ArticleBodyVo();
-    articleBodyVo.setContent(articleBody.getContent());
-    articleBodyVo.setContentHtml(articleBody.getContentHtml());
+    final ArticleBodyVo articleBodyVo = new ArticleBodyVo(articleBody.getContent(), articleBody.getContentHtml());
     return articleBodyVo;
   }
 
