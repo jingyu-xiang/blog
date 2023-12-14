@@ -9,8 +9,7 @@
     from ms_tag
     where id in (select tag_id
                  from ms_article_tag
-                 where article_id = #{articleId}
-                   and deleted = FALSE)
+                 where article_id = #{articleId} and deleted = false)
   </select>
 
   <select id="findHotTagIds" resultType="java.lang.Long">

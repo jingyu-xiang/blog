@@ -72,9 +72,14 @@ public class CommentServiceImpl implements CommentService {
         .createDate(System.currentTimeMillis())
         .build();
 
-    final long parentId = commentParam.getParent() == null ? -1L : Long.parseLong(commentParam.getParent());
-    final long toUserId = commentParam.getToUserId() == null ? -1L : Long.parseLong(commentParam.getToUserId());
-    final long toCommentId = commentParam.getToCommentId() == null ? -1L
+    final long parentId = commentParam.getParent() == null
+        ? -1L
+        : Long.parseLong(commentParam.getParent());
+    final long toUserId = commentParam.getToUserId() == null
+        ? -1L
+        : Long.parseLong(commentParam.getToUserId());
+    final long toCommentId = commentParam.getToCommentId() == null
+        ? -1L
         : Long.parseLong(commentParam.getToCommentId());
 
     if (parentId == -1L) {

@@ -5,7 +5,7 @@
   <select id="queryFullText" resultType="com.jxiang.blog.pojo.Article">
     select *
     from ms_article
-    where deleted = 0
+    where deleted = false
     <if test="queryString != null">
       and (match(title, summary) against (#{queryString}))
     </if>
