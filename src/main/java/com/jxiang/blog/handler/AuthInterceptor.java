@@ -22,9 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class AuthInterceptor implements HandlerInterceptor {
 
-  final private AuthService authService;
-
-  final private JwtUtils jwtUtils;
+  private final AuthService authService;
 
   @Override
   public boolean preHandle(
@@ -48,7 +46,7 @@ public class AuthInterceptor implements HandlerInterceptor {
       return false;
     }
 
-    token = jwtUtils.removeHeader(token);
+    token = JwtUtils.removeHeader(token);
 
     AuthInterceptor.log.info("============request start============");
     AuthInterceptor.log.info("request URI: {}", request.getRequestURI());

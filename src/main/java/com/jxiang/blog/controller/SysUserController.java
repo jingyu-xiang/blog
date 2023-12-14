@@ -16,13 +16,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SysUserController {
 
-  private SysUserService sysUserService;
-  private JwtUtils jwtUtils;
+  private final SysUserService sysUserService;
 
   @GetMapping("me")
   public Result currentUser(@RequestHeader("Authorization") final String token) {
-    return sysUserService.findCurrentLoginUserVoByToken(
-        jwtUtils.removeHeader(token));
+    return sysUserService.findCurrentLoginUserVoByToken(JwtUtils.removeHeader(token));
   }
 
 }

@@ -5,18 +5,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.stereotype.Component;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 
-@Component
 public class JwtUtils {
 
-  final Key KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+  private static final Key KEY = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
   /**
    * create a jwt based on SECRET_KEY and provided userId
@@ -24,12 +21,12 @@ public class JwtUtils {
    * @param userId sysUser's id
    * @return jwt token string
    */
-  public String createToken(final Long userId) {
+  public static String createToken(final Long userId) {
     final Map<String, Object> claims = new HashMap<>();
     claims.put("userId", userId);
 
     return Jwts.builder()
-        .signWith(KEY)
+        .signWith(JwtUtils.KEY)
         .setClaims(claims)
         .setIssuedAt(new Date())
         .setExpiration(new Date(System.currentTimeMillis() + 24L * 60 * 60 * 1000))
@@ -42,11 +39,11 @@ public class JwtUtils {
    * @param token jwt token string
    * @return {userId=1xx2L}
    */
-  public Map<String, Object> checkToken(final String token) {
+  public static Map<String, Object> checkToken(final String token) {
     try {
       final Jws<Claims> claimsJws = Jwts
           .parserBuilder()
-          .setSigningKey(KEY)
+          .setSigningKey(JwtUtils.KEY)
           .build()
           .parseClaimsJws(token);
       return claimsJws.getBody();
@@ -63,7 +60,7 @@ public class JwtUtils {
    * @param token jwt token
    * @return jwt token with "Bearer " removed
    */
-  public String removeHeader(final String token) {
+  public static String removeHeader(final String token) {
     return token.substring(7);
   }
 

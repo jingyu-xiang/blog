@@ -19,8 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthController {
 
-  private AuthService authService;
-  private JwtUtils jwtUtils;
+  private final AuthService authService;
 
   @PostMapping("login")
   public Result login(@RequestBody final LoginParam loginParam) {
@@ -29,7 +28,7 @@ public class AuthController {
 
   @PostMapping("logout")
   public Result logout(@RequestHeader("Authorization") final String token) {
-    return authService.logout(jwtUtils.removeHeader(token));
+    return authService.logout(JwtUtils.removeHeader(token));
   }
 
   @PostMapping("register")

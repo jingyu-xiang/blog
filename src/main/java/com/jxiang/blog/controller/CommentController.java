@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommentController {
 
-  private CommentService commentService;
+  private final CommentService commentService;
 
   @PostMapping("articles/{id}/comments")
   public Result getArticleComments(@PathVariable final String id) {

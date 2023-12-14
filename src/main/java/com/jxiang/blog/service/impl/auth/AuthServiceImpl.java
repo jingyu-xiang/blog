@@ -27,19 +27,15 @@ public class AuthServiceImpl implements AuthService {
 
   private final Environment environment;
 
-  private final JwtUtils jwtUtils;
-
   private final SysUserService sysUserService;
 
   private final RedisTemplate<String, String> redisTemplate;
 
   public AuthServiceImpl(
       final Environment environment,
-      final JwtUtils jwtUtils,
       @Lazy final SysUserService sysUserService,
       final RedisTemplate<String, String> redisTemplate) {
     this.environment = environment;
-    this.jwtUtils = jwtUtils;
     this.sysUserService = sysUserService;
     this.redisTemplate = redisTemplate;
   }
@@ -61,7 +57,7 @@ public class AuthServiceImpl implements AuthService {
       return Result.failure(ErrorCode.ACCOUNT_PWD_NOT_EXIST.getCode(), ErrorCode.ACCOUNT_PWD_NOT_EXIST.getMsg());
     }
 
-    final String token = jwtUtils.createToken(sysUser.getId());
+    final String token = JwtUtils.createToken(sysUser.getId());
 
     // store token in redis {TOKEN_ey21e123f24=SysUser}
     redisTemplate
@@ -76,7 +72,7 @@ public class AuthServiceImpl implements AuthService {
       return null;
     }
 
-    final Map<String, Object> stringObjectMap = jwtUtils.checkToken(token);
+    final Map<String, Object> stringObjectMap = JwtUtils.checkToken(token);
     if (stringObjectMap == null) {
       // jwt check failed
       return null;
@@ -115,9 +111,7 @@ public class AuthServiceImpl implements AuthService {
     final String github = registerParam.getGithub();
 
     if (account.isBlank() || password.isBlank() || nickname.isBlank() || github.isBlank()) {
-      return Result.failure(
-          ErrorCode.PARAMS_ERROR.getCode(),
-          ErrorCode.PARAMS_ERROR.getMsg());
+      return Result.failure(ErrorCode.PARAMS_ERROR.getCode(), ErrorCode.PARAMS_ERROR.getMsg());
     }
 
     // check if sysUser already exists
@@ -139,7 +133,7 @@ public class AuthServiceImpl implements AuthService {
 
     sysUserService.save(sysUser);
 
-    final String token = jwtUtils.createToken(sysUser.getId());
+    final String token = JwtUtils.createToken(sysUser.getId());
 
     // store token in redis {TOKEN_ey21e123f24=SysUser}
     redisTemplate

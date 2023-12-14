@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ThreadService {
 
-  final private String THREAD_POOL_ID = "taskExecutor";
+  private final String THREAD_POOL_ID = "taskExecutor";
 
   private final RedisTemplate<String, String> redisTemplate;
 

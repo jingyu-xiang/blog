@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ArticleController {
 
-  private ArticleService articleService;
+  private final ArticleService articleService;
 
   @Log(module = "article", operator = "get articles") // AOP log
   @PostMapping

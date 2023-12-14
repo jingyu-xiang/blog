@@ -13,7 +13,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class WebMvcConfig implements WebMvcConfigurer {
 
-  final private AuthInterceptor authInterceptor;
+  private final AuthInterceptor authInterceptor;
 
   @Override
   public void addCorsMappings(final CorsRegistry registry) {

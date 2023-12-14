@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TagController {
 
-  private TagService tagService;
+  private final TagService tagService;
 
   @PostMapping("create")
   public Result createTag(

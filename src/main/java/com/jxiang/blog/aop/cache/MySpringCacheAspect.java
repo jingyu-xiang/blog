@@ -26,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MySpringCacheAspect {
 
-  final private RedisTemplate<String, String> redisTemplate;
+  private final RedisTemplate<String, String> redisTemplate;
 
   @Pointcut("@annotation(com.jxiang.blog.aop.cache.MySpringCache)") // 切点
   public void pt() {
