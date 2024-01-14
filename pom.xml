@@ -6,7 +6,7 @@
     <artifactId>spring-boot-starter-parent</artifactId>
     <groupId>org.springframework.boot</groupId>
     <relativePath/>
-    <version>3.1.6</version> <!-- lookup parent from repository -->
+    <version>3.1.7</version> <!-- lookup parent from repository -->
   </parent>
 
   <name>blog</name>
@@ -47,8 +47,8 @@
       <!-- database -->
       <dependency>
         <groupId>com.baomidou</groupId>
-        <artifactId>mybatis-plus-boot-starter</artifactId>
-        <version>3.5.4</version>
+        <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+        <version>3.5.5</version>
       </dependency>
       <dependency>
         <artifactId>mysql-connector-j</artifactId>
@@ -109,7 +109,7 @@
     </dependency>
 
     <dependency>
-      <artifactId>mybatis-plus-boot-starter</artifactId>
+      <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
       <groupId>com.baomidou</groupId>
     </dependency>
     <dependency>
